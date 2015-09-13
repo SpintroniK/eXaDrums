@@ -1,0 +1,20 @@
+<root>
+	<kitName>Default</kitName>
+	<kitFolder>default</kitFolder>
+	<snareDrum>
+		<drumName>SnareDrum</drumName>
+		<soundFile>snare.raw</soundFile>
+		<threshold>204</threshold>
+		<scanTime>40000</scanTime>
+		<maskTime>400000</maskTime>
+		<curve>exponential</curve>
+	</snareDrum>
+	<snareDrum2>
+		<drumName>SnareDrum2</drumName>
+		<soundFile>snare.raw</soundFile>
+		<threshold>204</threshold>
+		<scanTime>4000</scanTime>
+		<maskTime>40000</maskTime>
+		<curve>exponential</curve>
+	</snareDrum2>
+</root>
