@@ -11,7 +11,6 @@
 int main(int argc, char* argv[])
 {
 
-
 	Testing::eXaDrumsHddTest::RunTest();
 
 	return 0;
