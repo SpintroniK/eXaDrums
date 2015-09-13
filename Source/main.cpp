@@ -6,12 +6,14 @@
  */
 
 #include "Testing/eXaDrumsHddTest.h"
-
+#include "Testing/SerialSensorTest.h"
 
 int main(int argc, char* argv[])
 {
 
-	Testing::eXaDrumsHddTest::RunTest();
+	//Testing::eXaDrumsHddTest::RunTest();
+
+	Testing::SerialSensorTest::RunTest();
 
 	return 0;
 }
