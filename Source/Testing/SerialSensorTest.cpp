@@ -38,13 +38,13 @@ namespace Testing
 		// Start drum module
 		drumKit.Start();
 
-		int N = 100000;
+		int N = 500000;
 
 
 		for(int i = 0; i < N; i++)
 		{
 
-			short value = 16.0f * short((unsigned char)serialSensor.Read());
+			short value = 16.0f * short((unsigned char)serialSensor.Read('1'));
 
 			drumKit.Trig(snareId, value);
 
