@@ -7,11 +7,13 @@
 
 #include "Testing/eXaDrumsHddTest.h"
 #include "Testing/SerialSensorTest.h"
+#include "Testing/SerialSensorsTest.h"
 
 int main(int argc, char* argv[])
 {
 
 	//Testing::eXaDrumsHddTest::RunTest();
+	//Testing::SerialSensorsTest::RunTest();
 
 	Testing::SerialSensorTest::RunTest();
 
