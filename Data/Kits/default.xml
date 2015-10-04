@@ -3,7 +3,7 @@
 	<kitFolder>default</kitFolder>
 	<snareDrum>
 		<drumName>SnareDrum</drumName>
-		<soundFile>snare.raw</soundFile>
+		<soundFile>SnareDrum/edge1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>
@@ -11,9 +11,9 @@
 	</snareDrum>
 	<snareDrum2>
 		<drumName>SnareDrum2</drumName>
-		<soundFile>edge.raw</soundFile>
+		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>124</threshold>
-		<scanTime>2000</scanTime>
+		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>
 		<curve>exponential</curve>
 	</snareDrum2>
