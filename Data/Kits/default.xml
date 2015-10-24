@@ -3,6 +3,7 @@
 	<kitFolder>default</kitFolder>
 	<snareDrum>
 		<drumName>SnareDrum</drumName>
+		<sensorId>0</sensorId>
 		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
@@ -11,6 +12,7 @@
 	</snareDrum>
 	<snareDrum2>
 		<drumName>SnareDrum2</drumName>
+		<sensorId>1</sensorId>
 		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>124</threshold>
 		<scanTime>4000</scanTime>

@@ -15,11 +15,11 @@ int main(int argc, char* argv[])
 
 	int a = 0;
 
-	//Testing::eXaDrumsHddTest::RunTest();
+	Testing::eXaDrumsHddTest::RunTest();
 	//Testing::SerialSensorsTest::RunTest();
 	//Testing::SerialSensorTest::RunTest();
 
-	a = Testing::GuiHddTest::RunTest(argc, argv);
+	//a = Testing::GuiHddTest::RunTest(argc, argv);
 
 	return a;
 }
