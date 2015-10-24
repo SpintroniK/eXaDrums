@@ -28,7 +28,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Sensor
-		IO::Sensor sensor(0);
+		IO::SpiSensor sensor(0);
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
