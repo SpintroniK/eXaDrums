@@ -17,12 +17,12 @@
 namespace IO
 {
 
-	class Sensor
+	class SpiSensor
 	{
 
 	public:
-		Sensor(char channel);
-		virtual ~Sensor();
+		SpiSensor(char channel);
+		virtual ~SpiSensor();
 
 		short Read();
 

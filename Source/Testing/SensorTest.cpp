@@ -8,7 +8,8 @@
 #include "SensorTest.h"
 
 #include <Source/Api/eXaDrumKit.h>
-#include "../IO/Sensor.h"
+
+#include "../IO/SpiSensor.h"
 
 
 using namespace eXaDrumKitApi;

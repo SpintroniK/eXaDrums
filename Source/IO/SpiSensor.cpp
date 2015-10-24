@@ -5,13 +5,13 @@
  *      Author: jeremy
  */
 
-#include "Sensor.h"
+#include "SpiSensor.h"
 
 
 namespace IO
 {
 
-	Sensor::Sensor(char chan)
+	SpiSensor::SpiSensor(char chan)
 	: channel(chan)
 	{
 
@@ -34,7 +34,7 @@ namespace IO
 		return;
 	}
 
-	Sensor::~Sensor()
+	SpiSensor::~SpiSensor()
 	{
 
 		// End Spi transfer
@@ -47,7 +47,7 @@ namespace IO
 	}
 
 
-	short Sensor::Read()
+	short SpiSensor::Read()
 	{
 
 		// Select SPI channel
