@@ -8,8 +8,8 @@
 #include "eXaDrumsHddTest.h"
 
 #include <Source/Api/eXaDrumKit.h>
-#include <Source/IO/Sensor.h>
 #include <Source/IO/HddSensor.h>
+#include <Source/IO/ISensor.h>
 
 #include <iostream>
 #include <string>
@@ -33,7 +33,7 @@ namespace Testing
 
 		// Create Hdd sensor
 		std::string sensorFile(moduleLocation + "../out.raw");
-		std::unique_ptr<IO::Sensor> sensor(new IO::HddSensor(sensorFile.c_str()));
+		std::unique_ptr<IO::ISensor> sensor(new IO::HddSensor(sensorFile.c_str()));
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;

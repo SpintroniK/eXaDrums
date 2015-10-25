@@ -8,7 +8,7 @@
 #include "SerialSensorTest.h"
 
 #include <Source/Api/eXaDrumKit.h>
-#include <Source/IO/Sensor.h>
+#include <Source/IO/ISensor.h>
 #include <Source/IO/Serial.h>
 
 #include <memory>
@@ -29,7 +29,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Serial sensor
-		std::unique_ptr<IO::Sensor> sensor(new IO::Serial);
+		std::unique_ptr<IO::ISensor> sensor(new IO::Serial);
 
 		//sensor->Open();
 

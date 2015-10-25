@@ -27,7 +27,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Serial sensor
-		std::unique_ptr<IO::Sensor> sensor(new IO::Serial);
+		std::unique_ptr<IO::ISensor> sensor(new IO::Serial);
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;

@@ -7,7 +7,7 @@
 
 #include "SpiSensorTest.h"
 #include <Source/Api/eXaDrumKit.h>
-#include <Source/IO/Sensor.h>
+#include <Source/IO/ISensor.h>
 #include <Source/IO/SpiSensor.h>
 
 
@@ -27,7 +27,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Sensor
-		std::unique_ptr<IO::Sensor> sensor(new IO::SpiSensor);
+		std::unique_ptr<IO::ISensor> sensor(new IO::SpiSensor);
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
