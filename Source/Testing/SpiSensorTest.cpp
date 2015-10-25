@@ -5,10 +5,9 @@
  *      Author: jeremy
  */
 
-#include "SensorTest.h"
-
+#include "SpiSensorTest.h"
 #include <Source/Api/eXaDrumKit.h>
-
+#include <Source/IO/Sensor.h>
 #include <Source/IO/SpiSensor.h>
 
 
@@ -28,7 +27,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Sensor
-		IO::SpiSensor sensor(0);
+		std::unique_ptr<IO::Sensor> sensor(new IO::SpiSensor);
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
@@ -43,7 +42,7 @@ namespace Testing
 		for(int i = 0; i < N; i++)
 		{
 
-			short value = sensor.Read();
+			short value = sensor->GetData(0);
 
 			drumKit.Trig(snareId, value);
 

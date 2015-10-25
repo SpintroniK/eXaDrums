@@ -8,12 +8,14 @@
 #include "eXaDrumsHddTest.h"
 
 #include <Source/Api/eXaDrumKit.h>
+#include <Source/IO/Sensor.h>
 #include <Source/IO/HddSensor.h>
 
 #include <iostream>
 #include <string>
 #include <thread>
 #include <chrono>
+#include <memory>
 
 using namespace eXaDrumKitApi;
 
@@ -31,7 +33,7 @@ namespace Testing
 
 		// Create Hdd sensor
 		std::string sensorFile(moduleLocation + "../out.raw");
-		IO::HddSensor hddSensor(sensorFile.c_str());
+		std::unique_ptr<IO::Sensor> sensor(new IO::HddSensor(sensorFile.c_str()));
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
@@ -40,13 +42,14 @@ namespace Testing
 		// Start drum module
 		drumKit.Start();
 
-		int N = hddSensor.GetDataLength();
+		//int N = hddSensor.GetDataLength();
 
+		int N = 1000000;
 
 		for(int i = 0; i < N; i++)
 		{
 
-			short value = hddSensor.GetOutput();
+			short value = sensor->GetData(0);
 			drumKit.Trig(snareId, value);
 
 		}
