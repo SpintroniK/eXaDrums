@@ -27,9 +27,7 @@ namespace Testing
 		drumKit.LoadKit(kitLocation.c_str());
 
 		// Create Serial sensor
-		IO::Serial serialSensor;
-
-		serialSensor.Open();
+		std::unique_ptr<IO::Sensor> sensor(new IO::Serial);
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
@@ -47,7 +45,7 @@ namespace Testing
 		for(int i = 0; i < N; i++)
 		{
 
-			short value = 16.0f * short((unsigned char)serialSensor.Read('1'));
+			short value = 16.0f * short((unsigned char)sensor->GetData(0));
 
 			drumKit.Trig(snareId, value);
 
@@ -60,8 +58,6 @@ namespace Testing
 
 		// Stop drum module
 		drumKit.Stop();
-
-		serialSensor.Close();
 
 		return;
 	}
