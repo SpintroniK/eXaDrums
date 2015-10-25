@@ -81,7 +81,6 @@
 								</option>
 								<option id="gnu.cpp.link.option.libs.1204950681" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
 									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="eXaDrumKit"/>
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="bcm2835"/>
 								</option>
 								<option id="gnu.cpp.link.option.shared.1102288316" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.flags.200557072" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="$(shell pkg-config --libs gtkmm-3.0)" valueType="string"/>

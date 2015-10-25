@@ -9,7 +9,7 @@
 
 #include <Source/Api/eXaDrumKit.h>
 
-#include "../IO/SpiSensor.h"
+#include <Source/IO/SpiSensor.h>
 
 
 using namespace eXaDrumKitApi;
