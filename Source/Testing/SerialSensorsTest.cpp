@@ -31,10 +31,10 @@ namespace Testing
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
-		drumKit.AddTrigger(snareId);
+		drumKit.AddDrum(snareId);
 
 		const int tomtomId = 1;
-		drumKit.AddTrigger(tomtomId);
+		drumKit.AddDrum(tomtomId);
 
 		// Start drum module
 		drumKit.Start();

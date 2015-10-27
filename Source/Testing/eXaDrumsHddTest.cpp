@@ -16,6 +16,7 @@
 #include <thread>
 #include <chrono>
 #include <memory>
+#include <vector>
 
 using namespace eXaDrumKitApi;
 
@@ -33,11 +34,16 @@ namespace Testing
 
 		// Create Hdd sensor
 		std::string sensorFile(moduleLocation + "../out.raw");
-		std::unique_ptr<IO::ISensor> sensor(new IO::HddSensor(sensorFile.c_str()));
+
+		// Create vector of sensors to hold all the sensors
+		std::vector<std::unique_ptr<IO::ISensor>> sensors;
+
+		// Add HddSensor to the sensors' list
+		sensors.push_back(std::unique_ptr<IO::ISensor>(new IO::HddSensor(sensorFile.c_str())));
 
 		// Add a trigger for drum id 0
 		const int snareId = 0;
-		drumKit.AddTrigger(snareId);
+		drumKit.AddDrum(snareId);
 
 		// Start drum module
 		drumKit.Start();
@@ -49,7 +55,7 @@ namespace Testing
 		for(int i = 0; i < N; i++)
 		{
 
-			short value = sensor->GetData(0);
+			short value = sensors[0]->GetData(0);
 			drumKit.Trig(snareId, value);
 
 		}
