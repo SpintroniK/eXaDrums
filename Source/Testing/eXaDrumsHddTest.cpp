@@ -32,36 +32,18 @@ namespace Testing
 		std::string kitLocation("Kits/default.xml");
 		drumKit.LoadKit(kitLocation.c_str());
 
-		// Create Hdd sensor
-		std::string sensorFile(moduleLocation + "../out.raw");
 
-		// Create vector of sensors to hold all the sensors
-		std::vector<std::unique_ptr<IO::ISensor>> sensors;
-
-		// Add HddSensor to the sensors' list
-		sensors.push_back(std::unique_ptr<IO::ISensor>(new IO::HddSensor(sensorFile.c_str())));
-
-		// Add a trigger for drum id 0
-		const int snareId = 0;
-		drumKit.AddDrum(snareId);
 
 		// Start drum module
 		drumKit.Start();
 
-		//int N = hddSensor.GetDataLength();
 
-		int N = 1000000;
-
-		for(int i = 0; i < N; i++)
-		{
-
-			short value = sensors[0]->GetData(0);
-			drumKit.Trig(snareId, value);
-
-		}
+		std::this_thread::sleep_for(std::chrono::seconds(30));
 
 		// Stop drum module
 		drumKit.Stop();
+
+
 
 		return;
 	}
