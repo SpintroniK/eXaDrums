@@ -9,6 +9,7 @@
 
 #include <Source/Api/eXaDrumKit.h>
 #include <Source/IO/Serial.h>
+#include <Source/IO/SensorType.h>
 
 
 using namespace eXaDrumKitApi;
@@ -21,7 +22,7 @@ namespace Testing
 	{
 
 		std::string moduleLocation("/home/jeremy/Desktop/Prog/eXaDrums/eXaDrums/Data/");
-		eXaDrumKit drumKit(moduleLocation.c_str());
+		eXaDrumKit drumKit(moduleLocation.c_str(), IO::SensorType::UsbSerial);
 
 		std::string kitLocation("Kits/default.xml");
 		drumKit.LoadKit(kitLocation.c_str());
