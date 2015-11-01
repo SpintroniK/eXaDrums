@@ -5,13 +5,13 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_TESTING_SERIALSENSORTEST_H_
-#define SOURCE_TESTING_SERIALSENSORTEST_H_
+#ifndef SOURCE_TESTING_SPISENSORTEST_H_
+#define SOURCE_TESTING_SPISENSORTEST_H_
 
 namespace Testing
 {
 
-	class SensorTest
+	class SpiSensorTest
 	{
 
 	public:
@@ -20,8 +20,8 @@ namespace Testing
 
 	private:
 
-		SensorTest() {};
-		virtual ~SensorTest() {};
+		SpiSensorTest() {};
+		virtual ~SpiSensorTest() {};
 
 
 	};

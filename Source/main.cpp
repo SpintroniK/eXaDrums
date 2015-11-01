@@ -8,6 +8,7 @@
 #include "Testing/eXaDrumsHddTest.h"
 #include "Testing/SerialSensorTest.h"
 #include "Testing/SerialSensorsTest.h"
+#include "Testing/SpiSensorTest.h"
 #include "Testing/GuiHddTest.h"
 
 int main(int argc, char* argv[])
@@ -15,9 +16,10 @@ int main(int argc, char* argv[])
 
 	int a = 0;
 
-	Testing::eXaDrumsHddTest::RunTest();
+	//Testing::eXaDrumsHddTest::RunTest();
 	//Testing::SerialSensorsTest::RunTest();
 	//Testing::SerialSensorTest::RunTest();
+	Testing::SpiSensorTest::RunTest();
 
 	//a = Testing::GuiHddTest::RunTest(argc, argv);
 
