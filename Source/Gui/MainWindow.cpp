@@ -14,7 +14,7 @@ namespace Gui
 {
 
 	MainWindow::MainWindow()
-	: button("Start/Stop")
+	: button("Start/Stop"), drumKit(nullptr), isDrumKitStarted(false)
 	{
 
 		// Sets the border width of the window.
@@ -28,11 +28,22 @@ namespace Gui
 
 		button.show();
 
+		// Init drum kit
+
+		std::string moduleLocation("/home/jeremy/Desktop/Prog/eXaDrums/eXaDrums/Data/");
+		drumKit = std::unique_ptr<eXaDrumKit>(new eXaDrumKit(moduleLocation.c_str(), IO::SensorType::Hdd));
+
+		std::string kitLocation("Kits/default.xml");
+		drumKit->LoadKit(kitLocation.c_str());
+
 		return;
 	}
 
 	MainWindow::~MainWindow()
 	{
+
+		if(isDrumKitStarted)
+			drumKit->Stop();
 
 		return;
 	}
@@ -40,7 +51,22 @@ namespace Gui
 
 	void MainWindow::on_button_clicked()
 	{
-	  std::cout << "Hello World" << std::endl;
+
+		if(!isDrumKitStarted)
+		{
+			drumKit->Start();
+			std::cout << "Drum Kit Started." << std::endl;
+
+		}
+		else
+		{
+			drumKit->Stop();
+			std::cout << "Drum Kit Stopped." << std::endl;
+
+		}
+
+		isDrumKitStarted ^= true;
+
 	}
 
 }
