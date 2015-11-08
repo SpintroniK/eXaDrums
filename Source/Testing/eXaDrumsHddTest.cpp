@@ -7,7 +7,7 @@
 
 #include "eXaDrumsHddTest.h"
 
-#include <Source/Api/eXaDrumKit.h>
+#include <Source/Api/eXaDrums.h>
 #include <Source/IO/HddSensor.h>
 #include <Source/IO/ISensor.h>
 #include <Source/IO/SensorType.h>
@@ -19,7 +19,7 @@
 #include <memory>
 #include <vector>
 
-using namespace eXaDrumKitApi;
+using namespace eXaDrumsApi;
 
 namespace Testing
 {
@@ -28,7 +28,7 @@ namespace Testing
 	{
 
 		std::string moduleLocation("/home/jeremy/Desktop/Prog/eXaDrums/eXaDrums/Data/");
-		eXaDrumKit drumKit(moduleLocation.c_str(), IO::SensorType::Hdd);
+		eXaDrums drumKit(moduleLocation.c_str(), IO::SensorType::Hdd);
 
 		std::string kitLocation("Kits/default.xml");
 		drumKit.LoadKit(kitLocation.c_str());

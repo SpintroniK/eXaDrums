@@ -3,7 +3,7 @@
 	<name>eXaDrums</name>
 	<comment></comment>
 	<projects>
-		<project>eXaDrumKit</project>
+		<project>libeXaDrums</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

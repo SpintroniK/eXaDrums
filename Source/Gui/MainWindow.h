@@ -8,12 +8,12 @@
 #ifndef SOURCE_GUI_MAINWINDOW_H_
 #define SOURCE_GUI_MAINWINDOW_H_
 
-#include <Source/Api/eXaDrumKit.h>
+#include <Source/Api/eXaDrums.h>
 #include <Source/IO/HddSensor.h>
 #include <Source/IO/ISensor.h>
 #include <Source/IO/SensorType.h>
 
-#include <gtkmm/button.h>
+#include <gtkmm/togglebutton.h>
 #include <gtkmm/window.h>
 
 #include <iostream>
@@ -23,7 +23,7 @@
 #include <memory>
 #include <vector>
 
-using namespace eXaDrumKitApi;
+using namespace eXaDrumsApi;
 
 namespace Gui
 {
@@ -45,10 +45,10 @@ namespace Gui
 
 
 	  //Member widgets:
-	  Gtk::Button button;
+	  Gtk::ToggleButton button;
 
 	  //Drum kit
-	  std::unique_ptr<eXaDrumKit> drumKit;
+	  std::unique_ptr<eXaDrums> drumKit;
 
 	  bool isDrumKitStarted;
 

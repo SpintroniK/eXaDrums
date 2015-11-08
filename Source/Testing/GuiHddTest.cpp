@@ -9,12 +9,12 @@
 
 #include "../Gui/MainWindow.h"
 
-#include <Source/Api/eXaDrumKit.h>
 #include <Source/IO/HddSensor.h>
 
 #include <gtkmm/application.h>
+#include <Source/Api/eXaDrums.h>
 
-using namespace eXaDrumKitApi;
+using namespace eXaDrumsApi;
 
 namespace Testing
 {
