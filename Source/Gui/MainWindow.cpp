@@ -33,6 +33,10 @@ namespace Gui
 		std::string moduleLocation("./Data/");
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str(), IO::SensorType::Hdd));
 
+		std::string kitsPath("Kits");
+
+		drumKit->CreateKitManager(kitsPath.c_str());
+
 		std::string kitLocation("Kits/default.xml");
 		drumKit->LoadKit(kitLocation.c_str());
 
