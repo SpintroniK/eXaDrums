@@ -34,7 +34,7 @@ namespace Gui
 	public:
 
 		MainWindow();
-		~MainWindow();
+		virtual ~MainWindow();
 
 	protected:
 
