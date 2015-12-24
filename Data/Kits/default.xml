@@ -4,7 +4,7 @@
 	<Instrument type="Drum">
 		<drumName>SnareDrum</drumName>
 		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/edge1.raw</soundFile>
+		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>
@@ -13,7 +13,7 @@
 	<Instrument type="Drum">
 		<drumName>SnareDrum2</drumName>
 		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/edge1.raw</soundFile>
+		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>
