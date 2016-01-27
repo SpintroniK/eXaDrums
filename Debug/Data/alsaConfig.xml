@@ -1,0 +1,10 @@
+<root>
+	<device>plughw:0,0</device>
+	<capture>0</capture>
+	<format>SND_PCM_FORMAT_S16_LE</format>
+	<sampleRate>48000</sampleRate>
+	<nChannels>1</nChannels>
+	<bufferTime>10000</bufferTime>
+	<periodTime>5000</periodTime>
+	<access>SND_PCM_ACCESS_RW_INTERLEAVED</access>
+</root>
