@@ -8,6 +8,13 @@
 #ifndef SOURCE_GUI_MAINWINDOW_H_
 #define SOURCE_GUI_MAINWINDOW_H_
 
+// For development purposes only
+#ifndef __arm__
+#define __arm__ (!(1==1))
+#endif
+
+// includes
+
 #include <Source/Api/eXaDrums.h>
 #include <Source/IO/HddSensor.h>
 #include <Source/IO/ISensor.h>

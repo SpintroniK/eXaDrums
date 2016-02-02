@@ -19,6 +19,13 @@ namespace Gui
 
 		// Sets the border width of the window.
 		set_border_width(10);
+		set_decorated(false);
+
+		// Detect if the code is running on a Raspberry Pi
+		if(!__arm__)
+			set_size_request(800, 480);
+		else
+			fullscreen();
 
 		// When the button receives the "clicked" signal, it will call the
 		// on_button_clicked() method defined below.HelloWorld
