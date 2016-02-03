@@ -14,7 +14,11 @@ namespace Gui
 {
 
 	MainWindow::MainWindow()
-	: button(Gtk::Stock::MEDIA_PLAY), drumKit(nullptr), isDrumKitStarted(false)
+	: button(Gtk::Stock::MEDIA_PLAY),
+	  buttonQuit(Gtk::Stock::QUIT),
+	  grid(nullptr),
+	  drumKit(nullptr),
+	  isDrumKitStarted(false)
 	{
 
 		// Sets the border width of the window.
@@ -27,13 +31,27 @@ namespace Gui
 		else
 			fullscreen();
 
+		grid = std::unique_ptr<Gtk::Grid>(new Gtk::Grid);
+
 		// When the button receives the "clicked" signal, it will call the
 		// on_button_clicked() method defined below.HelloWorld
 		button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
+		buttonQuit.signal_clicked().connect(sigc::mem_fun(this, &MainWindow::on_button_Quit_clicked));
 
-		add(button);
+		button.set_hexpand(true);
+		buttonQuit.set_hexpand(false);
 
-		button.show();
+		grid->attach(button, 0, 0, 1, 1);
+		grid->attach(buttonQuit, 1, 0, 1, 1);
+
+		grid->set_column_spacing(10);
+		grid->set_row_spacing(10);
+
+		grid->show_all();
+
+		add(*grid);
+
+		this->show_all();
 
 		// Init drum kit
 
@@ -74,6 +92,16 @@ namespace Gui
 
 		isDrumKitStarted ^= true;
 
+		return;
+
+	}
+
+	void MainWindow::on_button_Quit_clicked()
+	{
+
+		this->close();
+
+		return;
 	}
 
 }

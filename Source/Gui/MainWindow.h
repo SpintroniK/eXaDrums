@@ -21,6 +21,8 @@
 #include <Source/IO/SensorType.h>
 
 #include <gtkmm/togglebutton.h>
+#include <gtkmm/button.h>
+#include <gtkmm/grid.h>
 #include <gtkmm/window.h>
 
 #include <iostream>
@@ -47,12 +49,17 @@ namespace Gui
 
 	  //Signal handlers:
 	  void on_button_clicked();
+	  void on_button_Quit_clicked();
 
 	private:
 
 
 	  //Member widgets:
 	  Gtk::ToggleButton button;
+	  Gtk::Button buttonQuit;
+
+	  std::unique_ptr<Gtk::Grid> grid;
+
 
 	  //Drum kit
 	  std::unique_ptr<eXaDrums> drumKit;
