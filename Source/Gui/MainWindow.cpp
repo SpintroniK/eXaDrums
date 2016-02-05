@@ -7,15 +7,14 @@
 
 
 #include "MainWindow.h"
-#include <gtkmm/stock.h>
 #include <iostream>
 
 namespace Gui
 {
 
 	MainWindow::MainWindow()
-	: button(Gtk::Stock::MEDIA_PLAY),
-	  buttonQuit(Gtk::Stock::QUIT),
+	: button("_Play", true),
+	  buttonQuit("_Quit", true),
 	  grid(nullptr),
 	  drumKit(nullptr),
 	  isDrumKitStarted(false)
@@ -35,7 +34,12 @@ namespace Gui
 
 		// When the button receives the "clicked" signal, it will call the
 		// on_button_clicked() method defined below.HelloWorld
+		//button.set_label("_Play");
+
+		button.set_image_from_icon_name("media-playback-start");
 		button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
+
+		buttonQuit.set_image_from_icon_name("application-exit");
 		buttonQuit.signal_clicked().connect(sigc::mem_fun(this, &MainWindow::on_button_Quit_clicked));
 
 		button.set_hexpand(true);
