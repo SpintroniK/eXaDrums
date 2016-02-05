@@ -20,7 +20,6 @@
 #include <Source/IO/ISensor.h>
 #include <Source/IO/SensorType.h>
 
-#include <gtkmm/togglebutton.h>
 #include <gtkmm/button.h>
 #include <gtkmm/grid.h>
 #include <gtkmm/window.h>
@@ -55,7 +54,7 @@ namespace Gui
 
 
 	  //Member widgets:
-	  Gtk::ToggleButton button;
+	  Gtk::Button button;
 	  Gtk::Button buttonQuit;
 
 	  std::unique_ptr<Gtk::Grid> grid;

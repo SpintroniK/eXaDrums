@@ -88,10 +88,16 @@ namespace Gui
 		if(!isDrumKitStarted)
 		{
 			drumKit->Start();
+			button.set_label("_Stop");
+			button.mnemonic_activate(true);
+			button.set_image_from_icon_name("media-playback-stop");
 		}
 		else
 		{
 			drumKit->Stop();
+			button.set_label("_Play");
+			button.mnemonic_activate(true);
+			button.set_image_from_icon_name("media-playback-start");
 		}
 
 		isDrumKitStarted ^= true;
