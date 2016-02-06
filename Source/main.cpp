@@ -5,23 +5,15 @@
  *      Author: jeremy
  */
 
-#include "Testing/eXaDrumsHddTest.h"
-#include "Testing/SerialSensorTest.h"
-#include "Testing/SerialSensorsTest.h"
-#include "Testing/SpiSensorTest.h"
-#include "Testing/GuiHddTest.h"
+#include "Gui/MainWindow.h"
+
+#include <gtkmm/application.h>
 
 int main(int argc, char* argv[])
 {
 
-	int a = 0;
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "eXaDrums");
+	Gui::MainWindow mainWindow;
 
-	//Testing::eXaDrumsHddTest::RunTest();
-	//Testing::SerialSensorsTest::RunTest();
-	//Testing::SerialSensorTest::RunTest();
-	//Testing::SpiSensorTest::RunTest();
-
-	a = Testing::GuiHddTest::RunTest(argc, argv);
-
-	return a;
+	return app->run(mainWindow);
 }

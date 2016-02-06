@@ -22,7 +22,7 @@ namespace Testing
 	int GuiHddTest::RunTest(int argc, char* argv[])
 	{
 
-		  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "");
+		  Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "eXaDrums");
 
 		  Gui::MainWindow test;
 
