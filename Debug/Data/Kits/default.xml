@@ -2,18 +2,18 @@
 	<kitName>Default</kitName>
 	<kitFolder>default</kitFolder>
 	<Instrument type="Drum">
-		<drumName>SnareDrum</drumName>
+		<instrumentName>SnareDrum</instrumentName>
 		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/edge1.raw</soundFile>
+		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>
 		<curve>exponential</curve>
 	</Instrument>
 	<Instrument type="Drum">
-		<drumName>SnareDrum2</drumName>
+		<instrumentName>SnareDrum2</instrumentName>
 		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/edge1.raw</soundFile>
+		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
 		<scanTime>4000</scanTime>
 		<maskTime>60000</maskTime>

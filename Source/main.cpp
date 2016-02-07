@@ -12,7 +12,7 @@
 int main(int argc, char* argv[])
 {
 
-	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv, "eXaDrums");
+	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
 	Gui::MainWindow mainWindow;
 
 	return app->run(mainWindow);

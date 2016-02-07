@@ -2,7 +2,7 @@
 	<kitName>Default</kitName>
 	<kitFolder>default</kitFolder>
 	<Instrument type="Drum">
-		<drumName>SnareDrum</drumName>
+		<instrumentName>SnareDrum</instrumentName>
 		<sensorId>0</sensorId>
 		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
@@ -11,7 +11,7 @@
 		<curve>exponential</curve>
 	</Instrument>
 	<Instrument type="Drum">
-		<drumName>SnareDrum2</drumName>
+		<instrumentName>SnareDrum2</instrumentName>
 		<sensorId>0</sensorId>
 		<soundFile>SnareDrum/snare1.raw</soundFile>
 		<threshold>120</threshold>
