@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -leXaDrums
+LIBS := -leXaDrums -ltinyxml2
 

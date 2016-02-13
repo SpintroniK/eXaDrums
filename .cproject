@@ -185,7 +185,8 @@
 								<option id="gnu.cpp.link.option.shared.1193502852" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.flags.1476491603" name="Linker flags" superClass="gnu.cpp.link.option.flags" value="$(shell pkg-config --libs gtkmm-3.0)" valueType="string"/>
 								<option id="gnu.cpp.link.option.libs.2091091103" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="eXaDrums"/>
+									<listOptionValue builtIn="false" value="eXaDrums"/>
+									<listOptionValue builtIn="false" value="tinyxml2"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.1488593687" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../libeXaDrums/Release"/>
