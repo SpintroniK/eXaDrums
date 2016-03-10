@@ -3,20 +3,20 @@
 	<kitFolder>default</kitFolder>
 	<Instrument type="Drum">
 		<instrumentName>SnareDrum</instrumentName>
-		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/snare1.raw</soundFile>
-		<threshold>120</threshold>
-		<scanTime>4000</scanTime>
-		<maskTime>60000</maskTime>
-		<curve>exponential</curve>
+		<triggers>
+			<trigger location="DrumHead">0</trigger>
+		</triggers>
+		<sounds>
+			<sound type="Default">SnareDrum/snare1.raw</sound>
+		</sounds>
 	</Instrument>
 	<Instrument type="Drum">
 		<instrumentName>SnareDrum2</instrumentName>
-		<sensorId>0</sensorId>
-		<soundFile>SnareDrum/snare1.raw</soundFile>
-		<threshold>120</threshold>
-		<scanTime>4000</scanTime>
-		<maskTime>60000</maskTime>
-		<curve>exponential</curve>
+		<triggers>
+			<trigger location="DrumHead">0</trigger>
+		</triggers>
+		<sounds>
+			<sound type="Default">SnareDrum/snare1.raw</sound>
+		</sounds>
 	</Instrument>
 </root>
