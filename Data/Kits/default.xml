@@ -5,17 +5,21 @@
 		<instrumentName>SnareDrum</instrumentName>
 		<triggers>
 			<trigger location="DrumHead">0</trigger>
+			<trigger location="Rim">1</trigger>
 		</triggers>
 		<sounds>
 			<sound type="Default">SnareDrum/snare1.raw</sound>
+			<sound type="RimShot">SnareDrum/edge1.raw</sound>
 		</sounds>
 	</Instrument>
 	<Instrument type="Drum">
 		<instrumentName>SnareDrum2</instrumentName>
 		<triggers>
 			<trigger location="DrumHead">0</trigger>
+			<trigger location="Rim">1</trigger>
 		</triggers>
 		<sounds>
+			<sound type="RimShot">SnareDrum/edge1.raw</sound>
 			<sound type="Default">SnareDrum/snare1.raw</sound>
 		</sounds>
 	</Instrument>

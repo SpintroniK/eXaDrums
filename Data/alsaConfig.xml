@@ -1,5 +1,5 @@
 <root>
-	<device>plughw:0,0</device>
+	<device>default</device>
 	<capture>0</capture>
 	<format>SND_PCM_FORMAT_S16_LE</format>
 	<sampleRate>48000</sampleRate>
