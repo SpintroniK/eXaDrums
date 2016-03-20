@@ -1,7 +1,7 @@
 <root>
 	<kitName>Default</kitName>
 	<kitFolder>default</kitFolder>
-	<Instrument type="Drum">
+	<Instrument type="TestDrum">
 		<instrumentName>SnareDrum</instrumentName>
 		<triggers>
 			<trigger location="DrumHead">0</trigger>
@@ -12,7 +12,7 @@
 			<sound type="RimShot">SnareDrum/edge1.raw</sound>
 		</sounds>
 	</Instrument>
-	<Instrument type="Drum">
+<!--	<Instrument type="TestDrum">
 		<instrumentName>SnareDrum2</instrumentName>
 		<triggers>
 			<trigger location="DrumHead">0</trigger>
@@ -22,5 +22,5 @@
 			<sound type="RimShot">SnareDrum/edge1.raw</sound>
 			<sound type="Default">SnareDrum/snare1.raw</sound>
 		</sounds>
-	</Instrument>
+	</Instrument> -->
 </root>
