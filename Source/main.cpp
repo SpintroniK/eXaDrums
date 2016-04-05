@@ -5,7 +5,7 @@
  *      Author: jeremy
  */
 
-#include "Gui/MainWindow.h"
+#include "MainWindow/MainWindow.h"
 
 #include <gtkmm/application.h>
 

@@ -7,15 +7,16 @@
 
 
 #include "MainWindow.h"
+
 #include <iostream>
 
 namespace Gui
 {
 
 	MainWindow::MainWindow()
-	: button("_Play", true),
-	  buttonQuit("_Quit", true),
+	: quitButton("_Quit", true),
 	  grid(nullptr),
+	  page(nullptr),
 	  drumKit(nullptr),
 	  isDrumKitStarted(false)
 	{
@@ -32,21 +33,19 @@ namespace Gui
 
 		grid = std::unique_ptr<Gtk::Grid>(new Gtk::Grid);
 
-		// When the button receives the "clicked" signal, it will call the
-		// on_button_clicked() method defined below.HelloWorld
-		//button.set_label("_Play");
+		//button.set_image_from_icon_name("media-playback-start");
+		//button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
 
-		button.set_image_from_icon_name("media-playback-start");
-		button.signal_clicked().connect(sigc::mem_fun(*this, &MainWindow::on_button_clicked));
+		quitButton.set_image_from_icon_name("application-exit");
+		quitButton.signal_clicked().connect(sigc::mem_fun(this, &MainWindow::on_quitButton_clicked));
 
-		buttonQuit.set_image_from_icon_name("application-exit");
-		buttonQuit.signal_clicked().connect(sigc::mem_fun(this, &MainWindow::on_button_Quit_clicked));
+		//button.set_hexpand(true);
+		quitButton.set_hexpand(false);
 
-		button.set_hexpand(true);
-		buttonQuit.set_hexpand(false);
+		grid->attach(quitButton, 0, 0, 1, 1);
 
-		grid->attach(button, 0, 0, 1, 1);
-		grid->attach(buttonQuit, 1, 0, 1, 1);
+		// Default page is the main page
+		this->SwitchToPage(Pages::mainPage);
 
 		grid->set_column_spacing(10);
 		grid->set_row_spacing(10);
@@ -71,14 +70,45 @@ namespace Gui
 	MainWindow::~MainWindow()
 	{
 
-		if(isDrumKitStarted)
+		if(drumKit->IsStarted())
+		{
 			drumKit->Stop();
+		}
 
 		return;
 	}
 
 
-	void MainWindow::on_button_clicked()
+	void MainWindow::SwitchToPage(Pages page)
+	{
+
+		if(this->page != nullptr)
+		{
+			this->page.release();
+		}
+
+		switch(page)
+		{
+			case Pages::mainPage:
+			{
+
+				MainPageModelPtr model = MainPageModelPtr(new MainPageModel());
+				MainPageControllerPtr controller = MainPageControllerPtr(new MainPageController(model, this));
+				this->page = PagePtr(new MainPageView(model, controller));
+
+				grid->attach(*this->page , 0, 1, 1, 1);
+
+				break;
+			}
+			default:
+				break;
+		}
+
+
+		return;
+	}
+
+	/*void MainWindow::on_button_clicked()
 	{
 
 		if(!isDrumKitStarted)
@@ -101,8 +131,9 @@ namespace Gui
 		return;
 
 	}
+	*/
 
-	void MainWindow::on_button_Quit_clicked()
+	void MainWindow::on_quitButton_clicked()
 	{
 
 		this->close();

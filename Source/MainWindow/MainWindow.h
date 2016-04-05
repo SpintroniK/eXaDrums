@@ -5,8 +5,8 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_GUI_MAINWINDOW_H_
-#define SOURCE_GUI_MAINWINDOW_H_
+#ifndef SOURCE_MAINWINDOW_MAINWINDOW_H_
+#define SOURCE_MAINWINDOW_MAINWINDOW_H_
 
 // For development purposes only
 #ifndef __arm__
@@ -14,6 +14,13 @@
 #endif
 
 // includes
+
+
+#include "../Models/Model.h"
+#include "../Views/Page.h"
+#include "../Views/Pages.h"
+#include "../Views/MainPage/MainPageView.h"
+
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/IO/HddSensor.h>
@@ -24,12 +31,8 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/window.h>
 
-#include <iostream>
 #include <string>
-#include <thread>
-#include <chrono>
 #include <memory>
-#include <vector>
 
 using namespace eXaDrumsApi;
 
@@ -44,21 +47,25 @@ namespace Gui
 		MainWindow();
 		virtual ~MainWindow();
 
+		eXaDrums* GetDrumKit() { return drumKit.get(); }
+
+		void SwitchToPage(Pages page);
+
 	protected:
 
 	  //Signal handlers:
-	  void on_button_clicked();
-	  void on_button_Quit_clicked();
+	  void on_quitButton_clicked();
 
 	private:
 
 
 	  //Member widgets:
 	  Gtk::Button button;
-	  Gtk::Button buttonQuit;
+	  Gtk::Button quitButton;
 
 	  std::unique_ptr<Gtk::Grid> grid;
 
+	  PagePtr page;
 
 	  //Drum kit
 	  std::unique_ptr<eXaDrums> drumKit;
@@ -72,4 +79,4 @@ namespace Gui
 }
 
 
-#endif /* SOURCE_GUI_MAINWINDOW_H_ */
+#endif /* SOURCE_MAINWINDOW_MAINWINDOW_H_ */
