@@ -10,7 +10,9 @@
 namespace Gui
 {
 
-	MainPageModel::MainPageModel() : playButtonText("Play")
+	MainPageModel::MainPageModel()
+	: playButtonText("Play"),
+	  kitFrameTitle("Drum kit")
 	{
 
 		return;

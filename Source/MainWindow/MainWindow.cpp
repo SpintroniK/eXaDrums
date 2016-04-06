@@ -14,7 +14,7 @@ namespace Gui
 {
 
 	MainWindow::MainWindow()
-	: quitButton("_Quit", true),
+	: quitButton("", true),
 	  grid(nullptr),
 	  page(nullptr),
 	  drumKit(nullptr),
@@ -42,7 +42,7 @@ namespace Gui
 		//button.set_hexpand(true);
 		quitButton.set_hexpand(false);
 
-		grid->attach(quitButton, 0, 0, 1, 1);
+		grid->attach(quitButton, 1, 0, 1, 1);
 
 		// Default page is the main page
 		this->SwitchToPage(Pages::mainPage);

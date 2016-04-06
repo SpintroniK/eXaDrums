@@ -27,11 +27,14 @@ namespace Gui
 		std::string GetPlayButtonText() const { return this->playButtonText; }
 		std::string GetStopText() const { return "Stop"; }
 		std::string GetPlayText() const { return "Play"; }
+		std::string GetKitFrameTitle() const { return kitFrameTitle; }
+
 		void SetPlayButtonText(std::string text);
 
 	private:
 
 		std::string playButtonText;
+		std::string kitFrameTitle;
 
 	};
 

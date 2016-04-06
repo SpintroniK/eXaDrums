@@ -15,6 +15,8 @@
 
 
 #include <gtkmm/button.h>
+#include <gtkmm/frame.h>
+#include <gtkmm/grid.h>
 
 namespace Gui
 {
@@ -40,6 +42,8 @@ namespace Gui
 
 
 		Gtk::Button playButton;
+		Gtk::Frame kitFrame;
+		Gtk::Grid kitFrameGrid;
 
 	};
 

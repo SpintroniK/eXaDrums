@@ -12,13 +12,35 @@ namespace Gui
 
 	MainPageView::MainPageView(MainPageModelPtr modelPtr, MainPageControllerPtr controllerPtr)
 	: model(modelPtr),
-	  controller(controllerPtr)
+	  controller(controllerPtr),
+	  kitFrame(),
+	  kitFrameGrid()
 	{
 
+		// Set kitFrame title
+		kitFrame.set_label(model->GetKitFrameTitle());
+
+		// Add kitFrameGrid to kitFrame
+		kitFrame.add(kitFrameGrid);
+
+		// Set kitFrameGrid's border
+		kitFrameGrid.set_border_width(10);
+		kitFrameGrid.set_hexpand(true);
+
+		// Show kitFrame's contents
+		kitFrame.show_all();
+
+		// Set button text and signal function
 		playButton = Gtk::Button(controller->GetPlayButtonText());
 		playButton.signal_clicked().connect(sigc::mem_fun(this, &MainPageView::onPlayButtonClicked));
 
-		this->attach(playButton, 0, 0, 1, 1);
+		// Add button to kitFrame's grid
+		kitFrameGrid.attach(playButton, 0, 0, 1, 1);
+
+		kitFrameGrid.show_all();
+
+		// Add kitFrame to main grid
+		this->attach(kitFrame, 0, 0, 1, 1);
 
 		this->show_all();
 
