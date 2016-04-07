@@ -17,6 +17,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/frame.h>
 #include <gtkmm/grid.h>
+#include <gtkmm/comboboxtext.h>
 
 namespace Gui
 {
@@ -40,11 +41,13 @@ namespace Gui
 		MainPageModelPtr model;
 		MainPageControllerPtr controller;
 
-
-		Gtk::Button playButton;
 		Gtk::Frame kitFrame;
 		Gtk::Grid kitFrameGrid;
-
+		Gtk::Button playButton;
+		Gtk::Button addKitButton;
+		Gtk::Button deleteKitButton;
+		Gtk::Button configureButton;
+		Gtk::ComboBoxText kitsList;
 	};
 
 } /* namespace Gui */

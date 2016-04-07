@@ -11,8 +11,11 @@ namespace Gui
 {
 
 	MainPageModel::MainPageModel()
-	: playButtonText("Play"),
-	  kitFrameTitle("Drum kit")
+	: kitFrameTitle("Drum kit"),
+	  playButtonLabel("Play"),
+	  addKitButtonLabel("Add"),
+	  deleteKitButtonLabel("Delete"),
+	  configureButtonLabel("Configure")
 	{
 
 		return;
@@ -28,7 +31,7 @@ namespace Gui
 	void MainPageModel::SetPlayButtonText(std::string text)
 	{
 
-		 this->playButtonText = text;
+		 this->playButtonLabel = text;
 
 		 this->Notify();
 

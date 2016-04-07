@@ -24,17 +24,23 @@ namespace Gui
 		MainPageModel();
 		virtual ~MainPageModel();
 
-		std::string GetPlayButtonText() const { return this->playButtonText; }
+		std::string GetKitFrameTitle() const { return kitFrameTitle; }
+		std::string GetPlayButtonLabel() const { return this->playButtonLabel; }
 		std::string GetStopText() const { return "Stop"; }
 		std::string GetPlayText() const { return "Play"; }
-		std::string GetKitFrameTitle() const { return kitFrameTitle; }
+		std::string GetAddKitButtonLabel() const { return this->addKitButtonLabel; }
+		std::string GetdeleteKitButtonLabel() const { return this->deleteKitButtonLabel; }
+		std::string GetConfigureButtonLabel() const { return this->configureButtonLabel; }
 
 		void SetPlayButtonText(std::string text);
 
 	private:
 
-		std::string playButtonText;
 		std::string kitFrameTitle;
+		std::string playButtonLabel;
+		std::string addKitButtonLabel;
+		std::string deleteKitButtonLabel;
+		std::string configureButtonLabel;
 
 	};
 

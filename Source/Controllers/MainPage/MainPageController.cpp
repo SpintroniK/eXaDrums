@@ -47,9 +47,9 @@ namespace Gui
 		return;
 	}
 
-	std::string MainPageController::GetPlayButtonText() const
+	std::string MainPageController::GetPlayButtonLabel() const
 	{
-		return model->GetPlayButtonText();
+		return model->GetPlayButtonLabel();
 	}
 
 } /* namespace Gui */

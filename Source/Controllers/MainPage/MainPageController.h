@@ -28,7 +28,7 @@ namespace Gui
 
 		void StartOrStopDrumKit();
 		bool IsDrumKitStarted() const { return isDrumKitStarted; }
-		std::string GetPlayButtonText() const;
+		std::string GetPlayButtonLabel() const;
 
 	private:
 

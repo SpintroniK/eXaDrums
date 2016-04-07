@@ -82,11 +82,6 @@ namespace Gui
 	void MainWindow::SwitchToPage(Pages page)
 	{
 
-		if(this->page != nullptr)
-		{
-			this->page.release();
-		}
-
 		switch(page)
 		{
 			case Pages::mainPage:
@@ -94,7 +89,7 @@ namespace Gui
 
 				MainPageModelPtr model = MainPageModelPtr(new MainPageModel());
 				MainPageControllerPtr controller = MainPageControllerPtr(new MainPageController(model, this));
-				this->page = PagePtr(new MainPageView(model, controller));
+				this->page.reset(new MainPageView(model, controller));
 
 				grid->attach(*this->page , 0, 1, 1, 1);
 

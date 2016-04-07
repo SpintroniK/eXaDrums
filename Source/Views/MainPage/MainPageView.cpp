@@ -12,9 +12,7 @@ namespace Gui
 
 	MainPageView::MainPageView(MainPageModelPtr modelPtr, MainPageControllerPtr controllerPtr)
 	: model(modelPtr),
-	  controller(controllerPtr),
-	  kitFrame(),
-	  kitFrameGrid()
+	  controller(controllerPtr)
 	{
 
 		// Set kitFrame title
@@ -24,18 +22,41 @@ namespace Gui
 		kitFrame.add(kitFrameGrid);
 
 		// Set kitFrameGrid's border
-		kitFrameGrid.set_border_width(10);
+		kitFrameGrid.set_border_width(4);
+		kitFrameGrid.set_column_spacing(4);
 		kitFrameGrid.set_hexpand(true);
 
 		// Show kitFrame's contents
 		kitFrame.show_all();
 
-		// Set button text and signal function
-		playButton = Gtk::Button(controller->GetPlayButtonText());
+		// Set playButton text and signal function
+		playButton = Gtk::Button(controller->GetPlayButtonLabel());
 		playButton.signal_clicked().connect(sigc::mem_fun(this, &MainPageView::onPlayButtonClicked));
 
-		// Add button to kitFrame's grid
-		kitFrameGrid.attach(playButton, 0, 0, 1, 1);
+		// Set addKitButton label
+		addKitButton = Gtk::Button(model->GetAddKitButtonLabel());
+
+		// Set deleteKitButton label
+		deleteKitButton = Gtk::Button(model->GetdeleteKitButtonLabel());
+		deleteKitButton.set_margin_right(20);
+
+		// Set configure button label
+		configureButton = Gtk::Button(model->GetConfigureButtonLabel());
+		configureButton.set_margin_right(20);
+
+		// Create kits list
+		kitsList = Gtk::ComboBoxText();
+		//XXX Add fake kit for test
+		kitsList.append("Default");
+		kitsList.set_active(0);
+
+		// Add widgets to kitFrame's grid
+		kitFrameGrid.attach(addKitButton, 0, 0, 1, 1);
+		kitFrameGrid.attach_next_to(deleteKitButton, addKitButton, Gtk::PositionType::POS_RIGHT, 1, 1);
+		kitFrameGrid.attach_next_to(kitsList, deleteKitButton, Gtk::PositionType::POS_RIGHT, 1, 1);
+		kitFrameGrid.attach_next_to(configureButton, kitsList, Gtk::PositionType::POS_RIGHT, 1, 1);
+		kitFrameGrid.attach_next_to(playButton, configureButton, Gtk::PositionType::POS_RIGHT, 1, 1);
+
 
 		kitFrameGrid.show_all();
 
@@ -65,7 +86,7 @@ namespace Gui
 	void MainPageView::Update()
 	{
 
-		playButton.set_label(this->controller->GetPlayButtonText());
+		playButton.set_label(this->controller->GetPlayButtonLabel());
 		playButton.mnemonic_activate(true);
 
 		if(controller->IsDrumKitStarted())
