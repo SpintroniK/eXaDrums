@@ -12,11 +12,15 @@ namespace Gui
 
 	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder)
 	: builder(builder),
-	  playButton(nullptr)
+	  aboutButton(nullptr),
+	  playButton(nullptr),
+	  aboutDialog(nullptr)
 	{
 
 		// Get all widgets
+		builder->get_widget("AboutButton", aboutButton);
 		builder->get_widget("PlayButton", playButton);
+		builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 
 		// Start drum kit
 		const std::string moduleLocation("../Data/");
@@ -27,7 +31,9 @@ namespace Gui
 		drumKit->LoadKit(kitLocation.c_str());
 
 		// Connect all signals
+		aboutButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowAboutDialog));
 		playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
+		aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &Controller::HideAboutDialog), 0));
 
 		return;
 	}
@@ -36,6 +42,8 @@ namespace Gui
 	{
 
 		// Delete all pointers
+		delete aboutButton;
+		delete aboutDialog;
 		delete playButton;
 
 		if(drumKit->IsStarted())
@@ -47,6 +55,22 @@ namespace Gui
 	}
 
 	// PRIVATE
+
+	void Controller::ShowAboutDialog()
+	{
+
+		aboutDialog->show();
+
+		return;
+	}
+
+	void Controller::HideAboutDialog(int responseId)
+	{
+
+		aboutDialog->hide();
+
+		return;
+	}
 
 	void Controller::PlayDrums()
 	{

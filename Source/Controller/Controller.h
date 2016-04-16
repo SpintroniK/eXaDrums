@@ -12,8 +12,10 @@
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
+#include <gtkmm/aboutdialog.h>
 
 #include <memory>
+#include <functional>
 
 using namespace eXaDrumsApi;
 
@@ -30,12 +32,19 @@ namespace Gui
 
 	private:
 
+		void ShowAboutDialog();
+		void HideAboutDialog(int responseId);
 		void PlayDrums();
 
 		std::unique_ptr<eXaDrums> drumKit;
 		Glib::RefPtr<Gtk::Builder> builder;
 
+		// Buttons
+		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
+
+		// Dialogs
+		Gtk::AboutDialog* aboutDialog;
 
 	};
 
