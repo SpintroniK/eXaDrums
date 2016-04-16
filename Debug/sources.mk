@@ -23,10 +23,7 @@ C_UPPER_DEPS :=
 
 # Every subdirectory with source files must be described here
 SUBDIRS := \
-Source/Controllers/MainPage \
+Source/Controller \
 Source/MainWindow \
-Source/Models/MainPage \
-Source/Observers \
-Source/Views/MainPage \
 Source \
 

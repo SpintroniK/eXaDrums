@@ -1,40 +1,19 @@
 /*
  * MainWindow.h
  *
- *  Created on: 13 Oct 2015
+ *  Created on: 16 Apr 2016
  *      Author: jeremy
  */
 
 #ifndef SOURCE_MAINWINDOW_MAINWINDOW_H_
 #define SOURCE_MAINWINDOW_MAINWINDOW_H_
 
-// For development purposes only
-#ifndef __arm__
-#define __arm__ (!(1==1))
-#endif
+#include "../Controller/Controller.h"
 
-// includes
-
-
-#include "../Models/Model.h"
-#include "../Views/Page.h"
-#include "../Views/Pages.h"
-#include "../Views/MainPage/MainPageView.h"
-
-
-#include <Source/Api/eXaDrums.h>
-#include <Source/IO/HddSensor.h>
-#include <Source/IO/ISensor.h>
-#include <Source/IO/SensorType.h>
-
-#include <gtkmm/button.h>
-#include <gtkmm/grid.h>
 #include <gtkmm/window.h>
+#include <gtkmm/builder.h>
 
-#include <string>
 #include <memory>
-
-using namespace eXaDrumsApi;
 
 namespace Gui
 {
@@ -44,39 +23,18 @@ namespace Gui
 
 	public:
 
-		MainWindow();
+		MainWindow(BaseObjectType* baseObject, const Glib::RefPtr<Gtk::Builder>& builder);
 		virtual ~MainWindow();
 
-		eXaDrums* GetDrumKit() { return drumKit.get(); }
-
-		void SwitchToPage(Pages page);
-
-	protected:
-
-	  //Signal handlers:
-	  void on_quitButton_clicked();
+		void SetController(std::shared_ptr<Controller>& controller);
 
 	private:
 
-
-	  //Member widgets:
-	  Gtk::Button button;
-	  Gtk::Button quitButton;
-
-	  std::unique_ptr<Gtk::Grid> grid;
-
-	  PagePtr page;
-
-	  //Drum kit
-	  std::unique_ptr<eXaDrums> drumKit;
-
-	  bool isDrumKitStarted;
-
-
+		Glib::RefPtr<Gtk::Builder> builder;
+		std::shared_ptr<Controller> controller;
 
 	};
 
-}
-
+} /* namespace Gui */
 
 #endif /* SOURCE_MAINWINDOW_MAINWINDOW_H_ */
