@@ -1,7 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 -->
+<!-- Generated with glade 3.18.3 
+
+Copyright (c) Jérémy Oden
+All rights reserved.
+
+Redistribution and use in source and binary forms, with or without
+modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright
+      notice, this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright
+      notice, this list of conditions and the following disclaimer in the
+      documentation and/or other materials provided with the distribution.
+    * Neither the name of the <organization> nor the
+      names of its contributors may be used to endorse or promote products
+      derived from this software without specific prior written permission.
+
+THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE
+DISCLAIMED. IN NO EVENT SHALL <COPYRIGHT HOLDER> BE LIABLE FOR ANY
+DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES
+(INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES;
+LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND
+ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT
+(INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS
+SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+
+Author: Jérémy Oden
+
+-->
 <interface>
   <requires lib="gtk+" version="3.12"/>
+  <!-- interface-license-type bsd3c -->
+  <!-- interface-name eXaDrums -->
+  <!-- interface-description Drums for Linux -->
+  <!-- interface-copyright J\303\251r\303\251my Oden -->
+  <!-- interface-authors J\303\251r\303\251my Oden -->
   <object class="GtkAdjustment" id="AdjustKitVolume">
     <property name="upper">100</property>
     <property name="value">75</property>
@@ -9,6 +43,7 @@
     <property name="page_increment">10</property>
   </object>
   <object class="GtkAdjustment" id="TempoAdjustment">
+    <property name="lower">40</property>
     <property name="upper">300</property>
     <property name="value">150</property>
     <property name="step_increment">1</property>
@@ -19,8 +54,6 @@
     <property name="height_request">480</property>
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
-    <property name="default_width">800</property>
-    <property name="default_height">480</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="decorated">False</property>
     <property name="deletable">False</property>
@@ -109,6 +142,7 @@
             <property name="can_focus">False</property>
             <property name="hexpand">True</property>
             <property name="vexpand">True</property>
+            <property name="column_homogeneous">True</property>
             <child>
               <object class="GtkFrame" id="DrumKitFrame">
                 <property name="height_request">100</property>
@@ -116,7 +150,7 @@
                 <property name="can_focus">False</property>
                 <property name="margin_left">10</property>
                 <property name="margin_right">10</property>
-                <property name="margin_top">10</property>
+                <property name="margin_top">3</property>
                 <property name="margin_bottom">10</property>
                 <property name="hexpand">True</property>
                 <property name="label_xalign">0</property>
@@ -125,9 +159,11 @@
                   <object class="GtkAlignment" id="alignment1">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
+                    <property name="hexpand">True</property>
                     <property name="left_padding">12</property>
                     <child>
                       <object class="GtkGrid" id="DrumKitGrid">
+                        <property name="width_request">760</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
@@ -306,15 +342,16 @@
                 <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <property name="row_homogeneous">True</property>
-                <property name="column_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="FadersFrame">
+                    <property name="width_request">350</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                     <property name="margin_bottom">10</property>
+                    <property name="hexpand">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">out</property>
                     <child>
@@ -364,9 +401,9 @@
                 </child>
                 <child>
                   <object class="GtkGrid" id="BottomRightGird">
+                    <property name="width_request">430</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="row_homogeneous">True</property>
                     <property name="column_homogeneous">True</property>
@@ -649,6 +686,7 @@
     <property name="window_position">center</property>
     <property name="type_hint">normal</property>
     <property name="gravity">center</property>
+    <property name="transient_for">MainWindow</property>
     <property name="program_name">eXaDrums</property>
     <property name="version">0.0.1</property>
     <property name="copyright" translatable="yes">Copyright (c) 2015-9999 Jérémy Oden</property>
