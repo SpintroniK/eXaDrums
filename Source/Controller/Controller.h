@@ -14,6 +14,7 @@
 #include <gtkmm/button.h>
 #include <gtkmm/aboutdialog.h>
 
+#include <string>
 #include <memory>
 #include <functional>
 
@@ -27,7 +28,7 @@ namespace Gui
 
 	public:
 
-		Controller(Glib::RefPtr<Gtk::Builder>& builder);
+		Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder);
 		virtual ~Controller();
 
 	private:
@@ -35,6 +36,8 @@ namespace Gui
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void PlayDrums();
+
+		std::string mainFolder;
 
 		std::unique_ptr<eXaDrums> drumKit;
 		Glib::RefPtr<Gtk::Builder> builder;

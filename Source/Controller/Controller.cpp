@@ -10,8 +10,9 @@
 namespace Gui
 {
 
-	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder)
-	: builder(builder),
+	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
+	: mainFolder(mainFolder),
+	  builder(builder),
 	  aboutButton(nullptr),
 	  playButton(nullptr),
 	  aboutDialog(nullptr)
@@ -23,8 +24,9 @@ namespace Gui
 		builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 
 		// Start drum kit
-		const std::string moduleLocation("../Data/");
+		const std::string moduleLocation(mainFolder+"/../Data/");
 		const std::string kitLocation("Kits/default.xml");
+
 
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str(), IO::SensorType::Hdd));
 

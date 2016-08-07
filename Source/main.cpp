@@ -14,11 +14,19 @@
 
 #include <string>
 #include <memory>
+#include <iostream>
 
 int main(int argc, char* argv[])
 {
 
-	const std::string uiFileLocation = "../Source/Ui.glade";
+	const std::string mainLocation = std::string(argv[0]);
+	std::size_t pos = mainLocation.find_last_of("/");
+
+	const std::string mainFolder = mainLocation.substr(0, pos);
+
+
+
+	const std::string uiFileLocation = mainFolder + "/../Source/Ui.glade";
 
 	// Create application and builder
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
@@ -29,7 +37,7 @@ int main(int argc, char* argv[])
 	builder->get_widget_derived("MainWindow", mainWindow);
 
 	// Create controller
-	std::shared_ptr<Gui::Controller> controller = std::shared_ptr<Gui::Controller>(new Gui::Controller(builder));
+	std::shared_ptr<Gui::Controller> controller = std::shared_ptr<Gui::Controller>(new Gui::Controller(builder, mainFolder));
 
 	// Give controller to main window
 	mainWindow->SetController(controller);
