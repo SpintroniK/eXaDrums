@@ -13,6 +13,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/aboutdialog.h>
+#include <gtkmm/comboboxtext.h>
 
 #include <string>
 #include <memory>
@@ -36,6 +37,8 @@ namespace Gui
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void PlayDrums();
+		std::string GetCurrentKitName() const;
+		std::string GetKitNameById(int id) const;
 
 		std::string mainFolder;
 
@@ -45,6 +48,9 @@ namespace Gui
 		// Buttons
 		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
+
+		// Comboboxes
+		Gtk::ComboBoxText* kitsList;
 
 		// Dialogs
 		Gtk::AboutDialog* aboutDialog;

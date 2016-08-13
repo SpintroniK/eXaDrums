@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.18.3 
+<!-- Generated with glade 3.20.0 
 
 Copyright (c) Jérémy Oden
 All rights reserved.
@@ -264,7 +264,7 @@ Author: Jérémy Oden
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBoxText" id="comboboxtext1">
+                          <object class="GtkComboBoxText" id="KitsList">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
                           </object>

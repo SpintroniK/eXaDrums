@@ -23,9 +23,6 @@ int main(int argc, char* argv[])
 	std::size_t pos = mainLocation.find_last_of("/");
 
 	const std::string mainFolder = mainLocation.substr(0, pos);
-
-
-
 	const std::string uiFileLocation = mainFolder + "/../Source/Ui.glade";
 
 	// Create application and builder
