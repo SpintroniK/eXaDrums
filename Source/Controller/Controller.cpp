@@ -29,7 +29,6 @@ namespace Gui
 
 		// Start drum kit
 		const std::string moduleLocation(mainFolder+"/../Data/");
-		// Create and load drum kit
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str(), IO::SensorType::Hdd));
 
 		// Add kits to the list
@@ -45,7 +44,7 @@ namespace Gui
 		}
 
 		const std::string currentKitName = GetCurrentKitName();
-		const std::string kitLocation("Kits/" + currentKitName);
+		const std::string kitLocation("Kits/" + currentKitName + ".xml");
 
 		drumKit->LoadKit(kitLocation.c_str());
 
@@ -53,7 +52,7 @@ namespace Gui
 		{
 			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowAboutDialog));
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
-			//kitsList->signal_changed().connect()
+			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
 			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &Controller::HideAboutDialog), 0));
 		}
 
@@ -109,23 +108,18 @@ namespace Gui
 
 	void Controller::ShowAboutDialog()
 	{
-
 		aboutDialog->show();
-
 		return;
 	}
 
 	void Controller::HideAboutDialog(int responseId)
 	{
-
 		aboutDialog->hide();
-
 		return;
 	}
 
 	void Controller::PlayDrums()
 	{
-
 		if(drumKit->IsStarted())
 		{
 			this->playButton->set_property("label", Gtk::StockID("gtk-media-play"));
@@ -134,6 +128,34 @@ namespace Gui
 		else
 		{
 			this->playButton->set_property("label", Gtk::StockID("gtk-media-stop"));
+			drumKit->Start();
+		}
+
+		return;
+	}
+
+	void Controller::ChangeKit()
+	{
+
+		std::cout << GetCurrentKitName() << std::endl;
+
+		bool started = drumKit->IsStarted();
+
+		// Stop module if started
+		if(started)
+		{
+			drumKit->Stop();
+		}
+
+
+		// Load new kit
+		const std::string currentKitName = GetCurrentKitName();
+		const std::string kitLocation("Kits/" + currentKitName + ".xml");
+		drumKit->LoadKit(kitLocation.c_str());
+
+		// Restart module if needed
+		if(started)
+		{
 			drumKit->Start();
 		}
 

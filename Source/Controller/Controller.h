@@ -37,6 +37,8 @@ namespace Gui
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void PlayDrums();
+		void ChangeKit();
+
 		std::string GetCurrentKitName() const;
 		std::string GetKitNameById(int id) const;
 

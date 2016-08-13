@@ -15,6 +15,15 @@ namespace Gui
 	  builder(builder)
 	{
 
+		if(!__arm__)
+		{
+			set_size_request(800, 480);
+		}
+		else
+		{
+			fullscreen();
+		}
+
 
 		return;
 	}

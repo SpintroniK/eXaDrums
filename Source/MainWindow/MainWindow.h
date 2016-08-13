@@ -15,6 +15,10 @@
 
 #include <memory>
 
+#ifndef __arm__
+#define __arm__ (!(1==1))
+#endif
+
 namespace Gui
 {
 
