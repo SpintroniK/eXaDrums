@@ -11,25 +11,30 @@ namespace Gui
 {
 
 	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
-	: mainFolder(mainFolder),
-	  builder(builder),
-	  aboutButton(nullptr),
-	  playButton(nullptr),
+	: mainFolder(mainFolder), builder(builder),
+	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr),
 	  kitsList(nullptr),
-	  aboutDialog(nullptr)
+	  aboutDialog(nullptr), deleteKitDialog(nullptr)
 	{
 
 		// Get all widgets
 		{
+			// Button
 			builder->get_widget("AboutButton", aboutButton);
 			builder->get_widget("PlayButton", playButton);
+			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
+
+			// Kits list
 			builder->get_widget("KitsList", kitsList);
+
+			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
+			builder->get_widget("DeleteKitDialog", deleteKitDialog);
 		}
 
 		// Start drum kit
 		const std::string moduleLocation(mainFolder+"/../Data/");
-		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str(), IO::SensorType::Hdd));
+		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
 
 		// Add kits to the list
 		{
@@ -37,10 +42,11 @@ namespace Gui
 			for(int i = 0; i < numKits; i++)
 			{
 				std::string kitName = this->GetKitNameById(i);
+				kitName[0] = std::toupper(kitName[0]);
 				kitsList->append(kitName);
 			}
 			//xxx Set current kit to first of the list
-			kitsList->set_active(1);
+			kitsList->set_active(0);
 		}
 
 		const std::string currentKitName = GetCurrentKitName();
@@ -50,9 +56,15 @@ namespace Gui
 
 		// Connect all signals
 		{
+			// Buttons
 			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowAboutDialog));
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
+			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
+
+			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
+
+			// Dialog
 			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &Controller::HideAboutDialog), 0));
 		}
 
@@ -63,12 +75,11 @@ namespace Gui
 	Controller::~Controller()
 	{
 
-		// Delete all pointers
-		delete aboutButton;
+		// Delete all pointers (dialogs and windows)
+		delete deleteKitDialog;
 		delete aboutDialog;
-		delete playButton;
-		delete kitsList;
 
+		// Stop drum kit
 		if(drumKit->IsStarted())
 		{
 			drumKit->Stop();
@@ -137,8 +148,6 @@ namespace Gui
 	void Controller::ChangeKit()
 	{
 
-		std::cout << GetCurrentKitName() << std::endl;
-
 		bool started = drumKit->IsStarted();
 
 		// Stop module if started
@@ -158,6 +167,32 @@ namespace Gui
 		{
 			drumKit->Start();
 		}
+
+		return;
+	}
+
+	void Controller::DeleteKitDialog()
+	{
+
+		// Get answer
+		int answer = deleteKitDialog->run();
+
+		// Check answer
+		switch (answer)
+		{
+			case Gtk::RESPONSE_CANCEL: break;
+
+			case Gtk::RESPONSE_OK:
+			{
+
+			}
+			break;
+
+			default: break;
+		}
+
+		// Close dialog
+		deleteKitDialog->hide();
 
 		return;
 	}

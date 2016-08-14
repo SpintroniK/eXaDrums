@@ -13,6 +13,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/aboutdialog.h>
+#include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
 
 #include <string>
@@ -34,10 +35,12 @@ namespace Gui
 
 	private:
 
+		// Signals methods
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void PlayDrums();
 		void ChangeKit();
+		void DeleteKitDialog();
 
 		std::string GetCurrentKitName() const;
 		std::string GetKitNameById(int id) const;
@@ -50,12 +53,14 @@ namespace Gui
 		// Buttons
 		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
+		Gtk::Button* deleteKitButton;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
 
 		// Dialogs
 		Gtk::AboutDialog* aboutDialog;
+		Gtk::MessageDialog* deleteKitDialog;
 
 	};
 

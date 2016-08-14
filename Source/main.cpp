@@ -47,9 +47,8 @@ int main(int argc, char* argv[])
 	// Run application
 	int ret = app->run(*mainWindow);
 
-	// Delete pointers
+	// Delete pointers (dialogs and windows)
 	delete mainWindow;
-	delete quitButton;
 
 	return ret;
 }

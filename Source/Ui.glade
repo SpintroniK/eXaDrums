@@ -686,6 +686,35 @@ Author: Jérémy Oden
       </object>
     </child>
   </object>
+  <object class="GtkMessageDialog" id="DeleteKitDialog">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Delete Kit</property>
+    <property name="type_hint">dialog</property>
+    <property name="transient_for">MainWindow</property>
+    <property name="message_type">question</property>
+    <property name="buttons">ok-cancel</property>
+    <property name="text" translatable="yes">Are you sure you want to delete the currect drum kit?</property>
+    <property name="secondary_text" translatable="yes">All parameters, and configuration files for that kit will be lost.</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="can_focus">False</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can_focus">False</property>
+            <property name="homogeneous">True</property>
+            <property name="layout_style">end</property>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkAboutDialog" id="eXaDrumsAboutDialog">
     <property name="can_focus">False</property>
     <property name="halign">center</property>
