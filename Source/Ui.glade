@@ -265,16 +265,6 @@ Author: Jérémy Oden
                           </packing>
                         </child>
                         <child>
-                          <object class="GtkComboBoxText" id="KitsList">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
                           <object class="GtkGrid" id="DrumKitFuncGrid">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
@@ -309,6 +299,17 @@ Author: Jérémy Oden
                           </object>
                           <packing>
                             <property name="left_attach">2</property>
+                            <property name="top_attach">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <object class="GtkComboBoxText" id="KitsList">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="events">GDK_STRUCTURE_MASK | GDK_SCROLL_MASK | GDK_TOUCH_MASK</property>
+                          </object>
+                          <packing>
+                            <property name="left_attach">1</property>
                             <property name="top_attach">2</property>
                           </packing>
                         </child>
@@ -368,7 +369,6 @@ Author: Jérémy Oden
                             <property name="margin_right">10</property>
                             <property name="margin_top">10</property>
                             <property name="margin_bottom">10</property>
-                            <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkButton" id="FadersSaveButton">
                                 <property name="label">gtk-save</property>
@@ -376,12 +376,16 @@ Author: Jérémy Oden
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
                                 <property name="halign">end</property>
+                                <property name="valign">start</property>
                                 <property name="use_stock">True</property>
                               </object>
                               <packing>
-                                <property name="left_attach">0</property>
+                                <property name="left_attach">1</property>
                                 <property name="top_attach">0</property>
                               </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
                             </child>
                           </object>
                         </child>
