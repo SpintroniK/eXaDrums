@@ -8,6 +8,8 @@
 #ifndef SOURCE_CONTROLLER_CONTROLLER_H_
 #define SOURCE_CONTROLLER_CONTROLLER_H_
 
+#include "../Fader/Fader.h"
+
 #include <Source/Api/eXaDrums.h>
 
 #include <gtkmm/builder.h>
@@ -15,6 +17,7 @@
 #include <gtkmm/aboutdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/box.h>
 
 #include <string>
 #include <memory>
@@ -58,9 +61,15 @@ namespace Gui
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
 
+		// Boxes
+		Gtk::Box* fadersList;
+
 		// Dialogs
 		Gtk::AboutDialog* aboutDialog;
 		Gtk::MessageDialog* deleteKitDialog;
+
+		// Faders
+		std::vector<FaderPtr> faders;
 
 	};
 

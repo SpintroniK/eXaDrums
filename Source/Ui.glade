@@ -377,6 +377,7 @@ Author: Jérémy Oden
                                 <property name="receives_default">True</property>
                                 <property name="halign">end</property>
                                 <property name="valign">start</property>
+                                <property name="margin_left">8</property>
                                 <property name="use_stock">True</property>
                               </object>
                               <packing>
@@ -385,7 +386,19 @@ Author: Jérémy Oden
                               </packing>
                             </child>
                             <child>
-                              <placeholder/>
+                              <object class="GtkBox" id="FadersList">
+                                <property name="width_request">100</property>
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="orientation">vertical</property>
+                                <child>
+                                  <placeholder/>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">0</property>
+                              </packing>
                             </child>
                           </object>
                         </child>

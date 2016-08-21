@@ -14,6 +14,7 @@ namespace Gui
 	: mainFolder(mainFolder), builder(builder),
 	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr),
 	  kitsList(nullptr),
+	  fadersList(nullptr),
 	  aboutDialog(nullptr), deleteKitDialog(nullptr)
 	{
 
@@ -26,6 +27,9 @@ namespace Gui
 
 			// Kits list
 			builder->get_widget("KitsList", kitsList);
+
+			// Faders' box
+			builder->get_widget("FadersList", fadersList);
 
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
@@ -49,6 +53,11 @@ namespace Gui
 			kitsList->set_active(0);
 		}
 
+
+		// Add faders
+		faders.clear();
+
+
 		const std::string currentKitName = GetCurrentKitName();
 		const std::string kitLocation("Kits/" + currentKitName + ".xml");
 
@@ -67,7 +76,6 @@ namespace Gui
 			// Dialog
 			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &Controller::HideAboutDialog), 0));
 		}
-
 
 		return;
 	}
