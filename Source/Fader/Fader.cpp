@@ -10,12 +10,12 @@
 namespace Gui
 {
 
-	Fader::Fader(const std::string& name, int vol) : label(name+" "), volume(vol)
+	Fader::Fader(const std::string& name, int instrumentId, int vol)
+	: instrument(instrumentId), volume(vol), label(name+" ")
 	{
 
 		this->set_border_width(2);
 		this->set_halign(Gtk::Align::ALIGN_END);
-		this->set_hexpand(true);
 
 		// Set title
 		label.show();
@@ -29,7 +29,7 @@ namespace Gui
 		volScale.set_halign(Gtk::Align::ALIGN_END);
 
 		volScale.set_value(vol);
-		volScale.set_size_request(200, 10);
+		volScale.set_size_request(180, 10);
 
 		volScale.show();
 		this->attach_next_to(volScale, label, Gtk::PositionType::POS_RIGHT, 1, 1);

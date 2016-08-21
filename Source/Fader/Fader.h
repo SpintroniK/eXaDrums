@@ -23,14 +23,15 @@ namespace Gui
 
 	public:
 
-		Fader(const std::string& name, int vol);
+		Fader(const std::string& name, int instrumentId, int vol);
 		virtual ~Fader();
 
 	private:
 
+		int instrument;
+		int volume;
 		Gtk::Label label;
 		Gtk::Scale volScale;
-		int volume;
 
 	};
 

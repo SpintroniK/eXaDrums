@@ -40,26 +40,24 @@ namespace Gui
 		const std::string moduleLocation(mainFolder+"/../Data/");
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
 
+		// Retrieve kit names
+		std::vector<std::string> kitNames = RetrieveKitsNames();
+
 		// Add kits to the list
+		for(std::string const& name : kitNames)
 		{
-			int numKits = drumKit->GetNumKits();
-			for(int i = 0; i < numKits; i++)
-			{
-				std::string kitName = this->GetKitNameById(i);
-				kitName[0] = std::toupper(kitName[0]);
-				kitsList->append(kitName);
-			}
-			//xxx Set current kit to first of the list
-			kitsList->set_active(0);
+			kitsList->append(name);
 		}
+		// Set default kit
+		kitsList->set_active(0);
 
 
 		// Add faders
-		faders.clear();
+		UpdateFaders();
 
 
 		// Load current kit
-		drumKit->LoadKit(GetCurrentKitId());
+		drumKit->SelectKit(GetCurrentKitId());
 
 		// Connect all signals
 		{
@@ -97,20 +95,80 @@ namespace Gui
 	// PRIVATE
 
 
-	std::string Controller::GetKitNameById(int id) const
+	void Controller::UpdateFaders()
 	{
 
-		// Create local array to store string given by libeXaDrums
-		char kitName[128];
-		int nameLength;
+		faders.clear();
 
-		// Get characters and string's length
-		drumKit->GetKitNameById(id, kitName, nameLength);
+		std::vector<std::string> instNames = RetrieveInstrumentsNames();
+		for(std::size_t i = 0; i < instNames.size(); i++)
+		{
+			std::string name(instNames[i]);
+			FaderPtr fader(new Fader(name, i, 20));
+			faders.push_back(fader);
+		}
 
-		// Convert to string
-		std::string name(kitName, nameLength);
+		// Add all faders to GUI
+		std::for_each(faders.cbegin(), faders.cend(), [this](FaderPtr const f){ this->fadersList->add(*f); });
 
-		return name;
+
+		return;
+	}
+
+	std::vector<std::string> Controller::RetrieveKitsNames() const
+	{
+
+		int numKits = drumKit->GetNumKits();
+
+		// Get kit names
+		std::vector<std::string> kitsNames(numKits);
+		{
+			for(int i = 0; i < numKits; i++)
+			{
+
+				// Create local array to store string given by libeXaDrums
+				char kitName[128];
+				int nameLength;
+
+				// Get characters and string's length
+				drumKit->GetKitNameById(i, kitName, nameLength);
+
+				// Convert to string
+				std::string name(kitName, nameLength);
+
+				kitsNames[i] = name;
+			}
+		}
+
+		return kitsNames;
+	}
+
+	std::vector<std::string> Controller::RetrieveInstrumentsNames() const
+	{
+
+		int numInstruments = drumKit->GetNumInstruments();
+
+		// Get instruments names
+		std::vector<std::string> instNames(numInstruments);
+		{
+			for(int i = 0; i < numInstruments; i++)
+			{
+
+				// Create local array to store string given by libeXaDrums
+				char instName[128];
+				int nameLength;
+
+				// Get characters and string's length
+				drumKit->GetInstrumentName(i, instName, nameLength);
+
+				// Convert to string
+				std::string name(instName, nameLength);
+
+				instNames[i] = name;
+			}
+		}
+
+		return instNames;
 	}
 
 
@@ -164,7 +222,10 @@ namespace Gui
 
 
 		// Load new kit
-		drumKit->LoadKit(GetCurrentKitId());
+		drumKit->SelectKit(GetCurrentKitId());
+
+		// Update faders
+		this->UpdateFaders();
 
 		// Restart module if needed
 		if(started)

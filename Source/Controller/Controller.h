@@ -22,6 +22,7 @@
 #include <string>
 #include <memory>
 #include <functional>
+#include <algorithm>
 
 using namespace eXaDrumsApi;
 
@@ -44,9 +45,11 @@ namespace Gui
 		void PlayDrums();
 		void ChangeKit();
 		void DeleteKitDialog();
+		void UpdateFaders();
 
 		int GetCurrentKitId() const;
-		std::string GetKitNameById(int id) const;
+		std::vector<std::string> RetrieveKitsNames() const;
+		std::vector<std::string> RetrieveInstrumentsNames() const;
 
 		std::string mainFolder;
 
