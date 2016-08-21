@@ -58,10 +58,8 @@ namespace Gui
 		faders.clear();
 
 
-		const std::string currentKitName = GetCurrentKitName();
-		const std::string kitLocation("Kits/" + currentKitName + ".xml");
-
-		drumKit->LoadKit(kitLocation.c_str());
+		// Load current kit
+		drumKit->LoadKit(GetCurrentKitId());
 
 		// Connect all signals
 		{
@@ -116,12 +114,12 @@ namespace Gui
 	}
 
 
-	std::string Controller::GetCurrentKitName() const
+	int Controller::GetCurrentKitId() const
 	{
 
 		int currentKitId = kitsList->get_active_row_number();
 
-		return GetKitNameById(currentKitId);
+		return currentKitId;
 	}
 
 
@@ -166,9 +164,7 @@ namespace Gui
 
 
 		// Load new kit
-		const std::string currentKitName = GetCurrentKitName();
-		const std::string kitLocation("Kits/" + currentKitName + ".xml");
-		drumKit->LoadKit(kitLocation.c_str());
+		drumKit->LoadKit(GetCurrentKitId());
 
 		// Restart module if needed
 		if(started)

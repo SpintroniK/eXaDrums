@@ -45,7 +45,7 @@ namespace Gui
 		void ChangeKit();
 		void DeleteKitDialog();
 
-		std::string GetCurrentKitName() const;
+		int GetCurrentKitId() const;
 		std::string GetKitNameById(int id) const;
 
 		std::string mainFolder;
