@@ -94,10 +94,19 @@ namespace Gui
 
 	// PRIVATE
 
+	void Controller::SetInstrumentVolume(FaderPtr& fader)
+	{
+
+		//std::cout << fader->label.get_text() << " = " << fader->volScale.get_value() << std::endl;
+
+		return;
+	}
 
 	void Controller::UpdateFaders()
 	{
 
+		// Remove existing faders
+		std::for_each(faders.begin(), faders.end(), [](FaderPtr fader) { fader->destroy_(); });
 		faders.clear();
 
 		std::vector<std::string> instNames = RetrieveInstrumentsNames();
@@ -111,6 +120,11 @@ namespace Gui
 		// Add all faders to GUI
 		std::for_each(faders.cbegin(), faders.cend(), [this](FaderPtr const f){ this->fadersList->add(*f); });
 
+		// Connect faders signals
+		for(FaderPtr& fader : faders)
+		{
+			fader->volScale.signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), fader));
+		}
 
 		return;
 	}

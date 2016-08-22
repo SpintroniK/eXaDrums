@@ -42,6 +42,7 @@ namespace Gui
 		// Signals methods
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
+		void SetInstrumentVolume(FaderPtr& fader);
 		void PlayDrums();
 		void ChangeKit();
 		void DeleteKitDialog();

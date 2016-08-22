@@ -18,13 +18,19 @@
 namespace Gui
 {
 
+	class Controller;
+
 	class Fader : public Gtk::Grid
 	{
+
+		friend class Controller;
 
 	public:
 
 		Fader(const std::string& name, int instrumentId, int vol);
 		virtual ~Fader();
+
+		int GetInstrumentId() const { return instrument; }
 
 	private:
 
