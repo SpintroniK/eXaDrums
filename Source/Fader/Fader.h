@@ -23,7 +23,7 @@ namespace Gui
 	class Fader : public Gtk::Grid
 	{
 
-		friend class Controller;
+	friend class Controller;
 
 	public:
 

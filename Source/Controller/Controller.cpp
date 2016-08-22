@@ -106,7 +106,7 @@ namespace Gui
 	{
 
 		// Remove existing faders
-		std::for_each(faders.begin(), faders.end(), [](FaderPtr fader) { fader->destroy_(); });
+		std::for_each(faders.begin(), faders.end(), [](FaderPtr& fader) { fader.reset(); });
 		faders.clear();
 
 		std::vector<std::string> instNames = RetrieveInstrumentsNames();
@@ -118,12 +118,12 @@ namespace Gui
 		}
 
 		// Add all faders to GUI
-		std::for_each(faders.cbegin(), faders.cend(), [this](FaderPtr const f){ this->fadersList->add(*f); });
+		std::for_each(faders.cbegin(), faders.cend(), [this](FaderPtr const& f){ this->fadersList->add(*f); });
 
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
 		{
-			fader->volScale.signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), fader));
+			fader->volScale.signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
 		}
 
 		return;
