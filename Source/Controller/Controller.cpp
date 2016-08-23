@@ -97,7 +97,7 @@ namespace Gui
 	void Controller::SetInstrumentVolume(FaderPtr& fader)
 	{
 
-		//std::cout << fader->label.get_text() << " = " << fader->volScale.get_value() << std::endl;
+		//std::cout << fader->GetInstrumentId() << " = " << fader->GetValue() << std::endl;
 
 		return;
 	}
@@ -123,7 +123,7 @@ namespace Gui
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
 		{
-			fader->volScale.signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
+			fader->ValueChanged().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
 		}
 
 		return;
