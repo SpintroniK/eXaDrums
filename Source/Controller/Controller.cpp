@@ -97,7 +97,7 @@ namespace Gui
 	void Controller::SetInstrumentVolume(FaderPtr& fader)
 	{
 
-		//std::cout << fader->GetInstrumentId() << " = " << fader->GetValue() << std::endl;
+		drumKit->SetInstrumentVolume(fader->GetInstrumentId(), fader->GetValue());
 
 		return;
 	}
