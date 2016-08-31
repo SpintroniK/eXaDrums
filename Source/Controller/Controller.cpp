@@ -123,7 +123,7 @@ namespace Gui
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
 		{
-			fader->ValueChanged().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
+			fader->GetScale().signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
 		}
 
 		return;

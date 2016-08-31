@@ -12,6 +12,8 @@
 #include <gtkmm/label.h>
 #include <gtkmm/scale.h>
 
+#include <glibmm-2.4/glibmm/signalproxy.h>
+
 #include <string>
 #include <memory>
 
@@ -26,7 +28,7 @@ namespace Gui
 		Fader(const std::string& name, int instrumentId, int vol);
 		virtual ~Fader();
 
-		Glib::SignalProxy<void> ValueChanged() { return volScale.signal_value_changed(); };
+		Gtk::Scale& GetScale() { return volScale; };
 
 		int GetInstrumentId() const { return instrument; }
 		double GetValue() const { return volScale.get_value(); }
