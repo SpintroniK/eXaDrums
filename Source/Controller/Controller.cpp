@@ -259,6 +259,7 @@ namespace Gui
 
 		// Update faders
 		this->UpdateFaders();
+		saveFaders->set_sensitive(false);
 
 		// Restart module if needed
 		if(started)
