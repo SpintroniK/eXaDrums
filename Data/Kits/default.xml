@@ -1,26 +1,26 @@
 <root>
-	<kitName>Default</kitName>
-	<kitFolder>default</kitFolder>
-	<Instrument type="TestDrum">
-		<instrumentName>SnareDrum</instrumentName>
-		<triggers>
-			<trigger location="DrumHead">0</trigger>
-			<trigger location="Rim">1</trigger>
-		</triggers>
-		<sounds>
-			<sound type="Default">SnareDrum/snare1.raw</sound>
-			<sound type="RimShot">SnareDrum/edge1.raw</sound>
-		</sounds>
-	</Instrument>
-	<Instrument type="TestDrum">
-		<instrumentName>SnareDrum2</instrumentName>
-		<triggers>
-			<trigger location="DrumHead">0</trigger>
-			<trigger location="Rim">1</trigger>
-		</triggers>
-		<sounds>
-			<sound type="RimShot">SnareDrum/edge1.raw</sound>
-			<sound type="Default">SnareDrum/snare1.raw</sound>
-		</sounds>
-	</Instrument> 
+    <kitName>Default</kitName>
+    <kitFolder>default</kitFolder>
+    <Instrument type="TestDrum" volume="77">
+        <instrumentName>SnareDrum</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">0</trigger>
+            <trigger location="Rim">1</trigger>
+        </triggers>
+        <sounds>
+            <sound type="Default">SnareDrum/snare1.raw</sound>
+            <sound type="RimShot">SnareDrum/edge1.raw</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="TestDrum" volume="50">
+        <instrumentName>SnareDrum2</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">0</trigger>
+            <trigger location="Rim">1</trigger>
+        </triggers>
+        <sounds>
+            <sound type="RimShot">SnareDrum/edge1.raw</sound>
+            <sound type="Default">SnareDrum/snare1.raw</sound>
+        </sounds>
+    </Instrument>
 </root>

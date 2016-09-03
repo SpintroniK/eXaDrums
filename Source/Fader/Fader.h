@@ -12,8 +12,6 @@
 #include <gtkmm/label.h>
 #include <gtkmm/scale.h>
 
-#include <glibmm-2.4/glibmm/signalproxy.h>
-
 #include <string>
 #include <memory>
 
@@ -31,7 +29,7 @@ namespace Gui
 		Gtk::Scale& GetScale() { return volScale; };
 
 		int GetInstrumentId() const { return instrument; }
-		double GetValue() const { return volScale.get_value(); }
+		int GetValue() const { return (int)volScale.get_value(); }
 
 	private:
 

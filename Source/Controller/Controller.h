@@ -42,14 +42,21 @@ namespace Gui
 		// Signals methods
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
-		void SetInstrumentVolume(FaderPtr& fader);
+		void SetInstrumentVolume(FaderPtr& fader) const;
 		void PlayDrums();
 		void ChangeKit();
 		void DeleteKitDialog();
 		void UpdateFaders();
+		void SaveFaders() const;
 
-		int GetCurrentKitId() const;
+		// Kit
 		std::vector<std::string> RetrieveKitsNames() const;
+		int GetCurrentKitId() const;
+		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
+		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
+
+		// Instruments
+		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); }
 		std::vector<std::string> RetrieveInstrumentsNames() const;
 
 		std::string mainFolder;
@@ -73,6 +80,7 @@ namespace Gui
 		Gtk::MessageDialog* deleteKitDialog;
 
 		// Faders
+		Gtk::Button* saveFaders;
 		std::vector<FaderPtr> faders;
 
 	};

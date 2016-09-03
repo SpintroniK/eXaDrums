@@ -15,7 +15,7 @@ namespace Gui
 	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr),
 	  kitsList(nullptr),
 	  fadersList(nullptr),
-	  aboutDialog(nullptr), deleteKitDialog(nullptr)
+	  aboutDialog(nullptr), deleteKitDialog(nullptr), saveFaders(nullptr)
 	{
 
 		// Get all widgets
@@ -29,6 +29,7 @@ namespace Gui
 			builder->get_widget("KitsList", kitsList);
 
 			// Faders' box
+			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
 			// Dialogs
@@ -54,6 +55,7 @@ namespace Gui
 
 		// Add faders
 		UpdateFaders();
+		saveFaders->set_sensitive(false);
 
 
 		// Load current kit
@@ -65,6 +67,7 @@ namespace Gui
 			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowAboutDialog));
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
+			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveFaders));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
@@ -94,10 +97,22 @@ namespace Gui
 
 	// PRIVATE
 
-	void Controller::SetInstrumentVolume(FaderPtr& fader)
+	void Controller::SetInstrumentVolume(FaderPtr& fader) const
 	{
 
+		saveFaders->set_sensitive(true);
 		drumKit->SetInstrumentVolume(fader->GetInstrumentId(), fader->GetValue());
+
+		return;
+	}
+
+	void Controller::SaveFaders() const
+	{
+
+		SaveKitConfig();
+
+		// Disable button
+		saveFaders->set_sensitive(false);
 
 		return;
 	}
@@ -113,7 +128,10 @@ namespace Gui
 		for(std::size_t i = 0; i < instNames.size(); i++)
 		{
 			std::string name(instNames[i]);
-			FaderPtr fader(new Fader(name, i, 20));
+			int volume = GetInstrumentVolume(i);
+
+			FaderPtr fader(new Fader(name, i, volume));
+
 			faders.push_back(fader);
 		}
 
@@ -209,6 +227,7 @@ namespace Gui
 
 	void Controller::PlayDrums()
 	{
+
 		if(drumKit->IsStarted())
 		{
 			this->playButton->set_property("label", Gtk::StockID("gtk-media-play"));
