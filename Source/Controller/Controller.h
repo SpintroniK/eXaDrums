@@ -14,6 +14,7 @@
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
+#include <gtkmm/checkbutton.h>
 #include <gtkmm/aboutdialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
@@ -40,12 +41,18 @@ namespace Gui
 	private:
 
 		// Signals methods
+		// Kits
+		void ChangeKit();
+		void PlayDrums();
+		// Instruments
+		void SetInstrumentVolume(FaderPtr& fader) const;
+		// Metronome
+		void EnableClick() const;
+		// Dialogs
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
-		void SetInstrumentVolume(FaderPtr& fader) const;
-		void PlayDrums();
-		void ChangeKit();
 		void DeleteKitDialog();
+		// Faders
 		void UpdateFaders();
 		void SaveFaders() const;
 
@@ -68,6 +75,7 @@ namespace Gui
 		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
 		Gtk::Button* deleteKitButton;
+		Gtk::CheckButton* enableClickButton;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;

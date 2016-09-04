@@ -12,7 +12,7 @@ namespace Gui
 
 	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
 	: mainFolder(mainFolder), builder(builder),
-	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr),
+	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr), enableClickButton(nullptr),
 	  kitsList(nullptr),
 	  fadersList(nullptr),
 	  aboutDialog(nullptr), deleteKitDialog(nullptr), saveFaders(nullptr)
@@ -24,6 +24,7 @@ namespace Gui
 			builder->get_widget("AboutButton", aboutButton);
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
+			builder->get_widget("EnableClickButton", enableClickButton);
 
 			// Kits list
 			builder->get_widget("KitsList", kitsList);
@@ -68,6 +69,7 @@ namespace Gui
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveFaders));
+			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::EnableClick));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
@@ -95,7 +97,7 @@ namespace Gui
 		return;
 	}
 
-	// PRIVATE
+	// PRIVATE METHODS
 
 	void Controller::SetInstrumentVolume(FaderPtr& fader) const
 	{
@@ -222,6 +224,16 @@ namespace Gui
 	void Controller::HideAboutDialog(int responseId)
 	{
 		aboutDialog->hide();
+		return;
+	}
+
+	void Controller::EnableClick() const
+	{
+
+		bool enable =  enableClickButton->get_active();
+
+		drumKit->EnableMetronome(enable);
+
 		return;
 	}
 
