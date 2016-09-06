@@ -15,7 +15,8 @@ namespace Gui
 	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr), enableClickButton(nullptr),
 	  kitsList(nullptr),
 	  fadersList(nullptr),
-	  aboutDialog(nullptr), deleteKitDialog(nullptr), saveFaders(nullptr)
+	  aboutDialog(nullptr), deleteKitDialog(nullptr), saveFaders(nullptr),
+	  clickVolumeScale(nullptr)
 	{
 
 		// Get all widgets
@@ -32,6 +33,9 @@ namespace Gui
 			// Faders' box
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
+
+			// Scales
+			builder->get_widget("ClickVolumeScale", clickVolumeScale);
 
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
@@ -70,6 +74,9 @@ namespace Gui
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveFaders));
 			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::EnableClick));
+
+			// Scales
+			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &Controller::ChangeTempo));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
@@ -233,6 +240,15 @@ namespace Gui
 		bool enable =  enableClickButton->get_active();
 
 		drumKit->EnableMetronome(enable);
+
+		return;
+	}
+
+	void Controller::ChangeTempo() const
+	{
+
+		int tempo = (int) clickVolumeScale->get_value();
+		drumKit->ChangeTempo(tempo);
 
 		return;
 	}

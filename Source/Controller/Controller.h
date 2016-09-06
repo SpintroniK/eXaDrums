@@ -19,6 +19,7 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
+#include <gtkmm/scale.h>
 
 #include <string>
 #include <memory>
@@ -48,6 +49,7 @@ namespace Gui
 		void SetInstrumentVolume(FaderPtr& fader) const;
 		// Metronome
 		void EnableClick() const;
+		void ChangeTempo() const;
 		// Dialogs
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
@@ -90,6 +92,9 @@ namespace Gui
 		// Faders
 		Gtk::Button* saveFaders;
 		std::vector<FaderPtr> faders;
+
+		// Scales
+		Gtk::Scale* clickVolumeScale;
 
 	};
 
