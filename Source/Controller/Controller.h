@@ -61,11 +61,13 @@ namespace Gui
 		// Kit
 		std::vector<std::string> RetrieveKitsNames() const;
 		int GetCurrentKitId() const;
-		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
-		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
+		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); };
+		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); };
+		void DeleteKit(const int& id);
+		void CreateKitsList();
 
 		// Instruments
-		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); }
+		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		std::vector<std::string> RetrieveInstrumentsNames() const;
 
 		std::string mainFolder;

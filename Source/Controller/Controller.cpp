@@ -46,17 +46,8 @@ namespace Gui
 		const std::string moduleLocation(mainFolder+"/../Data/");
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
 
-		// Retrieve kit names
-		std::vector<std::string> kitNames = RetrieveKitsNames();
-
-		// Add kits to the list
-		for(std::string const& name : kitNames)
-		{
-			kitsList->append(name);
-		}
-		// Set default kit
-		kitsList->set_active(0);
-
+		// Populate Kits list
+		CreateKitsList();
 
 		// Add faders
 		UpdateFaders();
@@ -184,6 +175,67 @@ namespace Gui
 		return kitsNames;
 	}
 
+	void Controller::CreateKitsList()
+	{
+
+		// Retrieve kits names
+		std::vector<std::string> kitsNames = RetrieveKitsNames();
+
+		// Add kits to the list
+		for(std::size_t i = 0; i < kitsNames.size(); i++)
+		{
+			kitsList->insert(i, kitsNames[i]);
+		}
+		// Set default kit
+		kitsList->set_active(0);
+
+		return;
+	}
+
+	void Controller::DeleteKit(const int& id)
+	{
+
+		int numKits = drumKit->GetNumKits();
+
+		// Can't delete if only one kit
+		if(numKits > 1)
+		{
+			// Stop module if started
+			if(drumKit->IsStarted())
+			{
+				PlayDrums();
+			}
+
+			// Deselect kit
+			int activeKit;
+
+			if(id == 0)
+			{
+				activeKit = 1;
+			}
+			else
+			{
+				activeKit = id - 1;
+			}
+
+			kitsList->set_active(activeKit);
+
+			// Delete kit
+			drumKit->DeleteKit(id);
+
+			// Remove kit from list
+			kitsList->remove_text(id);
+
+			// Set new kit
+			ChangeKit();
+
+		}
+
+
+		return;
+	}
+
+
 	std::vector<std::string> Controller::RetrieveInstrumentsNames() const
 	{
 
@@ -308,13 +360,7 @@ namespace Gui
 		switch (answer)
 		{
 			case Gtk::RESPONSE_CANCEL: break;
-
-			case Gtk::RESPONSE_OK:
-			{
-
-			}
-			break;
-
+			case Gtk::RESPONSE_OK: this->DeleteKit(GetCurrentKitId()); break;
 			default: break;
 		}
 
