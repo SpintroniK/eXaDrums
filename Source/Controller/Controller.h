@@ -20,6 +20,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/window.h>
 
 #include <string>
 #include <memory>
@@ -42,18 +43,27 @@ namespace Gui
 	private:
 
 		// Signals methods
+
 		// Kits
 		void ChangeKit();
 		void PlayDrums();
+
 		// Instruments
 		void SetInstrumentVolume(FaderPtr& fader) const;
+
 		// Metronome
 		void EnableClick() const;
 		void ChangeTempo() const;
+		void SaveMetronomeConfig();
+
 		// Dialogs
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void DeleteKitDialog();
+
+		// Windows
+		void ShowMetronomePrefs();
+
 		// Faders
 		void UpdateFaders();
 		void SaveFaders() const;
@@ -79,6 +89,8 @@ namespace Gui
 		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
 		Gtk::Button* deleteKitButton;
+		Gtk::Button* rhythmCoachPrefButton;
+		Gtk::Button* metronomeConfigSave;
 		Gtk::CheckButton* enableClickButton;
 
 		// Comboboxes
@@ -90,6 +102,9 @@ namespace Gui
 		// Dialogs
 		Gtk::AboutDialog* aboutDialog;
 		Gtk::MessageDialog* deleteKitDialog;
+
+		// Windows
+		Gtk::Window* metronomeWindow;
 
 		// Faders
 		Gtk::Button* saveFaders;

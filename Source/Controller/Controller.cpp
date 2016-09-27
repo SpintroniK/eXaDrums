@@ -11,21 +11,19 @@ namespace Gui
 {
 
 	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
-	: mainFolder(mainFolder), builder(builder),
-	  aboutButton(nullptr), playButton(nullptr), deleteKitButton(nullptr), enableClickButton(nullptr),
-	  kitsList(nullptr),
-	  fadersList(nullptr),
-	  aboutDialog(nullptr), deleteKitDialog(nullptr), saveFaders(nullptr),
-	  clickVolumeScale(nullptr)
+	: mainFolder(mainFolder), builder(builder)
 	{
 
 		// Get all widgets
 		{
-			// Button
+			// Buttons
 			builder->get_widget("AboutButton", aboutButton);
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("EnableClickButton", enableClickButton);
+			builder->get_widget("RhythmCoachPrefButton", rhythmCoachPrefButton);
+			builder->get_widget("MetronomeConfigSave", metronomeConfigSave);
+
 
 			// Kits list
 			builder->get_widget("KitsList", kitsList);
@@ -40,6 +38,10 @@ namespace Gui
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
+
+			// Windows
+			builder->get_widget("MetronomeConfig", metronomeWindow);
+
 		}
 
 		// Start drum kit
@@ -65,6 +67,8 @@ namespace Gui
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveFaders));
 			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::EnableClick));
+			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowMetronomePrefs));
+			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveMetronomeConfig));
 
 			// Scales
 			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &Controller::ChangeTempo));
@@ -85,6 +89,7 @@ namespace Gui
 		// Delete all pointers (dialogs and windows)
 		delete deleteKitDialog;
 		delete aboutDialog;
+		delete metronomeWindow;
 
 		// Stop drum kit
 		if(drumKit->IsStarted())
@@ -218,6 +223,7 @@ namespace Gui
 				activeKit = id - 1;
 			}
 
+
 			kitsList->set_active(activeKit);
 
 			// Delete kit
@@ -235,6 +241,22 @@ namespace Gui
 		return;
 	}
 
+
+	void Controller::ShowMetronomePrefs()
+	{
+
+		metronomeWindow->show();
+
+		return;
+	}
+
+	void Controller::SaveMetronomeConfig()
+	{
+
+		metronomeWindow->hide();
+
+		return;
+	}
 
 	std::vector<std::string> Controller::RetrieveInstrumentsNames() const
 	{
