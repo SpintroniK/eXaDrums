@@ -25,8 +25,9 @@ namespace Gui
 			builder->get_widget("MetronomeConfigSave", metronomeConfigSave);
 
 
-			// Kits list
+			// Lists
 			builder->get_widget("KitsList", kitsList);
+			builder->get_widget("MetronomeSoundType", clickTypes);
 
 			// Faders' box
 			builder->get_widget("FadersSaveButton", saveFaders);
@@ -47,6 +48,15 @@ namespace Gui
 		// Start drum kit
 		const std::string moduleLocation(mainFolder+"/../Data/");
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
+
+		// Configure Metronome Window
+		std::vector<std::string> clicks = RetrieveClickTypes();
+
+		for(const std::string& clickType : clicks)
+		{
+			clickTypes->append(clickType);
+		}
+		clickTypes->set_active(0);
 
 		// Populate Kits list
 		CreateKitsList();
@@ -241,6 +251,34 @@ namespace Gui
 		return;
 	}
 
+	std::vector<std::string> Controller::RetrieveClickTypes() const
+	{
+
+		int numClickTypes = drumKit->GetNumClickTypes();
+
+		std::vector<std::string> clickTypes(numClickTypes);
+		{
+
+			for(int i = 0; i < numClickTypes; i++)
+			{
+
+				// Create local array to store string given by libeXaDrums
+				char clickName[128];
+				int nameLength;
+
+				// Get characters and string's length
+				drumKit->GetClickTypeById(i, clickName, nameLength);
+
+				// Convert to string
+				std::string name(clickName, nameLength);
+
+				clickTypes[i] = name;
+			}
+
+		}
+
+		return clickTypes;
+	}
 
 	void Controller::ShowMetronomePrefs()
 	{

@@ -55,6 +55,7 @@ namespace Gui
 		void EnableClick() const;
 		void ChangeTempo() const;
 		void SaveMetronomeConfig();
+		std::vector<std::string> RetrieveClickTypes() const;
 
 		// Dialogs
 		void ShowAboutDialog();
@@ -95,6 +96,7 @@ namespace Gui
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
+		Gtk::ComboBoxText* clickTypes;
 
 		// Boxes
 		Gtk::Box* fadersList;
