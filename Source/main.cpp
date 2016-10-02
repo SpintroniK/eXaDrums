@@ -5,7 +5,10 @@
  *      Author: jeremy
  */
 
+
+#include "Controllers/MainController.h"
 #include "MainWindow/MainWindow.h"
+
 #include <gtkmm/application.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
@@ -14,7 +17,6 @@
 #include <memory>
 #include <iostream>
 
-#include "Controllers/MainController.h"
 
 int main(int argc, char* argv[])
 {
