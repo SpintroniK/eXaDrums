@@ -10,7 +10,7 @@ RM := rm -rf
 -include sources.mk
 -include Source/MainWindow/subdir.mk
 -include Source/Fader/subdir.mk
--include Source/Controller/subdir.mk
+-include Source/Controllers/subdir.mk
 -include Source/subdir.mk
 -include subdir.mk
 -include objects.mk

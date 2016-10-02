@@ -34,7 +34,7 @@ namespace Gui
 		return;
 	}
 
-	void MainWindow::SetController(std::shared_ptr<Controller>& controller)
+	void MainWindow::SetController(std::shared_ptr<MainController>& controller)
 	{
 
 		this->controller = controller;

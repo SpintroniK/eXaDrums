@@ -5,12 +5,12 @@
  *      Author: jeremy
  */
 
-#include "Controller.h"
+#include "MainController.h"
 
 namespace Gui
 {
 
-	Controller::Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
+	MainController::MainController(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
 	: mainFolder(mainFolder), builder(builder)
 	{
 
@@ -50,13 +50,15 @@ namespace Gui
 		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
 
 		// Configure Metronome Window
-		std::vector<std::string> clicks = RetrieveClickTypes();
-
-		for(const std::string& clickType : clicks)
 		{
-			clickTypes->append(clickType);
+			std::vector<std::string> clicks = RetrieveClickTypes();
+
+			for(const std::string& clickType : clicks)
+			{
+				clickTypes->append(clickType);
+			}
+			clickTypes->set_active(0);
 		}
-		clickTypes->set_active(0);
 
 		// Populate Kits list
 		CreateKitsList();
@@ -72,28 +74,28 @@ namespace Gui
 		// Connect all signals
 		{
 			// Buttons
-			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowAboutDialog));
-			playButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::PlayDrums));
-			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::DeleteKitDialog));
-			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveFaders));
-			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::EnableClick));
-			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(this, &Controller::ShowMetronomePrefs));
-			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &Controller::SaveMetronomeConfig));
+			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::ShowAboutDialog));
+			playButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::PlayDrums));
+			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::DeleteKitDialog));
+			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &MainController::SaveFaders));
+			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::EnableClick));
+			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::ShowMetronomePrefs));
+			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &MainController::SaveMetronomeConfig));
 
 			// Scales
-			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &Controller::ChangeTempo));
+			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &MainController::ChangeTempo));
 
 			// Kits list
-			kitsList->signal_changed().connect(sigc::mem_fun(this, &Controller::ChangeKit));
+			kitsList->signal_changed().connect(sigc::mem_fun(this, &MainController::ChangeKit));
 
 			// Dialog
-			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &Controller::HideAboutDialog), 0));
+			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &MainController::HideAboutDialog), 0));
 		}
 
 		return;
 	}
 
-	Controller::~Controller()
+	MainController::~MainController()
 	{
 
 		// Delete all pointers (dialogs and windows)
@@ -112,7 +114,7 @@ namespace Gui
 
 	// PRIVATE METHODS
 
-	void Controller::SetInstrumentVolume(FaderPtr& fader) const
+	void MainController::SetInstrumentVolume(FaderPtr& fader) const
 	{
 
 		saveFaders->set_sensitive(true);
@@ -121,7 +123,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::SaveFaders() const
+	void MainController::SaveFaders() const
 	{
 
 		SaveKitConfig();
@@ -132,7 +134,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::UpdateFaders()
+	void MainController::UpdateFaders()
 	{
 
 		// Remove existing faders
@@ -156,13 +158,13 @@ namespace Gui
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
 		{
-			fader->GetScale().signal_value_changed().connect(std::bind(sigc::mem_fun(this, &Controller::SetInstrumentVolume), std::ref(fader)));
+			fader->GetScale().signal_value_changed().connect(std::bind(sigc::mem_fun(this, &MainController::SetInstrumentVolume), std::ref(fader)));
 		}
 
 		return;
 	}
 
-	std::vector<std::string> Controller::RetrieveKitsNames() const
+	std::vector<std::string> MainController::RetrieveKitsNames() const
 	{
 
 		int numKits = drumKit->GetNumKits();
@@ -190,7 +192,7 @@ namespace Gui
 		return kitsNames;
 	}
 
-	void Controller::CreateKitsList()
+	void MainController::CreateKitsList()
 	{
 
 		// Retrieve kits names
@@ -207,7 +209,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::DeleteKit(const int& id)
+	void MainController::DeleteKit(const int& id)
 	{
 
 		int numKits = drumKit->GetNumKits();
@@ -251,7 +253,7 @@ namespace Gui
 		return;
 	}
 
-	std::vector<std::string> Controller::RetrieveClickTypes() const
+	std::vector<std::string> MainController::RetrieveClickTypes() const
 	{
 
 		int numClickTypes = drumKit->GetNumClickTypes();
@@ -280,7 +282,7 @@ namespace Gui
 		return clickTypes;
 	}
 
-	void Controller::ShowMetronomePrefs()
+	void MainController::ShowMetronomePrefs()
 	{
 
 		metronomeWindow->show();
@@ -288,7 +290,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::SaveMetronomeConfig()
+	void MainController::SaveMetronomeConfig()
 	{
 
 		metronomeWindow->hide();
@@ -296,7 +298,7 @@ namespace Gui
 		return;
 	}
 
-	std::vector<std::string> Controller::RetrieveInstrumentsNames() const
+	std::vector<std::string> MainController::RetrieveInstrumentsNames() const
 	{
 
 		int numInstruments = drumKit->GetNumInstruments();
@@ -325,7 +327,7 @@ namespace Gui
 	}
 
 
-	int Controller::GetCurrentKitId() const
+	int MainController::GetCurrentKitId() const
 	{
 
 		int currentKitId = kitsList->get_active_row_number();
@@ -334,19 +336,19 @@ namespace Gui
 	}
 
 
-	void Controller::ShowAboutDialog()
+	void MainController::ShowAboutDialog()
 	{
 		aboutDialog->show();
 		return;
 	}
 
-	void Controller::HideAboutDialog(int responseId)
+	void MainController::HideAboutDialog(int responseId)
 	{
 		aboutDialog->hide();
 		return;
 	}
 
-	void Controller::EnableClick() const
+	void MainController::EnableClick() const
 	{
 
 		bool enable =  enableClickButton->get_active();
@@ -356,7 +358,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::ChangeTempo() const
+	void MainController::ChangeTempo() const
 	{
 
 		int tempo = (int) clickVolumeScale->get_value();
@@ -365,7 +367,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::PlayDrums()
+	void MainController::PlayDrums()
 	{
 
 		if(drumKit->IsStarted())
@@ -382,7 +384,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::ChangeKit()
+	void MainController::ChangeKit()
 	{
 
 		bool started = drumKit->IsStarted();
@@ -410,7 +412,7 @@ namespace Gui
 		return;
 	}
 
-	void Controller::DeleteKitDialog()
+	void MainController::DeleteKitDialog()
 	{
 
 		// Get answer

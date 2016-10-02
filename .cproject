@@ -101,7 +101,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Source/Old|Source/Testing/GuiHddTest.cpp|Source/Testing/SerialSensorsTest.cpp|Source/Testing/SpiSensorTest.cpp|Source/Testing/eXaDrumsHddTest.cpp|Source/Testing/SerialSensorTest.cpp|Source/old|Source/Bak" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -209,7 +209,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Source/Old|Source/Testing/GuiHddTest.cpp|Source/Testing/SerialSensorsTest.cpp|Source/Testing/SpiSensorTest.cpp|Source/Testing/eXaDrumsHddTest.cpp|Source/Testing/SerialSensorTest.cpp|Source/old|Source/Bak" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -257,4 +257,5 @@
 			<autodiscovery enabled="true" problemReportingEnabled="true" selectedProfileId=""/>
 		</scannerConfigBuildInfo>
 	</storageModule>
+	<storageModule moduleId="org.eclipse.cdt.make.core.buildtargets"/>
 </cproject>

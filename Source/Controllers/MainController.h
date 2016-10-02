@@ -5,8 +5,8 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_CONTROLLER_CONTROLLER_H_
-#define SOURCE_CONTROLLER_CONTROLLER_H_
+#ifndef SOURCE_CONTROLLERS_MAINCONTROLLER_H_
+#define SOURCE_CONTROLLERS_MAINCONTROLLER_H_
 
 #include "../Fader/Fader.h"
 
@@ -32,13 +32,13 @@ using namespace eXaDrumsApi;
 namespace Gui
 {
 
-	class Controller
+	class MainController
 	{
 
 	public:
 
-		Controller(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder);
-		virtual ~Controller();
+		MainController(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder);
+		virtual ~MainController();
 
 	private:
 
@@ -119,4 +119,4 @@ namespace Gui
 
 } /* namespace Gui */
 
-#endif /* SOURCE_CONTROLLER_CONTROLLER_H_ */
+#endif /* SOURCE_CONTROLLERS_MAINCONTROLLER_H_ */

@@ -6,8 +6,6 @@
  */
 
 #include "MainWindow/MainWindow.h"
-#include "Controller/Controller.h"
-
 #include <gtkmm/application.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
@@ -15,6 +13,8 @@
 #include <string>
 #include <memory>
 #include <iostream>
+
+#include "Controllers/MainController.h"
 
 int main(int argc, char* argv[])
 {
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	builder->get_widget_derived("MainWindow", mainWindow);
 
 	// Create controller
-	std::shared_ptr<Gui::Controller> controller = std::shared_ptr<Gui::Controller>(new Gui::Controller(builder, mainFolder));
+	std::shared_ptr<Gui::MainController> controller = std::shared_ptr<Gui::MainController>(new Gui::MainController(builder, mainFolder));
 
 	// Give controller to main window
 	mainWindow->SetController(controller);
