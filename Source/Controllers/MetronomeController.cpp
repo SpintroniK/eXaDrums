@@ -53,6 +53,10 @@ namespace Gui
 		return;
 	}
 
+
+	// Private methods
+
+
 	std::vector<std::string> MetronomeController::RetrieveClickTypes() const
 	{
 
@@ -101,9 +105,6 @@ namespace Gui
 
 		return;
 	}
-
-
-	// Private methods
 
 	void MetronomeController::ShowMetronomePrefs()
 	{

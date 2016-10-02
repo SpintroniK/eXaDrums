@@ -32,13 +32,14 @@ namespace Gui
 		virtual ~MetronomeController();
 
 		void ShowMetronomePrefs();
-		std::vector<std::string> RetrieveClickTypes() const;
-		void EnableClick() const;
-		void ChangeTempo() const;
 
 	private:
 
+		std::vector<std::string> RetrieveClickTypes() const;
+
 		// Signals
+		void EnableClick() const;
+		void ChangeTempo() const;
 		void SaveMetronomeConfig();
 
 		Glib::RefPtr<Gtk::Builder> builder;

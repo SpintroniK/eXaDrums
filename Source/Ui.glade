@@ -739,6 +739,7 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="default_width">440</property>
     <property name="default_height">120</property>
+    <property name="type_hint">dialog</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
