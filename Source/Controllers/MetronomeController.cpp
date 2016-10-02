@@ -86,6 +86,14 @@ namespace Gui
 		return clickTypes;
 	}
 
+	void MetronomeController::SetClickType(int id)
+	{
+
+		drumKit->SetClickType(id);
+
+		return;
+	}
+
 
 	void MetronomeController::EnableClick() const
 	{
@@ -116,6 +124,8 @@ namespace Gui
 
 	void MetronomeController::SaveMetronomeConfig()
 	{
+
+		SetClickType(clickTypes->get_active_row_number());
 
 		metronomeWindow->hide();
 

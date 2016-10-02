@@ -36,11 +36,13 @@ namespace Gui
 	private:
 
 		std::vector<std::string> RetrieveClickTypes() const;
+		void SetClickType(int id);
 
 		// Signals
 		void EnableClick() const;
 		void ChangeTempo() const;
 		void SaveMetronomeConfig();
+
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrums> drumKit;
