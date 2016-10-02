@@ -10,6 +10,8 @@
 
 #include "../Fader/Fader.h"
 
+#include "MetronomeController.h"
+
 #include <Source/Api/eXaDrums.h>
 
 #include <gtkmm/builder.h>
@@ -19,7 +21,6 @@
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
-#include <gtkmm/scale.h>
 #include <gtkmm/window.h>
 
 #include <string>
@@ -51,19 +52,12 @@ namespace Gui
 		// Instruments
 		void SetInstrumentVolume(FaderPtr& fader) const;
 
-		// Metronome
-		void EnableClick() const;
-		void ChangeTempo() const;
-		void SaveMetronomeConfig();
-		std::vector<std::string> RetrieveClickTypes() const;
-
 		// Dialogs
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void DeleteKitDialog();
 
 		// Windows
-		void ShowMetronomePrefs();
 
 		// Faders
 		void UpdateFaders();
@@ -83,20 +77,20 @@ namespace Gui
 
 		std::string mainFolder;
 
-		std::unique_ptr<eXaDrums> drumKit;
+		std::shared_ptr<eXaDrums> drumKit;
 		Glib::RefPtr<Gtk::Builder> builder;
+
+		// Controllers
+		std::unique_ptr<MetronomeController> metronomeController;
 
 		// Buttons
 		Gtk::Button* aboutButton;
 		Gtk::Button* playButton;
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* rhythmCoachPrefButton;
-		Gtk::Button* metronomeConfigSave;
-		Gtk::CheckButton* enableClickButton;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
-		Gtk::ComboBoxText* clickTypes;
 
 		// Boxes
 		Gtk::Box* fadersList;
@@ -106,14 +100,12 @@ namespace Gui
 		Gtk::MessageDialog* deleteKitDialog;
 
 		// Windows
-		Gtk::Window* metronomeWindow;
 
 		// Faders
 		Gtk::Button* saveFaders;
 		std::vector<FaderPtr> faders;
 
 		// Scales
-		Gtk::Scale* clickVolumeScale;
 
 	};
 

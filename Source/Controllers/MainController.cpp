@@ -14,50 +14,39 @@ namespace Gui
 	: mainFolder(mainFolder), builder(builder)
 	{
 
+		// Start drum kit
+		const std::string moduleLocation(mainFolder+"/../Data/");
+		drumKit = std::shared_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
+
+		// Set controllers
+		metronomeController = std::unique_ptr<MetronomeController>(new MetronomeController(this->builder, this->drumKit));
+
+
 		// Get all widgets
 		{
 			// Buttons
 			builder->get_widget("AboutButton", aboutButton);
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
-			builder->get_widget("EnableClickButton", enableClickButton);
 			builder->get_widget("RhythmCoachPrefButton", rhythmCoachPrefButton);
-			builder->get_widget("MetronomeConfigSave", metronomeConfigSave);
 
 
 			// Lists
 			builder->get_widget("KitsList", kitsList);
-			builder->get_widget("MetronomeSoundType", clickTypes);
 
 			// Faders' box
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
 			// Scales
-			builder->get_widget("ClickVolumeScale", clickVolumeScale);
 
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
 
 			// Windows
-			builder->get_widget("MetronomeConfig", metronomeWindow);
 
-		}
 
-		// Start drum kit
-		const std::string moduleLocation(mainFolder+"/../Data/");
-		drumKit = std::unique_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
-
-		// Configure Metronome Window
-		{
-			std::vector<std::string> clicks = RetrieveClickTypes();
-
-			for(const std::string& clickType : clicks)
-			{
-				clickTypes->append(clickType);
-			}
-			clickTypes->set_active(0);
 		}
 
 		// Populate Kits list
@@ -78,12 +67,9 @@ namespace Gui
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::PlayDrums));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::DeleteKitDialog));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &MainController::SaveFaders));
-			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::EnableClick));
-			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::ShowMetronomePrefs));
-			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &MainController::SaveMetronomeConfig));
+			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(*metronomeController, &MetronomeController::ShowMetronomePrefs));
 
 			// Scales
-			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &MainController::ChangeTempo));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &MainController::ChangeKit));
@@ -101,7 +87,6 @@ namespace Gui
 		// Delete all pointers (dialogs and windows)
 		delete deleteKitDialog;
 		delete aboutDialog;
-		delete metronomeWindow;
 
 		// Stop drum kit
 		if(drumKit->IsStarted())
@@ -253,50 +238,6 @@ namespace Gui
 		return;
 	}
 
-	std::vector<std::string> MainController::RetrieveClickTypes() const
-	{
-
-		int numClickTypes = drumKit->GetNumClickTypes();
-
-		std::vector<std::string> clickTypes(numClickTypes);
-		{
-
-			for(int i = 0; i < numClickTypes; i++)
-			{
-
-				// Create local array to store string given by libeXaDrums
-				char clickName[128];
-				int nameLength;
-
-				// Get characters and string's length
-				drumKit->GetClickTypeById(i, clickName, nameLength);
-
-				// Convert to string
-				std::string name(clickName, nameLength);
-
-				clickTypes[i] = name;
-			}
-
-		}
-
-		return clickTypes;
-	}
-
-	void MainController::ShowMetronomePrefs()
-	{
-
-		metronomeWindow->show();
-
-		return;
-	}
-
-	void MainController::SaveMetronomeConfig()
-	{
-
-		metronomeWindow->hide();
-
-		return;
-	}
 
 	std::vector<std::string> MainController::RetrieveInstrumentsNames() const
 	{
@@ -348,24 +289,6 @@ namespace Gui
 		return;
 	}
 
-	void MainController::EnableClick() const
-	{
-
-		bool enable =  enableClickButton->get_active();
-
-		drumKit->EnableMetronome(enable);
-
-		return;
-	}
-
-	void MainController::ChangeTempo() const
-	{
-
-		int tempo = (int) clickVolumeScale->get_value();
-		drumKit->ChangeTempo(tempo);
-
-		return;
-	}
 
 	void MainController::PlayDrums()
 	{
