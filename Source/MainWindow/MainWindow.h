@@ -30,12 +30,7 @@ namespace Gui
 		MainWindow(BaseObjectType* baseObject, const Glib::RefPtr<Gtk::Builder>& builder);
 		virtual ~MainWindow();
 
-		void SetController(std::shared_ptr<MainController>& controller);
-
 	private:
-
-		Glib::RefPtr<Gtk::Builder> builder;
-		std::shared_ptr<MainController> controller;
 
 	};
 

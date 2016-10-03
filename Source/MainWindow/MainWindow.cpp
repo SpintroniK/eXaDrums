@@ -11,8 +11,7 @@ namespace Gui
 {
 
 	MainWindow::MainWindow(BaseObjectType* baseObject, const Glib::RefPtr<Gtk::Builder>& builder)
-	: Gtk::Window(baseObject),
-	  builder(builder)
+	: Gtk::Window(baseObject)
 	{
 
 		if(!__arm__)
@@ -30,14 +29,6 @@ namespace Gui
 
 	MainWindow::~MainWindow()
 	{
-
-		return;
-	}
-
-	void MainWindow::SetController(std::shared_ptr<MainController>& controller)
-	{
-
-		this->controller = controller;
 
 		return;
 	}

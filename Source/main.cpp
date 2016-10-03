@@ -38,9 +38,6 @@ int main(int argc, char* argv[])
 	// Create controller
 	std::shared_ptr<Gui::MainController> controller = std::shared_ptr<Gui::MainController>(new Gui::MainController(builder, mainFolder));
 
-	// Give controller to main window
-	mainWindow->SetController(controller);
-
 	// Handle quit button signal
 	Gtk::Button* quitButton = nullptr;
 	builder->get_widget("QuitButton", quitButton);
