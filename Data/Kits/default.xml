@@ -2,7 +2,7 @@
     <kitName>Default</kitName>
     <kitFolder>default</kitFolder>
     <Instrument type="TestDrum" volume="77">
-        <instrumentName>SnareDrum</instrumentName>
+        <instrumentName>Snare Drum</instrumentName>
         <triggers>
             <trigger location="DrumHead">0</trigger>
             <trigger location="Rim">1</trigger>
@@ -13,7 +13,7 @@
         </sounds>
     </Instrument>
     <Instrument type="TestDrum" volume="50">
-        <instrumentName>SnareDrum2</instrumentName>
+        <instrumentName>Snare Drum 2</instrumentName>
         <triggers>
             <trigger location="DrumHead">0</trigger>
             <trigger location="Rim">1</trigger>
