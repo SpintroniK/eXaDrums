@@ -36,7 +36,8 @@ namespace Gui
 	private:
 
 		std::vector<std::string> RetrieveClickTypes() const;
-		void SetClickType(int id);
+		std::vector<int> RetrieveRhythmList() const;
+		std::vector<int> RetrieveBpmeasList() const;
 
 		// Signals
 		void EnableClick() const;
@@ -52,6 +53,11 @@ namespace Gui
 		Gtk::Scale* clickVolumeScale;
 		Gtk::Button* metronomeConfigSave;
 		Gtk::CheckButton* enableClickButton;
+		Gtk::ComboBoxText* rhythmList;
+		Gtk::ComboBoxText* bpmeasList;
+
+		std::vector<int> rhythms;
+		std::vector<int> bpmeasValues;
 
 	};
 

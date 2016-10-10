@@ -21,6 +21,8 @@ namespace Gui
 			this->builder->get_widget("MetronomeSoundType", clickTypes);
 			this->builder->get_widget("ClickVolumeScale", clickVolumeScale);
 			this->builder->get_widget("EnableClickButton", enableClickButton);
+			this->builder->get_widget("RhythmList", rhythmList);
+			this->builder->get_widget("BpmeasList", bpmeasList);
 		}
 
 		// Connect all signals
@@ -32,13 +34,43 @@ namespace Gui
 
 		// Configure Metronome Window
 		{
+			// Append clicks to list
 			std::vector<std::string> clicks = RetrieveClickTypes();
+			std::for_each(clicks.cbegin(), clicks.cend(), [this](const std::string& s){ clickTypes->append(s); });
 
-			for(const std::string& clickType : clicks)
-			{
-				clickTypes->append(clickType);
-			}
-			clickTypes->set_active(0);
+			// Get current click type
+			int clickTypeId = drumKit->GetClickTypeId();
+
+			// Select current click type
+			clickTypes->set_active(clickTypeId);
+		}
+
+		// Populate rhythm list
+		this->rhythms = RetrieveRhythmList();
+		{
+			// Append rhythms to list
+			std::for_each(rhythms.cbegin(), rhythms.cend(), [this](const int& x) { rhythmList->append(std::to_string(x)); });
+
+			// Get current rhythm index in vector
+			auto it = std::find(rhythms.cbegin(), rhythms.cend(), this->drumKit->GetRhythm());
+			int index = std::distance(rhythms.cbegin(), it);
+
+			// Select current rhythm
+			rhythmList->set_active(index);
+		}
+
+		// Populate beats per measure list
+		this->bpmeasValues = RetrieveBpmeasList();
+		{
+			// Append values to list
+			std::for_each(bpmeasValues.cbegin(), bpmeasValues.cend(), [this](const int& x) { bpmeasList->append(std::to_string(x));});
+
+			// Get current nb of beats per measure's index in vector
+			auto it = std::find(bpmeasValues.cbegin(), bpmeasValues.cend(), this->drumKit->GetBpmeas());
+			int index = std::distance(bpmeasValues.cbegin(), it);
+
+			// Select current number of beats per measure
+			bpmeasList->set_active(index);
 		}
 
 		return;
@@ -86,13 +118,36 @@ namespace Gui
 		return clickTypes;
 	}
 
-	void MetronomeController::SetClickType(int id)
+	std::vector<int> MetronomeController::RetrieveRhythmList() const
 	{
 
-		drumKit->SetClickType(id);
+		const int size = drumKit->GetNumRhythms();
 
-		return;
+		int data[size];
+
+		drumKit->GetRhythmList(data);
+
+		std::vector<int> list;
+		std::copy_n(data, size, std::back_inserter(list));
+
+		return list;
 	}
+
+	std::vector<int> MetronomeController::RetrieveBpmeasList() const
+	{
+
+		const int size = drumKit->GetNumBpmeas();
+
+		int data[size];
+
+		drumKit->GetBpmeasList(data);
+
+		std::vector<int> list;
+		std::copy_n(data, size, std::back_inserter(list));
+
+		return list;
+	}
+
 
 
 	void MetronomeController::EnableClick() const
@@ -125,7 +180,12 @@ namespace Gui
 	void MetronomeController::SaveMetronomeConfig()
 	{
 
-		SetClickType(clickTypes->get_active_row_number());
+		// Set new parameters values
+		drumKit->SetClickType(clickTypes->get_active_row_number());
+		drumKit->SetRhythm(rhythms[rhythmList->get_active_row_number()]);
+		drumKit->SetBpmeas(bpmeasValues[bpmeasList->get_active_row_number()]);
+
+		drumKit->RestartMetronome();
 
 		metronomeWindow->hide();
 
