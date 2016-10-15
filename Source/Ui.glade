@@ -715,7 +715,7 @@ Author: Jérémy Oden
     <property name="transient_for">MainWindow</property>
     <property name="message_type">question</property>
     <property name="buttons">ok-cancel</property>
-    <property name="text" translatable="yes">Are you sure you want to delete the currect drum kit?</property>
+    <property name="text" translatable="yes">Are you sure you want to delete the current drum kit?</property>
     <property name="secondary_text" translatable="yes">All parameters, and configuration files for that kit will be lost.</property>
     <child internal-child="vbox">
       <object class="GtkBox">
