@@ -19,7 +19,7 @@ namespace Gui
 			this->builder->get_widget("MetronomeConfig", metronomeWindow);
 			this->builder->get_widget("MetronomeConfigSave", metronomeConfigSave);
 			this->builder->get_widget("MetronomeSoundType", clickTypes);
-			this->builder->get_widget("ClickVolumeScale", clickVolumeScale);
+			this->builder->get_widget("ClickTempoScale", clickTempoScale);
 			this->builder->get_widget("EnableClickButton", enableClickButton);
 			this->builder->get_widget("RhythmList", rhythmList);
 			this->builder->get_widget("BpmeasList", bpmeasList);
@@ -28,9 +28,12 @@ namespace Gui
 		// Connect all signals
 		{
 			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::SaveMetronomeConfig));
-			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeTempo));
+			clickTempoScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeTempo));
 			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::EnableClick));
 		}
+
+		// Set tempo value
+		clickTempoScale->set_value(drumKit->GetTempo());
 
 		// Configure Metronome Window
 		{
@@ -163,7 +166,7 @@ namespace Gui
 	void MetronomeController::ChangeTempo() const
 	{
 
-		int tempo = (int) this->clickVolumeScale->get_value();
+		int tempo = (int) this->clickTempoScale->get_value();
 		drumKit->ChangeTempo(tempo);
 
 		return;
@@ -186,6 +189,8 @@ namespace Gui
 		drumKit->SetBpmeas(bpmeasValues[bpmeasList->get_active_row_number()]);
 
 		drumKit->RestartMetronome();
+
+		drumKit->SaveMetronomeConfig();
 
 		metronomeWindow->hide();
 

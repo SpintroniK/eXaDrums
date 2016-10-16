@@ -525,7 +525,7 @@ Author: Jérémy Oden
                                       </packing>
                                     </child>
                                     <child>
-                                      <object class="GtkScale" id="ClickVolumeScale">
+                                      <object class="GtkScale" id="ClickTempoScale">
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="hexpand">True</property>

@@ -50,7 +50,7 @@ namespace Gui
 
 		Gtk::Window* metronomeWindow;
 		Gtk::ComboBoxText* clickTypes;
-		Gtk::Scale* clickVolumeScale;
+		Gtk::Scale* clickTempoScale;
 		Gtk::Button* metronomeConfigSave;
 		Gtk::CheckButton* enableClickButton;
 		Gtk::ComboBoxText* rhythmList;
