@@ -11,7 +11,7 @@ namespace Gui
 {
 
 	Fader::Fader(const std::string& name, int instrumentId, int vol)
-	: instrument(instrumentId), volume(vol), label(name+" ")
+	: instrument(instrumentId), volume(vol), label(name+" "), volScale(Gtk::Orientation::ORIENTATION_HORIZONTAL)
 	{
 
 		this->set_halign(Gtk::Align::ALIGN_START);
@@ -22,8 +22,7 @@ namespace Gui
 		label.show();
 		this->attach(label, 0, 0, 1, 1);
 
-		// Set scale
-		volScale = Gtk::Scale(Gtk::Orientation::ORIENTATION_HORIZONTAL);
+		// Set scale parameters
 		volScale.set_range(0, 100);
 		volScale.set_digits(0);
 		volScale.set_value_pos(Gtk::PositionType::POS_LEFT);
