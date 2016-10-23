@@ -29,6 +29,8 @@ namespace Gui
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("RhythmCoachPrefButton", rhythmCoachPrefButton);
+			builder->get_widget("AddDrumKitButton", addDrumKitButton);
+			builder->get_widget("KitNameCancel", kitNameCancel);
 
 
 			// Lists
@@ -38,11 +40,13 @@ namespace Gui
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
-			// Scales
+			// Entries
+			builder->get_widget("KitNameEntry", kitNameEntry);
 
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
+			builder->get_widget("NewKitNameDialog", newKitNameDialog);
 
 			// Windows
 
@@ -68,14 +72,19 @@ namespace Gui
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::DeleteKitDialog));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &MainController::SaveFaders));
 			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(*metronomeController, &MetronomeController::ShowMetronomePrefs));
+			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::ShowNewKitDialog));
+			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &MainController::HideNewKitDialog));
 
-			// Scales
+
+			// Entries
+			kitNameEntry->signal_grab_focus().connect(sigc::mem_fun(this, &MainController::ShowKeyboard));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &MainController::ChangeKit));
 
 			// Dialog
 			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &MainController::HideAboutDialog), 0));
+
 		}
 
 		return;
@@ -87,6 +96,7 @@ namespace Gui
 		// Delete all pointers (dialogs and windows)
 		delete deleteKitDialog;
 		delete aboutDialog;
+		delete newKitNameDialog;
 
 		// Stop drum kit
 		if(drumKit->IsStarted())
@@ -286,6 +296,38 @@ namespace Gui
 	void MainController::HideAboutDialog(int responseId)
 	{
 		aboutDialog->hide();
+		return;
+	}
+
+	void MainController::ShowKeyboard()
+	{
+		HideKeyboard();
+		std::system("onboard --size=800x160 -x 0 -y 280 &");
+		return;
+	}
+
+	void MainController::HideKeyboard()
+	{
+
+		std::system("killall onboard");
+		return;
+	}
+
+
+	void MainController::ShowNewKitDialog()
+	{
+
+		newKitNameDialog->show();
+		ShowKeyboard();
+
+		return;
+	}
+
+	void MainController::HideNewKitDialog()
+	{
+
+		HideKeyboard();
+		newKitNameDialog->hide();
 		return;
 	}
 

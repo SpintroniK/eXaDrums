@@ -18,15 +18,19 @@
 #include <gtkmm/button.h>
 #include <gtkmm/checkbutton.h>
 #include <gtkmm/aboutdialog.h>
+#include <gtkmm/dialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
+#include <gtkmm/entry.h>
 
 #include <string>
 #include <memory>
 #include <functional>
 #include <algorithm>
+
+#include <cstdlib>
 
 using namespace eXaDrumsApi;
 
@@ -56,6 +60,12 @@ namespace Gui
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 		void DeleteKitDialog();
+		void ShowNewKitDialog();
+		void HideNewKitDialog();
+
+		// Keyboard
+		void ShowKeyboard();
+		void HideKeyboard();
 
 		// Windows
 
@@ -88,6 +98,8 @@ namespace Gui
 		Gtk::Button* playButton;
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* rhythmCoachPrefButton;
+		Gtk::Button* addDrumKitButton;
+		Gtk::Button* kitNameCancel;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
@@ -98,12 +110,16 @@ namespace Gui
 		// Dialogs
 		Gtk::AboutDialog* aboutDialog;
 		Gtk::MessageDialog* deleteKitDialog;
+		Gtk::Dialog* newKitNameDialog;
 
 		// Windows
 
 		// Faders
 		Gtk::Button* saveFaders;
 		std::vector<FaderPtr> faders;
+
+		// Entries
+		Gtk::Entry* kitNameEntry;
 
 		// Scales
 
