@@ -11,4 +11,10 @@
 		<MaskTime>60000</MaskTime>
 		<Response>exponential</Response>
 	</Trigger>
+	<Trigger sensorType="Continuous" sensorId="2">
+		<Threshold>120</Threshold>
+		<ScanTime>4000</ScanTime>
+		<MaskTime>60000</MaskTime>
+		<Response>exponential</Response>
+	</Trigger>
 </Triggers>

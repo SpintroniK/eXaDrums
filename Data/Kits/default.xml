@@ -12,15 +12,14 @@
             <sound type="RimShot">SnareDrum/edge1.raw</sound>
         </sounds>
     </Instrument>
-    <Instrument type="TestDrum" volume="50">
-        <instrumentName>Snare Drum 2</instrumentName>
+    <Instrument type="HiHat" volume="50">
+        <instrumentName>Test Hi-hat</instrumentName>
         <triggers>
-            <trigger location="DrumHead">0</trigger>
-            <trigger location="Rim">1</trigger>
+            <trigger location="DrumHead">1</trigger>
+            <trigger location="Rim">2</trigger>
         </triggers>
         <sounds>
-            <sound type="RimShot">SnareDrum/edge1.raw</sound>
-            <sound type="Default">SnareDrum/snare1.raw</sound>
+            <sound type="Default">HiHat/hihat.raw</sound>
         </sounds>
     </Instrument>
 </root>
