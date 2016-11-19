@@ -18,7 +18,6 @@
 #include <gtkmm/scale.h>
 
 
-using namespace eXaDrumsApi;
 
 namespace Gui
 {
@@ -28,7 +27,7 @@ namespace Gui
 
 	public:
 
-		MetronomeController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit);
+		MetronomeController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit);
 		virtual ~MetronomeController();
 
 		void ShowMetronomePrefs();
@@ -46,7 +45,7 @@ namespace Gui
 
 
 		Glib::RefPtr<Gtk::Builder> builder;
-		std::shared_ptr<eXaDrums> drumKit;
+		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 
 		Gtk::Window* metronomeWindow;
 		Gtk::ComboBoxText* clickTypes;

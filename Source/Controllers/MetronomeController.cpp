@@ -7,6 +7,8 @@
 
 #include "MetronomeController.h"
 
+using namespace eXaDrumsApi;
+
 namespace Gui
 {
 

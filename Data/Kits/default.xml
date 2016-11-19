@@ -1,6 +1,6 @@
 <root>
     <kitName>Default</kitName>
-    <kitFolder>default</kitFolder>
+    <kitFolder/>
     <Instrument type="TestDrum" volume="77">
         <instrumentName>Snare Drum</instrumentName>
         <triggers>
@@ -8,7 +8,7 @@
             <trigger location="Rim">1</trigger>
         </triggers>
         <sounds>
-            <sound type="Default">SnareDrum/snare1.raw</sound>
+            <sound type="DrumHead">SnareDrum/snare1.raw</sound>
             <sound type="RimShot">SnareDrum/edge1.raw</sound>
         </sounds>
     </Instrument>
@@ -19,7 +19,7 @@
             <trigger location="Rim">2</trigger>
         </triggers>
         <sounds>
-            <sound type="Default">HiHat/hihat.raw</sound>
+            <sound type="DrumHead">HiHat/hihat.raw</sound>
         </sounds>
     </Instrument>
 </root>
