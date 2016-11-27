@@ -16,6 +16,12 @@ namespace Gui
 	: builder(builder), drumKit(drumKit)
 	{
 
+		std::string dataFolder = GetDataFolderLoc();
+
+		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
+
+
+
 		// Get all widgets
 		{
 			// Buttons
@@ -36,7 +42,7 @@ namespace Gui
 
 			// Dialogs
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
-			builder->get_widget("NewKitNameDialog", newKitNameDialog);
+			builder->get_widget("NewKitNameWindow", newKitNameWindow);
 
 			// Windows
 
@@ -60,8 +66,8 @@ namespace Gui
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::PlayDrums));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
-			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowNewKitDialog));
-			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideNewKitDialog));
+			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowNewKitWindow));
+			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideNewKitWindow));
 
 			// Entries
 			//kitNameEntry->signal_grab_focus().connect(sigc::mem_fun(this, &KitController::ShowKeyboard));
@@ -77,7 +83,7 @@ namespace Gui
 	{
 
 		// Delete all pointers (dialogs and windows)
-		delete newKitNameDialog;
+		delete newKitNameWindow;
 		delete deleteKitDialog;
 
 		return;
@@ -85,6 +91,17 @@ namespace Gui
 
 
 	// Private Methods
+
+	std::string KitController::GetDataFolderLoc() const
+	{
+
+		char folder[256];
+		int folderLength;
+
+		drumKit->GetDataLocation(folder, folderLength);
+
+		return std::string(folder, folderLength);
+	}
 
 	std::vector<std::string> KitController::RetrieveKitsNames() const
 	{
@@ -327,20 +344,20 @@ namespace Gui
 	}
 
 
-	void KitController::ShowNewKitDialog()
+	void KitController::ShowNewKitWindow()
 	{
 
-		newKitNameDialog->show();
+		newKitNameWindow->show();
 		ShowKeyboard();
 
 		return;
 	}
 
-	void KitController::HideNewKitDialog()
+	void KitController::HideNewKitWindow()
 	{
 
 		HideKeyboard();
-		newKitNameDialog->hide();
+		newKitNameWindow->hide();
 		return;
 	}
 

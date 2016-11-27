@@ -12,14 +12,15 @@
 #include "../Fader/Fader.h"
 
 #include <Source/Api/eXaDrums.h>
+#include <Source/Api/KitCreator_api.h>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
-#include <gtkmm/dialog.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
+#include <gtkmm/window.h>
 
 #include <functional>
 #include <algorithm>
@@ -40,6 +41,7 @@ namespace Gui
 
 
 		std::vector<std::string> RetrieveKitsNames() const;
+		std::string GetDataFolderLoc() const;
 		void CreateKitsList();
 		int GetCurrentKitId() const;
 		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
@@ -66,14 +68,15 @@ namespace Gui
 
 		// Dialogs
 		void DeleteKitDialog();
-		void ShowNewKitDialog();
-		void HideNewKitDialog();
+		void ShowNewKitWindow();
+		void HideNewKitWindow();
 
 		// Instruments
 		void SetInstrumentVolume(FaderPtr& fader) const;
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
+		std::unique_ptr<eXaDrumsApi::KitCreator> kitCreator;
 
 		// Buttons
 		Gtk::Button* deleteKitButton;
@@ -86,7 +89,7 @@ namespace Gui
 
 		// Dialogs
 		Gtk::MessageDialog* deleteKitDialog;
-		Gtk::Dialog* newKitNameDialog;
+		Gtk::Window* newKitNameWindow;
 
 		// Faders
 		Gtk::Button* saveFaders;
