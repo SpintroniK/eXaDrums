@@ -7,6 +7,7 @@
 
 #include "KitController.h"
 
+
 using namespace eXaDrumsApi;
 
 namespace Gui
@@ -19,7 +20,6 @@ namespace Gui
 		std::string dataFolder = GetDataFolderLoc();
 
 		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
-
 
 
 		// Get all widgets
@@ -42,9 +42,9 @@ namespace Gui
 
 			// Dialogs
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
-			builder->get_widget("NewKitNameWindow", newKitNameWindow);
 
 			// Windows
+			builder->get_widget("NewKitNameWindow", newKitNameWindow);
 
 
 		}
