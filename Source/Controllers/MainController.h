@@ -26,7 +26,7 @@
 #include <cstdlib>
 
 
-namespace Gui
+namespace Controllers
 {
 
 	class MainController

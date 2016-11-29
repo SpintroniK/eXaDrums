@@ -9,7 +9,7 @@
 
 using namespace eXaDrumsApi;
 
-namespace Gui
+namespace Controllers
 {
 
 	MetronomeController::MetronomeController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)

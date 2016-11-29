@@ -19,7 +19,7 @@
 
 
 
-namespace Gui
+namespace Controllers
 {
 
 	class MetronomeController

@@ -8,8 +8,8 @@ RM := rm -rf
 
 # All of the sources participating in the build are defined here
 -include sources.mk
+-include Source/Widgets/subdir.mk
 -include Source/MainWindow/subdir.mk
--include Source/Fader/subdir.mk
 -include Source/Controllers/subdir.mk
 -include Source/subdir.mk
 -include subdir.mk

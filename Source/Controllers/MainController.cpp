@@ -10,7 +10,7 @@
 
 using namespace eXaDrumsApi;
 
-namespace Gui
+namespace Controllers
 {
 
 	MainController::MainController(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)

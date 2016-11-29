@@ -5,9 +5,9 @@
  *      Author: jeremy
  */
 
-#include "Fader.h"
+#include "../Widgets/Fader.h"
 
-namespace Gui
+namespace Widgets
 {
 
 	Fader::Fader(const std::string& name, int instrumentId, int vol)

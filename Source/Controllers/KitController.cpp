@@ -9,8 +9,9 @@
 
 
 using namespace eXaDrumsApi;
+using namespace Widgets;
 
-namespace Gui
+namespace Controllers
 {
 
 	KitController::KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)

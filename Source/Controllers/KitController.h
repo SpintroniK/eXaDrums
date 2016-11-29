@@ -9,7 +9,7 @@
 #define SOURCE_CONTROLLERS_KITCONTROLLER_H_
 
 
-#include "../Fader/Fader.h"
+#include "../Widgets/Fader.h"
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/KitCreator_api.h>
@@ -26,7 +26,7 @@
 #include <algorithm>
 
 
-namespace Gui
+namespace Controllers
 {
 
 	class KitController
@@ -72,7 +72,7 @@ namespace Gui
 		void HideNewKitWindow();
 
 		// Instruments
-		void SetInstrumentVolume(FaderPtr& fader) const;
+		void SetInstrumentVolume(Widgets::FaderPtr& fader) const;
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
@@ -93,7 +93,7 @@ namespace Gui
 
 		// Faders
 		Gtk::Button* saveFaders;
-		std::vector<FaderPtr> faders;
+		std::vector<Widgets::FaderPtr> faders;
 
 		// Boxes
 		Gtk::Box* fadersList;

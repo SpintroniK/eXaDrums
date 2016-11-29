@@ -5,8 +5,8 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_FADER_FADER_H_
-#define SOURCE_FADER_FADER_H_
+#ifndef SOURCE_WIDGETS_FADER_H_
+#define SOURCE_WIDGETS_FADER_H_
 
 #include <gtkmm/grid.h>
 #include <gtkmm/label.h>
@@ -15,7 +15,7 @@
 #include <string>
 #include <memory>
 
-namespace Gui
+namespace Widgets
 {
 
 	class Fader : public Gtk::Grid
@@ -44,4 +44,4 @@ namespace Gui
 
 } /* namespace Gui */
 
-#endif /* SOURCE_FADER_FADER_H_ */
+#endif /* SOURCE_WIDGETS_FADER_H_ */
