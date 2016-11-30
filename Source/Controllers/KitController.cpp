@@ -7,6 +7,10 @@
 
 #include "KitController.h"
 
+#include <functional>
+#include <algorithm>
+#include <string>
+#include <stdexcept>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
@@ -29,10 +33,13 @@ namespace Controllers
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
 			builder->get_widget("KitNameCancel", kitNameCancel);
+			builder->get_widget("KitNameOk", KitNameOk);
+			builder->get_widget("InstrumentsListCancel", instrumentsListCancel);
 			builder->get_widget("PlayButton", playButton);
 
 			// Entries
 			builder->get_widget("KitNameEntry", kitNameEntry);
+			builder->get_widget("NumInstrumentsEntry", numInstrumentsEntry);
 
 			// Lists
 			builder->get_widget("KitsList", kitsList);
@@ -41,11 +48,15 @@ namespace Controllers
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
+			// Boxes
+			builder->get_widget("InstrumentsListBox", instrumentsListBox);
+
 			// Dialogs
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
 
 			// Windows
 			builder->get_widget("NewKitNameWindow", newKitNameWindow);
+			builder->get_widget("InstrumentsListWindow", instrumentsListWindow);
 
 
 		}
@@ -69,6 +80,8 @@ namespace Controllers
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowNewKitWindow));
 			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideNewKitWindow));
+			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentsListWindow));
+			instrumentsListCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideInstrumentsListWindow));
 
 			// Entries
 			//kitNameEntry->signal_grab_focus().connect(sigc::mem_fun(this, &KitController::ShowKeyboard));
@@ -85,6 +98,7 @@ namespace Controllers
 
 		// Delete all pointers (dialogs and windows)
 		delete newKitNameWindow;
+		delete instrumentsListWindow;
 		delete deleteKitDialog;
 
 		return;
@@ -333,7 +347,7 @@ namespace Controllers
 		}
 
 		// Add all faders to GUI
-		std::for_each(faders.cbegin(), faders.cend(), [this](FaderPtr const& f){ this->fadersList->add(*f); });
+		std::for_each(faders.cbegin(), faders.cend(), [this](const FaderPtr& f){ this->fadersList->add(*f); });
 
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
@@ -359,6 +373,55 @@ namespace Controllers
 
 		HideKeyboard();
 		newKitNameWindow->hide();
+		return;
+	}
+
+	void KitController::ShowInstrumentsListWindow()
+	{
+
+		HideNewKitWindow();
+
+		std::string kitName = kitNameEntry->get_text();
+		int numInstruments;
+
+		try
+		{
+			numInstruments = std::stoi(numInstrumentsEntry->get_text());
+		}
+		catch(std::invalid_argument& e)
+		{
+			//XXX Need to add an alert of some sort.
+			ShowNewKitWindow();
+			return;
+		}
+
+
+		// Remove existing instrument selectors
+		std::for_each(instrumentSelectors.begin(), instrumentSelectors.end(), [](InstrumentSelectorPtr& i) { i.reset(); });
+		instrumentSelectors.clear();
+
+
+		// Create new instrument selectors
+		for(int i = 0; i < numInstruments; i++)
+		{
+			instrumentSelectors.push_back(std::make_shared<InstrumentSelector>());
+		}
+
+		// Add all instrument selectors to GUI
+		std::for_each(instrumentSelectors.cbegin(), instrumentSelectors.cend(), [this](const InstrumentSelectorPtr& i){ this->instrumentsListBox->add(*i); });
+
+
+		// Show instrument selectors
+		instrumentsListWindow->show();
+
+		return;
+	}
+
+	void KitController::HideInstrumentsListWindow()
+	{
+
+		instrumentsListWindow->hide();
+
 		return;
 	}
 

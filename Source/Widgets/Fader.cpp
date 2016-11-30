@@ -5,7 +5,7 @@
  *      Author: jeremy
  */
 
-#include "../Widgets/Fader.h"
+#include "Fader.h"
 
 namespace Widgets
 {

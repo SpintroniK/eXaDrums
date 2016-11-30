@@ -10,6 +10,7 @@
 
 
 #include "../Widgets/Fader.h"
+#include "../Widgets/InstrumentSelector.h"
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/KitCreator_api.h>
@@ -22,9 +23,9 @@
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
 
-#include <functional>
-#include <algorithm>
-
+#include <vector>
+#include <string>
+#include <memory>
 
 namespace Controllers
 {
@@ -66,10 +67,12 @@ namespace Controllers
 		void ShowKeyboard();
 		void HideKeyboard();
 
-		// Dialogs
+		// Dialogs & Windows
 		void DeleteKitDialog();
 		void ShowNewKitWindow();
 		void HideNewKitWindow();
+		void ShowInstrumentsListWindow();
+		void HideInstrumentsListWindow();
 
 		// Instruments
 		void SetInstrumentVolume(Widgets::FaderPtr& fader) const;
@@ -82,24 +85,34 @@ namespace Controllers
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* addDrumKitButton;
 		Gtk::Button* kitNameCancel;
+		Gtk::Button* KitNameOk;
 		Gtk::Button* playButton;
+		Gtk::Button* instrumentsListCancel;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
 
 		// Dialogs
 		Gtk::MessageDialog* deleteKitDialog;
+
+		// Windows
 		Gtk::Window* newKitNameWindow;
+		Gtk::Window* instrumentsListWindow;
 
 		// Faders
 		Gtk::Button* saveFaders;
 		std::vector<Widgets::FaderPtr> faders;
 
+		// Instrument selectors
+		std::vector<Widgets::InstrumentSelectorPtr> instrumentSelectors;
+
 		// Boxes
 		Gtk::Box* fadersList;
+		Gtk::Box* instrumentsListBox;
 
 		// Entries
 		Gtk::Entry* kitNameEntry;
+		Gtk::Entry* numInstrumentsEntry;
 
 	};
 

@@ -8,12 +8,11 @@
 #ifndef SOURCE_MAINWINDOW_MAINWINDOW_H_
 #define SOURCE_MAINWINDOW_MAINWINDOW_H_
 
+#include "../Controllers/MainController.h"
+
 #include <gtkmm/window.h>
 #include <gtkmm/builder.h>
 
-#include <memory>
-
-#include "../Controllers/MainController.h"
 
 #ifndef __arm__
 #define __arm__ (!(1==1))
