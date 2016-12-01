@@ -397,18 +397,18 @@ namespace Controllers
 
 
 		// Remove existing instrument selectors
-		std::for_each(instrumentSelectors.begin(), instrumentSelectors.end(), [](InstrumentSelectorPtr& i) { i.reset(); });
-		instrumentSelectors.clear();
+		std::for_each(instrumentTypeSelectors.begin(), instrumentTypeSelectors.end(), [](InstrumentTypeSelectorPtr& i) { i.reset(); });
+		instrumentTypeSelectors.clear();
 
 
 		// Create new instrument selectors
 		for(int i = 0; i < numInstruments; i++)
 		{
-			instrumentSelectors.push_back(std::make_shared<InstrumentSelector>());
+			instrumentTypeSelectors.push_back(std::make_shared<InstrumentTypeSelector>());
 		}
 
 		// Add all instrument selectors to GUI
-		std::for_each(instrumentSelectors.cbegin(), instrumentSelectors.cend(), [this](const InstrumentSelectorPtr& i){ this->instrumentsListBox->add(*i); });
+		std::for_each(instrumentTypeSelectors.cbegin(), instrumentTypeSelectors.cend(), [this](const InstrumentTypeSelectorPtr& i){ this->instrumentsListBox->add(*i); });
 
 
 		// Show instrument selectors

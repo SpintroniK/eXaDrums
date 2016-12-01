@@ -5,15 +5,15 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Source/Widgets/Fader.cpp \
-../Source/Widgets/InstrumentSelector.cpp 
+../Source/Widgets/InstrumentTypeSelector.cpp 
 
 OBJS += \
 ./Source/Widgets/Fader.o \
-./Source/Widgets/InstrumentSelector.o 
+./Source/Widgets/InstrumentTypeSelector.o 
 
 CPP_DEPS += \
 ./Source/Widgets/Fader.d \
-./Source/Widgets/InstrumentSelector.d 
+./Source/Widgets/InstrumentTypeSelector.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

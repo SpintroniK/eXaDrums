@@ -10,7 +10,7 @@
 
 
 #include "../Widgets/Fader.h"
-#include "../Widgets/InstrumentSelector.h"
+#include "../Widgets/InstrumentTypeSelector.h"
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/KitCreator_api.h>
@@ -104,7 +104,7 @@ namespace Controllers
 		std::vector<Widgets::FaderPtr> faders;
 
 		// Instrument selectors
-		std::vector<Widgets::InstrumentSelectorPtr> instrumentSelectors;
+		std::vector<Widgets::InstrumentTypeSelectorPtr> instrumentTypeSelectors;
 
 		// Boxes
 		Gtk::Box* fadersList;
