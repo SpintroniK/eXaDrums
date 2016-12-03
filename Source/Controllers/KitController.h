@@ -52,6 +52,7 @@ namespace Controllers
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		std::vector<std::string> RetrieveInstrumentsNames() const;
+		std::vector<std::string> RetrieveInstrumentsTypes() const;
 
 		// Signals
 
@@ -88,6 +89,7 @@ namespace Controllers
 		Gtk::Button* KitNameOk;
 		Gtk::Button* playButton;
 		Gtk::Button* instrumentsListCancel;
+		Gtk::Button* instrumentsListOkay;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;

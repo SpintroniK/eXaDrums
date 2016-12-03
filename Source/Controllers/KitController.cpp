@@ -30,12 +30,13 @@ namespace Controllers
 		// Get all widgets
 		{
 			// Buttons
+			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
 			builder->get_widget("KitNameCancel", kitNameCancel);
 			builder->get_widget("KitNameOk", KitNameOk);
 			builder->get_widget("InstrumentsListCancel", instrumentsListCancel);
-			builder->get_widget("PlayButton", playButton);
+			builder->get_widget("InstrumentsListOkay", instrumentsListOkay);
 
 			// Entries
 			builder->get_widget("KitNameEntry", kitNameEntry);
@@ -75,13 +76,14 @@ namespace Controllers
 
 		// Connect signals
 		{
-			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::PlayDrums));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
+			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowNewKitWindow));
 			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideNewKitWindow));
 			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentsListWindow));
 			instrumentsListCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideInstrumentsListWindow));
+			instrumentsListOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideInstrumentsListWindow));
 
 			// Entries
 			//kitNameEntry->signal_grab_focus().connect(sigc::mem_fun(this, &KitController::ShowKeyboard));
@@ -317,6 +319,33 @@ namespace Controllers
 		return instNames;
 	}
 
+	std::vector<std::string> KitController::RetrieveInstrumentsTypes() const
+	{
+
+		int numInstrumentTypes = kitCreator->GetNumInstrumentTypes();
+
+		std::vector<std::string> instrumentTypes(numInstrumentTypes);
+		{
+			for(int i = 0; i < numInstrumentTypes; i++)
+			{
+
+				// Create local array to store string given by libeXaDrums
+				char instType[128];
+				int length;
+
+				// Get instrument type
+				kitCreator->GetInstrumentTypeById(i, instType, length);
+
+				// Convert to string
+				std::string name(instType, length);
+
+				instrumentTypes[i] = name;
+			}
+		}
+
+		return instrumentTypes;
+	}
+
 	void KitController::SaveFaders() const
 	{
 
@@ -400,16 +429,23 @@ namespace Controllers
 		std::for_each(instrumentTypeSelectors.begin(), instrumentTypeSelectors.end(), [](InstrumentTypeSelectorPtr& i) { i.reset(); });
 		instrumentTypeSelectors.clear();
 
+		// Create vector of instruments types
+		std::vector<std::string> instrumentTypes = RetrieveInstrumentsTypes();
 
 		// Create new instrument selectors
 		for(int i = 0; i < numInstruments; i++)
 		{
-			instrumentTypeSelectors.push_back(std::make_shared<InstrumentTypeSelector>());
+			std::string instrumentName = "Instrument " + std::to_string(i + 1);
+			instrumentTypeSelectors.push_back(std::make_shared<InstrumentTypeSelector>(instrumentName, instrumentTypes));
 		}
 
 		// Add all instrument selectors to GUI
 		std::for_each(instrumentTypeSelectors.cbegin(), instrumentTypeSelectors.cend(), [this](const InstrumentTypeSelectorPtr& i){ this->instrumentsListBox->add(*i); });
 
+
+		// Create new kit in KitCreator
+		kitCreator->CreateNewKit();
+		kitCreator->SetKitName(kitName.c_str());
 
 		// Show instrument selectors
 		instrumentsListWindow->show();
@@ -421,6 +457,11 @@ namespace Controllers
 	{
 
 		instrumentsListWindow->hide();
+
+		std::vector<std::string> instrumentsTypes;
+		std::transform(instrumentTypeSelectors.cbegin(), instrumentTypeSelectors.cend(), std::back_inserter(instrumentsTypes), [](const InstrumentTypeSelectorPtr& i) { return i->GetInstrumentType(); });
+
+
 
 		return;
 	}

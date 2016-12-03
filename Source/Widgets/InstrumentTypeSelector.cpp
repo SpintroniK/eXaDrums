@@ -7,10 +7,13 @@
 
 #include "InstrumentTypeSelector.h"
 
+#include <algorithm>
+
 namespace Widgets
 {
 
-	InstrumentTypeSelector::InstrumentTypeSelector() : label("Test"), selector()
+	InstrumentTypeSelector::InstrumentTypeSelector(const std::string& instrumentName, const std::vector<std::string>& types)
+	: label(instrumentName), selector(true)
 	{
 
 
@@ -24,9 +27,16 @@ namespace Widgets
 
 
 		// Set selector
+		// Populate
+		std::for_each(types.cbegin(), types.cend(), [&](const std::string& s) { selector.append(s); });
+
+		// Set parameters
+		selector.get_entry()->set_can_focus(false);
+		selector.set_active(0);
 		selector.show();
 		this->attach_next_to(selector, label, Gtk::PositionType::POS_RIGHT, 1, 1);
 
+		// Show widget
 		this->show();
 
 		return;
@@ -37,5 +47,7 @@ namespace Widgets
 
 		return;
 	}
+
+
 
 } /* namespace Widgets */

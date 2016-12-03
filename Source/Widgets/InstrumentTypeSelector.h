@@ -14,6 +14,8 @@
 #include <gtkmm/comboboxtext.h>
 
 #include <memory>
+#include <vector>
+#include <string>
 
 namespace Widgets
 {
@@ -23,8 +25,10 @@ namespace Widgets
 
 	public:
 
-		InstrumentTypeSelector();
+		InstrumentTypeSelector(const std::string& instrumentName, const std::vector<std::string>& types);
 		virtual ~InstrumentTypeSelector();
+
+		std::string GetInstrumentType() const { return selector.get_active_text(); }
 
 	private:
 
