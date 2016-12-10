@@ -5,15 +5,18 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Source/Widgets/Fader.cpp \
-../Source/Widgets/InstrumentTypeSelector.cpp 
+../Source/Widgets/SoundTypeAndPath.cpp \
+../Source/Widgets/TriggerIdAndLocation.cpp 
 
 OBJS += \
 ./Source/Widgets/Fader.o \
-./Source/Widgets/InstrumentTypeSelector.o 
+./Source/Widgets/SoundTypeAndPath.o \
+./Source/Widgets/TriggerIdAndLocation.o 
 
 CPP_DEPS += \
 ./Source/Widgets/Fader.d \
-./Source/Widgets/InstrumentTypeSelector.d 
+./Source/Widgets/SoundTypeAndPath.d \
+./Source/Widgets/TriggerIdAndLocation.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

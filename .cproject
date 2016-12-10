@@ -101,7 +101,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Source/Widgets/InstrumentTypeSelector.cpp|Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>
@@ -209,7 +209,7 @@
 						</toolChain>
 					</folderInfo>
 					<sourceEntries>
-						<entry excluding="Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
+						<entry excluding="Source/Widgets/InstrumentTypeSelector.cpp|Source/Testing/SerialSensorsTest.cpp|Source/old|Source/Bak|Source/Testing/SpiSensorTest.cpp|Source/Old|Source/Testing/SerialSensorTest.cpp|Source/Testing/GuiHddTest.cpp|Source/Testing/eXaDrumsHddTest.cpp" flags="VALUE_WORKSPACE_PATH|RESOLVED" kind="sourcePath" name=""/>
 					</sourceEntries>
 				</configuration>
 			</storageModule>

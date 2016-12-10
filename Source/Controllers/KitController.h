@@ -10,7 +10,8 @@
 
 
 #include "../Widgets/Fader.h"
-#include "../Widgets/InstrumentTypeSelector.h"
+#include "../Widgets/TriggerIdAndLocation.h"
+#include "../Widgets/SoundTypeAndPath.h"
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/KitCreator_api.h>
@@ -18,7 +19,6 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/messagedialog.h>
-#include <gtkmm/entry.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
@@ -51,13 +51,15 @@ namespace Controllers
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
+		void AddInstrumentToKit();
 		std::vector<std::string> RetrieveInstrumentsNames() const;
 		std::vector<std::string> RetrieveInstrumentsTypes() const;
 
 		// Signals
-
 		void ChangeKit();
 		void PlayDrums();
+		void ValidateKitData();
+		void ChangeInstrumentType();
 
 		// Faders
 		void UpdateFaders();
@@ -70,10 +72,7 @@ namespace Controllers
 
 		// Dialogs & Windows
 		void DeleteKitDialog();
-		void ShowNewKitWindow();
-		void HideNewKitWindow();
-		void ShowInstrumentsListWindow();
-		void HideInstrumentsListWindow();
+		void AddNewKit();
 
 		// Instruments
 		void SetInstrumentVolume(Widgets::FaderPtr& fader) const;
@@ -85,36 +84,31 @@ namespace Controllers
 		// Buttons
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* addDrumKitButton;
-		Gtk::Button* kitNameCancel;
-		Gtk::Button* KitNameOk;
 		Gtk::Button* playButton;
-		Gtk::Button* instrumentsListCancel;
-		Gtk::Button* instrumentsListOkay;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
+
+		// Faders
+		Gtk::Button* saveFaders;
+		std::vector<Widgets::FaderPtr> faders;
+		Gtk::Box* fadersList;
+
+		// Kit creation
+		std::vector<Widgets::TriggerIdAndLocationPtr> triggersIdsAndLocations;
+		std::vector<Widgets::SoundTypeAndPathPtr> soundsTypesAndPaths;
 
 		// Dialogs
 		Gtk::MessageDialog* deleteKitDialog;
 
 		// Windows
-		Gtk::Window* newKitNameWindow;
-		Gtk::Window* instrumentsListWindow;
+		Gtk::Window* newKitWindow;
+		Gtk::Window* instrumentConfigWindow;
 
-		// Faders
-		Gtk::Button* saveFaders;
-		std::vector<Widgets::FaderPtr> faders;
 
-		// Instrument selectors
-		std::vector<Widgets::InstrumentTypeSelectorPtr> instrumentTypeSelectors;
+		// Class variables
+		int numInstrumentsToCreate;
 
-		// Boxes
-		Gtk::Box* fadersList;
-		Gtk::Box* instrumentsListBox;
-
-		// Entries
-		Gtk::Entry* kitNameEntry;
-		Gtk::Entry* numInstrumentsEntry;
 
 	};
 

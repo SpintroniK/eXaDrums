@@ -7,6 +7,8 @@
 
 #include "KitController.h"
 
+#include <gtkmm/entry.h>
+
 #include <functional>
 #include <algorithm>
 #include <string>
@@ -22,6 +24,8 @@ namespace Controllers
 	: builder(builder), drumKit(drumKit)
 	{
 
+		numInstrumentsToCreate = 0;
+
 		std::string dataFolder = GetDataFolderLoc();
 
 		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
@@ -33,14 +37,6 @@ namespace Controllers
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
-			builder->get_widget("KitNameCancel", kitNameCancel);
-			builder->get_widget("KitNameOk", KitNameOk);
-			builder->get_widget("InstrumentsListCancel", instrumentsListCancel);
-			builder->get_widget("InstrumentsListOkay", instrumentsListOkay);
-
-			// Entries
-			builder->get_widget("KitNameEntry", kitNameEntry);
-			builder->get_widget("NumInstrumentsEntry", numInstrumentsEntry);
 
 			// Lists
 			builder->get_widget("KitsList", kitsList);
@@ -49,15 +45,13 @@ namespace Controllers
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
-			// Boxes
-			builder->get_widget("InstrumentsListBox", instrumentsListBox);
 
 			// Dialogs
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
 
 			// Windows
-			builder->get_widget("NewKitNameWindow", newKitNameWindow);
-			builder->get_widget("InstrumentsListWindow", instrumentsListWindow);
+			builder->get_widget("NewKitNameWindow", newKitWindow);
+			builder->get_widget("InstrumentConfigWindow", instrumentConfigWindow);
 
 
 		}
@@ -79,14 +73,7 @@ namespace Controllers
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::PlayDrums));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
-			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowNewKitWindow));
-			kitNameCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideNewKitWindow));
-			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentsListWindow));
-			instrumentsListCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideInstrumentsListWindow));
-			instrumentsListOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::HideInstrumentsListWindow));
-
-			// Entries
-			//kitNameEntry->signal_grab_focus().connect(sigc::mem_fun(this, &KitController::ShowKeyboard));
+			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKit));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeKit));
@@ -99,8 +86,8 @@ namespace Controllers
 	{
 
 		// Delete all pointers (dialogs and windows)
-		delete newKitNameWindow;
-		delete instrumentsListWindow;
+		delete newKitWindow;
+		delete instrumentConfigWindow;
 		delete deleteKitDialog;
 
 		return;
@@ -388,83 +375,213 @@ namespace Controllers
 	}
 
 
-	void KitController::ShowNewKitWindow()
+	void KitController::AddNewKit()
 	{
 
-		newKitNameWindow->show();
+		newKitWindow->show();
 		ShowKeyboard();
 
+		Gtk::Button* kitNameCancel = nullptr;
+		Gtk::Button* KitNameOk = nullptr;
+
+		builder->get_widget("KitNameCancel", kitNameCancel);
+		builder->get_widget("KitNameOk", KitNameOk);
+
+		kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
+		KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
+
 		return;
 	}
 
-	void KitController::HideNewKitWindow()
+
+
+	void KitController::AddInstrumentToKit()
 	{
 
-		HideKeyboard();
-		newKitNameWindow->hide();
+		int numInstruments = kitCreator->GetNumInstruments();
+
+		if(numInstruments < this->numInstrumentsToCreate)
+		{
+
+			// Retrieve data
+			std::string instrumentName = "Instrument " + std::to_string(numInstruments + 1);
+
+			// Retrieve window's widgets
+			Gtk::Entry* instrumentConfig_Name = nullptr;
+			Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
+
+			// Get widgets
+			builder->get_widget("InstrumentConfig_Name", instrumentConfig_Name);
+			builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
+
+			// Connect signals
+			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
+
+			// Create vector of instruments types
+			std::vector<std::string> instrumentTypes = RetrieveInstrumentsTypes();
+
+			// Populate instrument config window
+			{
+				instrumentConfig_Type->remove_all();
+
+				for(std::size_t i = 0; i < instrumentTypes.size(); i++)
+				{
+					instrumentConfig_Type->insert(i, instrumentTypes[i]);
+				}
+
+				// Set default instrument and call ChangeInstrumentType() method
+				instrumentConfig_Type->set_active(0);
+			}
+
+			instrumentConfig_Name->set_text(instrumentName);
+
+
+			// Show window
+			instrumentConfigWindow->show();
+
+		}
+		else if(numInstruments == this->numInstrumentsToCreate)
+		{
+			// All instruments have been added, save kit.
+		}
+		else
+		{
+			// Should never happen => error.
+		}
+
 		return;
 	}
 
-	void KitController::ShowInstrumentsListWindow()
+	void KitController::ChangeInstrumentType()
 	{
 
-		HideNewKitWindow();
+		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
+		Gtk::Box* instrumentConfig_TriggersBox = nullptr;
+		Gtk::Box* instrumentConfig_SoundsBox = nullptr;
+
+		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
+		builder->get_widget("InstrumentConfig_TriggersBox", instrumentConfig_TriggersBox);
+		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
+
+		std::string instrumentType = instrumentConfig_Type->get_active_text();
+		int numTriggersLocations = kitCreator->GetNumTriggers(instrumentType.c_str());
+		int numSoundsTypes = kitCreator->GetNumSounds(instrumentType.c_str());
+		int numSoundsFiles = kitCreator->GetNumSoundFiles();
+
+		// Retrieve triggers locations
+		std::vector<std::string> triggersLocations;
+		{
+			for(int i = 0; i < numTriggersLocations; i++)
+			{
+
+				char type[128];
+				int length;
+				kitCreator->GetTriggerTypeById(instrumentType.c_str(), i, type, length);
+
+				triggersLocations.push_back(std::string(type, length));
+			}
+		}
+
+		// Retrieve sounds types
+		std::vector<std::string> soundsTypes;
+		{
+			for(int i = 0; i < numSoundsTypes; i++)
+			{
+
+				char type[128];
+				int length;
+				kitCreator->GetSoundTypeById(instrumentType.c_str(), i, type, length);
+
+				soundsTypes.push_back(std::string(type, length));
+			}
+		}
+
+		// Retrieve sounds files
+		std::vector<std::string> soundsFiles;
+		{
+			for(int i = 0; i < numSoundsFiles; i++)
+			{
+
+				char title[128];
+				int length;
+				kitCreator->GetSoundFileById(i, title, length);
+
+				soundsFiles.push_back(std::string(title, length));
+			}
+		}
+
+		// Create tirggers ids and locations
+		{
+			std::for_each(triggersIdsAndLocations.begin(), triggersIdsAndLocations.end(), [](TriggerIdAndLocationPtr& t) { t.reset(); });
+			triggersIdsAndLocations.clear();
+
+			for(std::size_t i = 0; i < triggersLocations.size(); i++)
+			{
+				//XXX Need to add the triggers to the kitCreator.
+				triggersIdsAndLocations.push_back(std::make_shared<TriggerIdAndLocation>(triggersLocations, std::vector<int>{0, 1, 2}));
+			}
+
+			std::for_each(triggersIdsAndLocations.cbegin(), triggersIdsAndLocations.cend(), [&instrumentConfig_TriggersBox](const TriggerIdAndLocationPtr& t){ instrumentConfig_TriggersBox->add(*t); });
+		}
+
+		// Create sounds types and paths
+		{
+
+			std::for_each(soundsTypesAndPaths.begin(), soundsTypesAndPaths.end(), [](SoundTypeAndPathPtr& t) { t.reset(); });
+			soundsTypesAndPaths.clear();
+
+			for(std::size_t i = 0; i < soundsTypes.size(); i++)
+			{
+				soundsTypesAndPaths.push_back(std::make_shared<SoundTypeAndPath>(soundsTypes, soundsFiles));
+			}
+
+			// Add sounds types to window
+			std::for_each(soundsTypesAndPaths.cbegin(), soundsTypesAndPaths.cend(), [&instrumentConfig_SoundsBox](const SoundTypeAndPathPtr& t){ instrumentConfig_SoundsBox->add(*t); });
+
+		}
+
+		return;
+	}
+
+	void KitController::ValidateKitData()
+	{
+
+		Gtk::Entry* kitNameEntry = nullptr;
+		Gtk::Entry* numInstrumentsEntry = nullptr;
+
+
+		builder->get_widget("KitNameEntry", kitNameEntry);
+		builder->get_widget("NumInstrumentsEntry", numInstrumentsEntry);
 
 		std::string kitName = kitNameEntry->get_text();
-		int numInstruments;
 
+		if(kitName.length() < 3)
+		{
+			return;
+		}
+
+		int numInstruments;
 		try
 		{
 			numInstruments = std::stoi(numInstrumentsEntry->get_text());
 		}
 		catch(std::invalid_argument& e)
 		{
-			//XXX Need to add an alert of some sort.
-			ShowNewKitWindow();
+			// Return so that the entry isn't validated
 			return;
 		}
 
+		this->numInstrumentsToCreate = numInstruments;
 
-		// Remove existing instrument selectors
-		std::for_each(instrumentTypeSelectors.begin(), instrumentTypeSelectors.end(), [](InstrumentTypeSelectorPtr& i) { i.reset(); });
-		instrumentTypeSelectors.clear();
+		// Hide window
+		this->newKitWindow->hide();
+		HideKeyboard();
 
-		// Create vector of instruments types
-		std::vector<std::string> instrumentTypes = RetrieveInstrumentsTypes();
-
-		// Create new instrument selectors
-		for(int i = 0; i < numInstruments; i++)
-		{
-			std::string instrumentName = "Instrument " + std::to_string(i + 1);
-			instrumentTypeSelectors.push_back(std::make_shared<InstrumentTypeSelector>(instrumentName, instrumentTypes));
-		}
-
-		// Add all instrument selectors to GUI
-		std::for_each(instrumentTypeSelectors.cbegin(), instrumentTypeSelectors.cend(), [this](const InstrumentTypeSelectorPtr& i){ this->instrumentsListBox->add(*i); });
-
-
-		// Create new kit in KitCreator
-		kitCreator->CreateNewKit();
-		kitCreator->SetKitName(kitName.c_str());
-
-		// Show instrument selectors
-		instrumentsListWindow->show();
+		AddInstrumentToKit();
 
 		return;
 	}
 
-	void KitController::HideInstrumentsListWindow()
-	{
-
-		instrumentsListWindow->hide();
-
-		std::vector<std::string> instrumentsTypes;
-		std::transform(instrumentTypeSelectors.cbegin(), instrumentTypeSelectors.cend(), std::back_inserter(instrumentsTypes), [](const InstrumentTypeSelectorPtr& i) { return i->GetInstrumentType(); });
-
-
-
-		return;
-	}
 
 
 	void KitController::ShowKeyboard()

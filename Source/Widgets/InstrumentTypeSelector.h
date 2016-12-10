@@ -29,6 +29,7 @@ namespace Widgets
 		virtual ~InstrumentTypeSelector();
 
 		std::string GetInstrumentType() const { return selector.get_active_text(); }
+		std::string GetInstrumentName() const { return label.get_text(); }
 
 	private:
 
