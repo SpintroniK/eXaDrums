@@ -896,7 +896,7 @@ Author: Jérémy Oden
             <property name="valign">end</property>
             <property name="column_spacing">4</property>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="InstrumentConfigOkay">
                 <property name="label">gtk-ok</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -909,7 +909,7 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="InstrumentConfigCancel">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>

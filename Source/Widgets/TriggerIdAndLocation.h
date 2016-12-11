@@ -27,6 +27,9 @@ namespace Widgets
 		TriggerIdAndLocation(const std::vector<std::string>& locations, const std::vector<int>& ids);
 		virtual ~TriggerIdAndLocation();
 
+		std::string GetTriggerLoc() const { return location.get_entry_text(); }
+		int GetTriggerId() const { return std::stoi(triggerId.get_entry_text()); }
+
 
 	private:
 

@@ -27,6 +27,9 @@ namespace Widgets
 		SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds);
 		virtual ~SoundTypeAndPath();
 
+		std::string GetSoundType() const { return typesList.get_entry_text(); }
+		std::string GetSound() const { return soundsList.get_entry_text(); }
+
 	private:
 
 		Gtk::Label soundTypeLabel;

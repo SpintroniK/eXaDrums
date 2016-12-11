@@ -422,15 +422,22 @@ namespace Controllers
 
 			// Populate instrument config window
 			{
-				instrumentConfig_Type->remove_all();
 
-				for(std::size_t i = 0; i < instrumentTypes.size(); i++)
+				std::string text = instrumentConfig_Type->get_active_text();
+
+				// Populate only if not already done
+				if(text == "")
 				{
-					instrumentConfig_Type->insert(i, instrumentTypes[i]);
+
+					for(std::size_t i = 0; i < instrumentTypes.size(); i++)
+					{
+						instrumentConfig_Type->insert(i, instrumentTypes[i]);
+					}
+
+					// Set default instrument and call ChangeInstrumentType() method
+					instrumentConfig_Type->set_active(0);
 				}
 
-				// Set default instrument and call ChangeInstrumentType() method
-				instrumentConfig_Type->set_active(0);
 			}
 
 			instrumentConfig_Name->set_text(instrumentName);
@@ -443,6 +450,12 @@ namespace Controllers
 		else if(numInstruments == this->numInstrumentsToCreate)
 		{
 			// All instruments have been added, save kit.
+			//XXX Temporary saving to test.xml...
+			kitCreator->SaveKit("test.xml");
+			instrumentConfigWindow->hide();
+
+			//XXX Need to update the list of kits and the module...
+
 		}
 		else
 		{
@@ -455,13 +468,20 @@ namespace Controllers
 	void KitController::ChangeInstrumentType()
 	{
 
+		Gtk::Button* instrumentConfigOkay = nullptr;
+		Gtk::Button* instrumentConfigCancel = nullptr;
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
 		Gtk::Box* instrumentConfig_TriggersBox = nullptr;
 		Gtk::Box* instrumentConfig_SoundsBox = nullptr;
 
+		builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
+		builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
 		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 		builder->get_widget("InstrumentConfig_TriggersBox", instrumentConfig_TriggersBox);
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
+
+		instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
+		instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this->instrumentConfigWindow, &Gtk::Window::hide));
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 		int numTriggersLocations = kitCreator->GetNumTriggers(instrumentType.c_str());
@@ -543,6 +563,51 @@ namespace Controllers
 		return;
 	}
 
+	void KitController::ValidateInstrumentData()
+	{
+
+		Gtk::Entry* instrumentConfig_Name = nullptr;
+		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
+
+		builder->get_widget("InstrumentConfig_Name", instrumentConfig_Name);
+		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
+
+		// Get instrument name
+		std::string instrumentName = instrumentConfig_Name->get_text();
+		// Get instrument type
+		std::string instrumentType = instrumentConfig_Type->get_entry_text();
+
+		// Create instrument
+		kitCreator->CreateNewInstrument();
+		kitCreator->SetInstrumentVolume(1.0f);
+		kitCreator->SetInstrumentName(instrumentName.c_str());
+		kitCreator->SetInstrumentType(instrumentType.c_str());
+
+		// Add instrument sounds
+		for(const auto& sound : soundsTypesAndPaths)
+		{
+			std::string soundType = sound->GetSoundType();
+			std::string soundFile = sound->GetSound();
+
+			kitCreator->AddInstrumentSound(soundFile.c_str(), soundType.c_str());
+		}
+
+		// Add instrument triggers
+		for(const auto& trigger : triggersIdsAndLocations)
+		{
+			int id = trigger->GetTriggerId();
+			std::string location = trigger->GetTriggerLoc();
+
+			kitCreator->AddInstrumentTrigger(id, location.c_str());
+		}
+
+		kitCreator->AddInstrumentToKit();
+
+		AddInstrumentToKit();
+
+		return;
+	}
+
 	void KitController::ValidateKitData()
 	{
 
@@ -572,6 +637,10 @@ namespace Controllers
 		}
 
 		this->numInstrumentsToCreate = numInstruments;
+
+		// Create kit
+		kitCreator->CreateNewKit();
+		kitCreator->SetKitName(kitName.c_str());
 
 		// Hide window
 		this->newKitWindow->hide();

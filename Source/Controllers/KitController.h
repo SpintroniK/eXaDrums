@@ -60,6 +60,7 @@ namespace Controllers
 		void PlayDrums();
 		void ValidateKitData();
 		void ChangeInstrumentType();
+		void ValidateInstrumentData();
 
 		// Faders
 		void UpdateFaders();
