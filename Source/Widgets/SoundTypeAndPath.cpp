@@ -32,7 +32,7 @@ namespace Widgets
 
 		// Configure and add types to widget
 		typesList.set_halign(Gtk::Align::ALIGN_CENTER);
-		typesList.get_entry()->set_width_chars(16);
+		typesList.get_entry()->set_width_chars(12);
 		this->attach_next_to(typesList, soundTypeLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
 		typesList.show();
 
@@ -53,7 +53,7 @@ namespace Widgets
 
 		// Configure and add sounds to widget
 		soundsList.set_halign(Gtk::Align::ALIGN_CENTER);
-		soundsList.get_entry()->set_width_chars(16);
+		soundsList.get_entry()->set_width_chars(24);
 		this->attach_next_to(soundsList, soundLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
 		soundsList.show();
 

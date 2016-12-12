@@ -61,6 +61,7 @@ namespace Controllers
 		void ValidateKitData();
 		void ChangeInstrumentType();
 		void ValidateInstrumentData();
+		void CancelInstrumentModif();
 
 		// Faders
 		void UpdateFaders();

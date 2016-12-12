@@ -447,14 +447,13 @@ namespace Controllers
 			instrumentConfigWindow->show();
 
 		}
-		else if(numInstruments == this->numInstrumentsToCreate)
+		else if(numInstruments == this->numInstrumentsToCreate && numInstruments != 0)
 		{
 			// All instruments have been added, save kit.
-			//XXX Temporary saving to test.xml...
-			kitCreator->SaveKit("test.xml");
+			kitCreator->SaveKit();
 			instrumentConfigWindow->hide();
 
-			//XXX Need to update the list of kits and the module...
+			//XXX Need to update the list of kits, the module and the faders
 
 		}
 		else
@@ -481,7 +480,7 @@ namespace Controllers
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
 
 		instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
-		instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this->instrumentConfigWindow, &Gtk::Window::hide));
+		instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 		int numTriggersLocations = kitCreator->GetNumTriggers(instrumentType.c_str());
@@ -559,6 +558,17 @@ namespace Controllers
 			std::for_each(soundsTypesAndPaths.cbegin(), soundsTypesAndPaths.cend(), [&instrumentConfig_SoundsBox](const SoundTypeAndPathPtr& t){ instrumentConfig_SoundsBox->add(*t); });
 
 		}
+
+		return;
+	}
+
+	void KitController::CancelInstrumentModif()
+	{
+
+		kitCreator->CreateNewKit();
+		this->numInstrumentsToCreate = 0;
+
+		this->instrumentConfigWindow->hide();
 
 		return;
 	}
