@@ -74,6 +74,7 @@ namespace Controllers
 
 		// Dialogs & Windows
 		void DeleteKitDialog();
+		void AddNewKitWindow();
 		void AddNewKit();
 
 		// Instruments

@@ -73,7 +73,7 @@ namespace Controllers
 			playButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::PlayDrums));
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
-			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKit));
+			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKitWindow));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeKit));
@@ -219,6 +219,28 @@ namespace Controllers
 			ChangeKit();
 
 		}
+
+		return;
+	}
+
+	void KitController::AddNewKit()
+	{
+
+		if(drumKit->IsStarted())
+		{
+			PlayDrums();
+		}
+
+		// Reload kits
+		drumKit->ReloadKits();
+
+		// Retrieve kits names
+		std::vector<std::string> kitsNames = RetrieveKitsNames();
+
+		kitsList->append(kitsNames.back());
+
+		// Set new kit
+		ChangeKit();
 
 		return;
 	}
@@ -375,7 +397,7 @@ namespace Controllers
 	}
 
 
-	void KitController::AddNewKit()
+	void KitController::AddNewKitWindow()
 	{
 
 		newKitWindow->show();
@@ -453,7 +475,7 @@ namespace Controllers
 			kitCreator->SaveKit();
 			instrumentConfigWindow->hide();
 
-			//XXX Need to update the list of kits, the module and the faders
+			AddNewKit();
 
 		}
 		else
