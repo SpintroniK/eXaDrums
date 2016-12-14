@@ -553,13 +553,16 @@ namespace Controllers
 
 		// Create tirggers ids and locations
 		{
+
+			std::vector<int> triggersIds = kitCreator->GetTriggersIds();
+
 			std::for_each(triggersIdsAndLocations.begin(), triggersIdsAndLocations.end(), [](TriggerIdAndLocationPtr& t) { t.reset(); });
 			triggersIdsAndLocations.clear();
 
 			for(std::size_t i = 0; i < triggersLocations.size(); i++)
 			{
 				//XXX Need to add the triggers to the kitCreator.
-				triggersIdsAndLocations.push_back(std::make_shared<TriggerIdAndLocation>(triggersLocations, std::vector<int>{0, 1, 2}));
+				triggersIdsAndLocations.push_back(std::make_shared<TriggerIdAndLocation>(triggersLocations, triggersIds));
 			}
 
 			std::for_each(triggersIdsAndLocations.cbegin(), triggersIdsAndLocations.cend(), [&instrumentConfig_TriggersBox](const TriggerIdAndLocationPtr& t){ instrumentConfig_TriggersBox->add(*t); });
