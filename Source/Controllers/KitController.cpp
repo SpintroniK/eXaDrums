@@ -507,7 +507,6 @@ namespace Controllers
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 		int numTriggersLocations = kitCreator->GetNumTriggers(instrumentType.c_str());
 		int numSoundsTypes = kitCreator->GetNumSounds(instrumentType.c_str());
-		int numSoundsFiles = kitCreator->GetNumSoundFiles();
 
 		// Retrieve triggers locations
 		std::vector<std::string> triggersLocations;
@@ -538,8 +537,8 @@ namespace Controllers
 		}
 
 		// Retrieve sounds files
-		std::vector<std::string> soundsFiles;
-		{
+		std::vector<std::string> soundsFiles = kitCreator->GetSoundFiles();
+		/*{
 			for(int i = 0; i < numSoundsFiles; i++)
 			{
 
@@ -549,7 +548,7 @@ namespace Controllers
 
 				soundsFiles.push_back(std::string(title, length));
 			}
-		}
+		}*/
 
 		// Create tirggers ids and locations
 		{
