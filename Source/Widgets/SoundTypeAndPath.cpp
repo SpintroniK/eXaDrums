@@ -10,10 +10,10 @@
 namespace Widgets
 {
 
-	SoundTypeAndPath::SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds) : typesList(true), soundsList(true)
+	SoundTypeAndPath::SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds)
+	: soundTypeLabel("Sound type: "), soundLabel("Sound: "), typesList(true), soundsList(true)
 	{
 
-		soundTypeLabel = Gtk::Label("Sound type: ");
 
 		// Configure and add sound type label
 		soundTypeLabel.set_halign(Gtk::Align::ALIGN_CENTER);
@@ -36,8 +36,6 @@ namespace Widgets
 		this->attach_next_to(typesList, soundTypeLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
 		typesList.show();
 
-
-		soundLabel = Gtk::Label("Sound: ");
 
 		// Configure and add sound label
 		soundLabel.set_halign(Gtk::Align::ALIGN_CENTER);

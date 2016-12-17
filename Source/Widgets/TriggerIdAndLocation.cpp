@@ -10,11 +10,10 @@
 namespace Widgets
 {
 
-	TriggerIdAndLocation::TriggerIdAndLocation(const std::vector<std::string>& locations, const std::vector<int>& triggersIds) : location(true), triggerId(true)
+	TriggerIdAndLocation::TriggerIdAndLocation(const std::vector<std::string>& locations, const std::vector<int>& triggersIds)
+	: locationLabel("Location: "), triggerIdLabel("Trigger Id: "), location(true), triggerId(true)
 	{
 
-		locationLabel = Gtk::Label("Location: ");
-		triggerIdLabel = Gtk::Label("Trigger Id: ");
 
 		this->set_halign(Gtk::Align::ALIGN_FILL);
 		this->set_column_spacing(4);
