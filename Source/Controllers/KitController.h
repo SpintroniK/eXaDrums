@@ -41,8 +41,6 @@ namespace Controllers
 	private:
 
 
-		std::vector<std::string> RetrieveKitsNames() const;
-		std::string GetDataFolderLoc() const;
 		void CreateKitsList();
 		int GetCurrentKitId() const;
 		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
@@ -52,7 +50,6 @@ namespace Controllers
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		void AddInstrumentToKit();
-		std::vector<std::string> RetrieveInstrumentsNames() const;
 
 		// Signals
 		void ChangeKit();

@@ -27,7 +27,7 @@ namespace Controllers
 
 		numInstrumentsToCreate = 0;
 
-		std::string dataFolder = GetDataFolderLoc();
+		std::string dataFolder = drumKit->GetDataLocation();
 
 		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
 
@@ -120,50 +120,12 @@ namespace Controllers
 
 	// Private Methods
 
-	std::string KitController::GetDataFolderLoc() const
-	{
-
-		char folder[256];
-		int folderLength;
-
-		drumKit->GetDataLocation(folder, folderLength);
-
-		return std::string(folder, folderLength);
-	}
-
-	std::vector<std::string> KitController::RetrieveKitsNames() const
-	{
-
-		int numKits = drumKit->GetNumKits();
-
-		// Get kit names
-		std::vector<std::string> kitsNames(numKits);
-		{
-			for(int i = 0; i < numKits; i++)
-			{
-
-				// Create local array to store string given by libeXaDrums
-				char kitName[128];
-				int nameLength;
-
-				// Get characters and string's length
-				drumKit->GetKitNameById(i, kitName, nameLength);
-
-				// Convert to string
-				std::string name(kitName, nameLength);
-
-				kitsNames[i] = name;
-			}
-		}
-
-		return kitsNames;
-	}
 
 	void KitController::CreateKitsList()
 	{
 
 		// Retrieve kits names
-		std::vector<std::string> kitsNames = RetrieveKitsNames();
+		std::vector<std::string> kitsNames = drumKit->GetKitsNames();
 
 		// Add kits to the list
 		for(std::size_t i = 0; i < kitsNames.size(); i++)
@@ -259,7 +221,7 @@ namespace Controllers
 		drumKit->ReloadKits();
 
 		// Retrieve kits names
-		std::vector<std::string> kitsNames = RetrieveKitsNames();
+		std::vector<std::string> kitsNames = drumKit->GetKitsNames();
 
 		kitsList->append(kitsNames.back());
 
@@ -324,35 +286,6 @@ namespace Controllers
 	}
 
 
-	std::vector<std::string> KitController::RetrieveInstrumentsNames() const
-	{
-
-		int numInstruments = drumKit->GetNumInstruments();
-
-		// Get instruments names
-		std::vector<std::string> instNames(numInstruments);
-		{
-			for(int i = 0; i < numInstruments; i++)
-			{
-
-				// Create local array to store string given by libeXaDrums
-				char instName[128];
-				int nameLength;
-
-				// Get characters and string's length
-				drumKit->GetInstrumentName(i, instName, nameLength);
-
-				// Convert to string
-				std::string name(instName, nameLength);
-
-				instNames[i] = name;
-			}
-		}
-
-		return instNames;
-	}
-
-
 	void KitController::SaveFaders() const
 	{
 
@@ -371,7 +304,7 @@ namespace Controllers
 		std::for_each(faders.begin(), faders.end(), [](FaderPtr& fader) { fader.reset(); });
 		faders.clear();
 
-		std::vector<std::string> instNames = RetrieveInstrumentsNames();
+		std::vector<std::string> instNames = drumKit->GetInstrumentsNames();
 		for(std::size_t i = 0; i < instNames.size(); i++)
 		{
 			std::string name(instNames[i]);

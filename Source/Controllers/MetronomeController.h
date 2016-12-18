@@ -34,10 +34,6 @@ namespace Controllers
 
 	private:
 
-		std::vector<std::string> RetrieveClickTypes() const;
-		std::vector<int> RetrieveRhythmList() const;
-		std::vector<int> RetrieveBpmeasList() const;
-
 		// Signals
 		void EnableClick() const;
 		void ChangeTempo() const;

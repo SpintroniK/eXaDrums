@@ -7,6 +7,9 @@
 
 #include "MetronomeController.h"
 
+#include <algorithm>
+#include <iterator>
+
 using namespace eXaDrumsApi;
 
 namespace Controllers
@@ -40,7 +43,7 @@ namespace Controllers
 		// Configure Metronome Window
 		{
 			// Append clicks to list
-			std::vector<std::string> clicks = RetrieveClickTypes();
+			std::vector<std::string> clicks = drumKit->GetClicksTypes();
 			std::for_each(clicks.cbegin(), clicks.cend(), [this](const std::string& s){ clickTypes->append(s); });
 
 			// Get current click type
@@ -51,7 +54,7 @@ namespace Controllers
 		}
 
 		// Populate rhythm list
-		this->rhythms = RetrieveRhythmList();
+		this->rhythms = drumKit->GetRhythms();
 		{
 			// Append rhythms to list
 			std::for_each(rhythms.cbegin(), rhythms.cend(), [this](const int& x) { rhythmList->append(std::to_string(x)); });
@@ -65,7 +68,7 @@ namespace Controllers
 		}
 
 		// Populate beats per measure list
-		this->bpmeasValues = RetrieveBpmeasList();
+		this->bpmeasValues = drumKit->GetBpms();
 		{
 			// Append values to list
 			std::for_each(bpmeasValues.cbegin(), bpmeasValues.cend(), [this](const int& x) { bpmeasList->append(std::to_string(x));});
@@ -92,66 +95,6 @@ namespace Controllers
 
 
 	// Private methods
-
-
-	std::vector<std::string> MetronomeController::RetrieveClickTypes() const
-	{
-
-		int numClickTypes = drumKit->GetNumClickTypes();
-
-		std::vector<std::string> clickTypes(numClickTypes);
-		{
-
-			for(int i = 0; i < numClickTypes; i++)
-			{
-
-				// Create local array to store string given by libeXaDrums
-				char clickName[128];
-				int nameLength;
-
-				// Get characters and string's length
-				drumKit->GetClickTypeById(i, clickName, nameLength);
-
-				// Convert to string
-				std::string name(clickName, nameLength);
-
-				clickTypes[i] = name;
-			}
-
-		}
-
-		return clickTypes;
-	}
-
-	std::vector<int> MetronomeController::RetrieveRhythmList() const
-	{
-
-		const int size = drumKit->GetNumRhythms();
-
-		int data[size];
-
-		drumKit->GetRhythmList(data);
-
-		std::vector<int> list;
-		std::copy_n(data, size, std::back_inserter(list));
-
-		return list;
-	}
-
-	std::vector<int> MetronomeController::RetrieveBpmeasList() const
-	{
-
-		const int size = drumKit->GetNumBpmeas();
-
-		int data[size];
-
-		drumKit->GetBpmeasList(data);
-
-		std::vector<int> list;
-		std::copy_n(data, size, std::back_inserter(list));
-
-		return list;
-	}
 
 
 
