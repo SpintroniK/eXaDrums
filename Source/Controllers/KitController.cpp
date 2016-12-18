@@ -13,6 +13,7 @@
 #include <algorithm>
 #include <string>
 #include <stdexcept>
+#include <iostream>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
@@ -31,12 +32,26 @@ namespace Controllers
 		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
 
 
+		Gtk::Button* instrumentConfigOkay = nullptr;
+		Gtk::Button* instrumentConfigCancel = nullptr;
+		Gtk::Button* kitNameCancel = nullptr;
+		Gtk::Button* KitNameOk = nullptr;
+
+		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
+
+
+
 		// Get all widgets
 		{
 			// Buttons
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
+			builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
+			builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
+			builder->get_widget("KitNameCancel", kitNameCancel);
+			builder->get_widget("KitNameOk", KitNameOk);
+
 
 			// Lists
 			builder->get_widget("KitsList", kitsList);
@@ -45,6 +60,8 @@ namespace Controllers
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
+			// Comboboxes
+			builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 
 			// Dialogs
 			builder->get_widget("DeleteKitDialog", deleteKitDialog);
@@ -74,6 +91,13 @@ namespace Controllers
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKitWindow));
+			instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
+			instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
+			kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
+			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
+
+			// Comboboxes
+			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
 
 			// Kits list
 			kitsList->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeKit));
@@ -328,32 +352,6 @@ namespace Controllers
 		return instNames;
 	}
 
-	/*std::vector<std::string> KitController::RetrieveInstrumentsTypes() const
-	{
-
-		int numInstrumentTypes = kitCreator->GetNumInstrumentTypes();
-
-		std::vector<std::string> instrumentTypes(numInstrumentTypes);
-		{
-			for(int i = 0; i < numInstrumentTypes; i++)
-			{
-
-				// Create local array to store string given by libeXaDrums
-				char instType[128];
-				int length;
-
-				// Get instrument type
-				kitCreator->GetInstrumentTypeById(i, instType, length);
-
-				// Convert to string
-				std::string name(instType, length);
-
-				instrumentTypes[i] = name;
-			}
-		}
-
-		return instrumentTypes;
-	}*/
 
 	void KitController::SaveFaders() const
 	{
@@ -403,15 +401,6 @@ namespace Controllers
 		newKitWindow->show();
 		ShowKeyboard();
 
-		Gtk::Button* kitNameCancel = nullptr;
-		Gtk::Button* KitNameOk = nullptr;
-
-		builder->get_widget("KitNameCancel", kitNameCancel);
-		builder->get_widget("KitNameOk", KitNameOk);
-
-		kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
-		KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
-
 		return;
 	}
 
@@ -436,8 +425,6 @@ namespace Controllers
 			builder->get_widget("InstrumentConfig_Name", instrumentConfig_Name);
 			builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 
-			// Connect signals
-			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
 
 			// Create vector of instruments types
 			std::vector<std::string> instrumentTypes = kitCreator->GetInstrumentsTypes();
@@ -489,20 +476,15 @@ namespace Controllers
 	void KitController::ChangeInstrumentType()
 	{
 
-		Gtk::Button* instrumentConfigOkay = nullptr;
-		Gtk::Button* instrumentConfigCancel = nullptr;
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
 		Gtk::Box* instrumentConfig_TriggersBox = nullptr;
 		Gtk::Box* instrumentConfig_SoundsBox = nullptr;
 
-		builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
-		builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
 		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 		builder->get_widget("InstrumentConfig_TriggersBox", instrumentConfig_TriggersBox);
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
 
-		instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
-		instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
+
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 
@@ -601,6 +583,7 @@ namespace Controllers
 		}
 
 		kitCreator->AddInstrumentToKit();
+
 
 		AddInstrumentToKit();
 
