@@ -53,7 +53,7 @@ namespace Controllers
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		void AddInstrumentToKit();
 		std::vector<std::string> RetrieveInstrumentsNames() const;
-		std::vector<std::string> RetrieveInstrumentsTypes() const;
+		//std::vector<std::string> RetrieveInstrumentsTypes() const;
 
 		// Signals
 		void ChangeKit();

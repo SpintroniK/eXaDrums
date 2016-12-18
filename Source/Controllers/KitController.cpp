@@ -328,7 +328,7 @@ namespace Controllers
 		return instNames;
 	}
 
-	std::vector<std::string> KitController::RetrieveInstrumentsTypes() const
+	/*std::vector<std::string> KitController::RetrieveInstrumentsTypes() const
 	{
 
 		int numInstrumentTypes = kitCreator->GetNumInstrumentTypes();
@@ -353,7 +353,7 @@ namespace Controllers
 		}
 
 		return instrumentTypes;
-	}
+	}*/
 
 	void KitController::SaveFaders() const
 	{
@@ -440,7 +440,7 @@ namespace Controllers
 			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
 
 			// Create vector of instruments types
-			std::vector<std::string> instrumentTypes = RetrieveInstrumentsTypes();
+			std::vector<std::string> instrumentTypes = kitCreator->GetInstrumentsTypes();
 
 			// Populate instrument config window
 			{
@@ -505,50 +505,15 @@ namespace Controllers
 		instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
-		int numTriggersLocations = kitCreator->GetNumTriggers(instrumentType.c_str());
-		int numSoundsTypes = kitCreator->GetNumSounds(instrumentType.c_str());
 
 		// Retrieve triggers locations
-		std::vector<std::string> triggersLocations;
-		{
-			for(int i = 0; i < numTriggersLocations; i++)
-			{
-
-				char type[128];
-				int length;
-				kitCreator->GetTriggerTypeById(instrumentType.c_str(), i, type, length);
-
-				triggersLocations.push_back(std::string(type, length));
-			}
-		}
+		std::vector<std::string> triggersLocations = kitCreator->GetTriggersLocations(instrumentType);
 
 		// Retrieve sounds types
-		std::vector<std::string> soundsTypes;
-		{
-			for(int i = 0; i < numSoundsTypes; i++)
-			{
-
-				char type[128];
-				int length;
-				kitCreator->GetSoundTypeById(instrumentType.c_str(), i, type, length);
-
-				soundsTypes.push_back(std::string(type, length));
-			}
-		}
+		std::vector<std::string> soundsTypes = kitCreator->GetSoundsTypes(instrumentType);
 
 		// Retrieve sounds files
-		std::vector<std::string> soundsFiles = kitCreator->GetSoundFiles();
-		/*{
-			for(int i = 0; i < numSoundsFiles; i++)
-			{
-
-				char title[128];
-				int length;
-				kitCreator->GetSoundFileById(i, title, length);
-
-				soundsFiles.push_back(std::string(title, length));
-			}
-		}*/
+		std::vector<std::string> soundsFiles = kitCreator->GetSoundsFiles();
 
 		// Create tirggers ids and locations
 		{
