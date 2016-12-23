@@ -217,13 +217,25 @@ namespace Controllers
 			PlayDrums();
 		}
 
+
+		// Retrieve kits names
+		std::vector<std::string> oldKitsNames = drumKit->GetKitsNames();
+
 		// Reload kits
 		drumKit->ReloadKits();
 
 		// Retrieve kits names
-		std::vector<std::string> kitsNames = drumKit->GetKitsNames();
+		std::vector<std::string> newkitsNames = drumKit->GetKitsNames();
 
-		kitsList->append(kitsNames.back());
+		auto newOldKit = std::mismatch(newkitsNames.cbegin(), newkitsNames.cend(), oldKitsNames.cbegin());
+
+		// Get new kit's name and position in the list
+		std::string newKitName = *(newOldKit.first);
+		int pos = std::distance(oldKitsNames.cbegin(), newOldKit.second);
+
+		// Insert new kit into list, and activate it
+		kitsList->insert(pos, newKitName);
+		kitsList->set_active(pos);
 
 		// Set new kit
 		ChangeKit();
