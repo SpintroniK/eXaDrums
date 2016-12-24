@@ -8,6 +8,7 @@
 #include "KitController.h"
 
 #include <gtkmm/entry.h>
+#include <gtkmm/messagedialog.h>
 
 #include <functional>
 #include <algorithm>
@@ -63,8 +64,6 @@ namespace Controllers
 			// Comboboxes
 			builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 
-			// Dialogs
-			builder->get_widget("DeleteKitDialog", deleteKitDialog);
 
 			// Windows
 			builder->get_widget("NewKitNameWindow", newKitWindow);
@@ -112,7 +111,6 @@ namespace Controllers
 		// Delete all pointers (dialogs and windows)
 		delete newKitWindow;
 		delete instrumentConfigWindow;
-		delete deleteKitDialog;
 
 		return;
 	}
@@ -149,19 +147,19 @@ namespace Controllers
 	void KitController::DeleteKitDialog()
 	{
 
+
+		Gtk::MessageDialog d("Are you sure you want to delete the current drum kit?", false, Gtk::MessageType::MESSAGE_QUESTION, Gtk::ButtonsType::BUTTONS_YES_NO);
+		d.set_title("Delete Kit");
 		// Get answer
-		int answer = deleteKitDialog->run();
+		int answer = d.run();
 
 		// Check answer
 		switch (answer)
 		{
-			case Gtk::RESPONSE_CANCEL: break;
-			case Gtk::RESPONSE_OK: this->DeleteKit(GetCurrentKitId()); break;
+			case Gtk::ResponseType::RESPONSE_NO: break;
+			case Gtk::ResponseType::RESPONSE_YES: this->DeleteKit(GetCurrentKitId()); break;
 			default: break;
 		}
-
-		// Close dialog
-		deleteKitDialog->hide();
 
 		return;
 	}
@@ -239,6 +237,17 @@ namespace Controllers
 
 		// Set new kit
 		ChangeKit();
+
+		return;
+	}
+
+	void KitController::KitAdded()
+	{
+
+		Gtk::MessageDialog d("A new drum kit has been added.", false, Gtk::MessageType::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK);
+		d.set_title("New kit added");
+		d.run();
+
 
 		return;
 	}
@@ -409,6 +418,8 @@ namespace Controllers
 
 			AddNewKit();
 
+			KitAdded();
+
 		}
 		else
 		{
@@ -546,6 +557,19 @@ namespace Controllers
 		builder->get_widget("NumInstrumentsEntry", numInstrumentsEntry);
 
 		std::string kitName = kitNameEntry->get_text();
+
+		// Check kit name
+		std::vector<std::string> kitsNames = drumKit->GetKitsNames();
+		auto it = std::find(kitsNames.cbegin(), kitsNames.cend(), kitName);
+		if(it != kitsNames.cend())
+		{
+
+			Gtk::MessageDialog d("A drum kit with the same name already exists.", false, Gtk::MessageType::MESSAGE_ERROR, Gtk::ButtonsType::BUTTONS_CLOSE);
+			d.set_title("Error");
+			d.run();
+
+			return;
+		}
 
 		if(kitName.length() < 3)
 		{

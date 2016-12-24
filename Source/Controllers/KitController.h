@@ -18,7 +18,6 @@
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
-#include <gtkmm/messagedialog.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
@@ -46,6 +45,7 @@ namespace Controllers
 		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
 		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
 		void DeleteKit(const int& id);
+		void KitAdded();
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
@@ -97,8 +97,6 @@ namespace Controllers
 		std::vector<Widgets::TriggerIdAndLocationPtr> triggersIdsAndLocations;
 		std::vector<Widgets::SoundTypeAndPathPtr> soundsTypesAndPaths;
 
-		// Dialogs
-		Gtk::MessageDialog* deleteKitDialog;
 
 		// Windows
 		Gtk::Window* newKitWindow;
