@@ -11,7 +11,8 @@
 namespace Widgets
 {
 
-	InstrumentSelector::InstrumentSelector(const std::string name) : instrumentName(name)
+	InstrumentSelector::InstrumentSelector(const std::string name)
+	: instrumentName(name), preferencesButton(Gtk::StockID("gtk-preferences")), deleteButton(Gtk::StockID("gtk-delete"))
 	{
 
 		this->set_column_homogeneous(true);
@@ -20,11 +21,9 @@ namespace Widgets
 		this->attach(instrumentName, 0, 0, 1, 1);
 		instrumentName.show();
 
-		preferencesButton = Gtk::Button(Gtk::StockID("gtk-preferences"));
 		this->attach_next_to(preferencesButton, instrumentName, Gtk::PositionType::POS_RIGHT, 1, 1);
 		preferencesButton.show();
 
-		deleteButton = Gtk::Button(Gtk::StockID("gtk-delete"));
 		deleteButton.set_margin_left(4);
 		this->attach_next_to(deleteButton, preferencesButton, Gtk::PositionType::POS_RIGHT, 1, 1);
 		deleteButton.show();
