@@ -12,6 +12,7 @@
 #include "../Widgets/Fader.h"
 #include "../Widgets/TriggerIdAndLocation.h"
 #include "../Widgets/SoundTypeAndPath.h"
+#include "../Widgets/InstrumentSelector.h"
 
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/KitCreator_api.h>
@@ -58,6 +59,7 @@ namespace Controllers
 		void ChangeInstrumentType();
 		void ValidateInstrumentData();
 		void CancelInstrumentModif();
+		void ShowInstrumentSeclectWindow();
 
 		// Faders
 		void UpdateFaders();
@@ -84,6 +86,7 @@ namespace Controllers
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* addDrumKitButton;
 		Gtk::Button* playButton;
+		Gtk::Button* kitPreferencesButton;
 
 		// Comboboxes
 		Gtk::ComboBoxText* kitsList;
@@ -96,11 +99,13 @@ namespace Controllers
 		// Kit creation
 		std::vector<Widgets::TriggerIdAndLocationPtr> triggersIdsAndLocations;
 		std::vector<Widgets::SoundTypeAndPathPtr> soundsTypesAndPaths;
+		std::vector<Widgets::InstrumentSelectorPtr> instrumentsSelectors;
 
 
 		// Windows
 		Gtk::Window* newKitWindow;
 		Gtk::Window* instrumentConfigWindow;
+		Gtk::Window* instrumentSeclectWindow;
 
 
 		// Class variables

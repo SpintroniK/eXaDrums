@@ -48,6 +48,7 @@ namespace Controllers
 			builder->get_widget("PlayButton", playButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
+			builder->get_widget("KitPreferencesButton", kitPreferencesButton);
 			builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
 			builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
 			builder->get_widget("KitNameCancel", kitNameCancel);
@@ -68,6 +69,7 @@ namespace Controllers
 			// Windows
 			builder->get_widget("NewKitNameWindow", newKitWindow);
 			builder->get_widget("InstrumentConfigWindow", instrumentConfigWindow);
+			builder->get_widget("InstrumentSeclectWindow", instrumentSeclectWindow);
 
 
 		}
@@ -90,6 +92,7 @@ namespace Controllers
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKitWindow));
+			kitPreferencesButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentSeclectWindow));
 			instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
 			instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
 			kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
@@ -111,6 +114,7 @@ namespace Controllers
 		// Delete all pointers (dialogs and windows)
 		delete newKitWindow;
 		delete instrumentConfigWindow;
+		delete instrumentSeclectWindow;
 
 		return;
 	}
@@ -573,6 +577,11 @@ namespace Controllers
 
 		if(kitName.length() < 3)
 		{
+
+			Gtk::MessageDialog d("Kit's name must be at least 3 characters long.", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_CLOSE);
+			d.set_title("Error");
+			d.run();
+
 			return;
 		}
 
@@ -602,6 +611,32 @@ namespace Controllers
 		return;
 	}
 
+	void KitController::ShowInstrumentSeclectWindow()
+	{
+
+		Gtk::Label* kitNameLabel = nullptr;
+		Gtk::Box* instrumentsBox = nullptr;
+
+		builder->get_widget("ISKitName", kitNameLabel);
+		builder->get_widget("ISListBox", instrumentsBox);
+
+		kitNameLabel->set_text(kitsList->get_active_text());
+
+		std::for_each(instrumentsSelectors.begin(), instrumentsSelectors.end(), [](InstrumentSelectorPtr& i) { i.reset(); });
+		instrumentsSelectors.clear();
+
+		for(int i = 0; i < 2; i++)
+		{
+			InstrumentSelectorPtr is(new InstrumentSelector("Instrument" + std::to_string(i)));
+			instrumentsSelectors.push_back(is);
+		}
+
+		std::for_each(instrumentsSelectors.cbegin(), instrumentsSelectors.cend(), [&instrumentsBox](const InstrumentSelectorPtr& i) { instrumentsBox->add(*i); });
+
+		instrumentSeclectWindow->show();
+
+		return;
+	}
 
 
 	void KitController::ShowKeyboard()

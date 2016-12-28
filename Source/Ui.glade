@@ -52,6 +52,7 @@ Author: Jérémy Oden
   <object class="GtkWindow" id="MainWindow">
     <property name="width_request">780</property>
     <property name="can_focus">False</property>
+    <property name="halign">center</property>
     <property name="window_position">center</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="decorated">False</property>
@@ -59,17 +60,18 @@ Author: Jérémy Oden
     <property name="gravity">center</property>
     <child>
       <object class="GtkGrid" id="MainGrid">
-        <property name="width_request">760</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
+        <property name="halign">center</property>
+        <property name="hexpand">True</property>
         <child>
           <object class="GtkGrid" id="TopGrid">
-            <property name="width_request">760</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="margin_left">4</property>
             <property name="margin_right">4</property>
             <property name="margin_top">4</property>
+            <property name="hexpand">True</property>
             <property name="row_homogeneous">True</property>
             <property name="column_homogeneous">True</property>
             <child>
@@ -139,218 +141,36 @@ Author: Jérémy Oden
         </child>
         <child>
           <object class="GtkGrid" id="BottomGrid">
-            <property name="width_request">760</property>
             <property name="visible">True</property>
             <property name="can_focus">False</property>
+            <property name="margin_left">4</property>
+            <property name="margin_right">4</property>
+            <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkFrame" id="DrumKitFrame">
-                <property name="width_request">770</property>
-                <property name="height_request">100</property>
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">center</property>
-                <property name="margin_left">10</property>
-                <property name="margin_right">10</property>
-                <property name="margin_top">3</property>
-                <property name="margin_bottom">10</property>
-                <property name="label_xalign">0</property>
-                <property name="shadow_type">out</property>
-                <child>
-                  <object class="GtkAlignment" id="alignment1">
-                    <property name="width_request">760</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="left_padding">12</property>
-                    <child>
-                      <object class="GtkGrid" id="DrumKitGrid">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="column_spacing">10</property>
-                        <property name="column_homogeneous">True</property>
-                        <child>
-                          <object class="GtkGrid" id="DrumKitFuncGrid">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="column_spacing">10</property>
-                            <property name="column_homogeneous">True</property>
-                            <child>
-                              <object class="GtkButton" id="button1">
-                                <property name="label">gtk-preferences</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_stock">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="PlayButton">
-                                <property name="label">gtk-media-play</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_stock">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">0</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">2</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkComboBoxText" id="KitsList">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="can_default">True</property>
-                            <property name="has_entry">True</property>
-                            <child internal-child="entry">
-                              <object class="GtkEntry">
-                                <property name="can_focus">False</property>
-                                <property name="editable">False</property>
-                              </object>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkGrid" id="ManageDrumKitGrid">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="row_homogeneous">True</property>
-                            <property name="column_homogeneous">True</property>
-                            <child>
-                              <object class="GtkButton" id="AddDrumKitButton">
-                                <property name="label">gtk-add</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_stock">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">0</property>
-                                <property name="top_attach">0</property>
-                              </packing>
-                            </child>
-                            <child>
-                              <object class="GtkButton" id="DeleteDrumKitButton">
-                                <property name="label">gtk-delete</property>
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="use_stock">True</property>
-                              </object>
-                              <packing>
-                                <property name="left_attach">1</property>
-                                <property name="top_attach">0</property>
-                              </packing>
-                            </child>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">2</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="SelectKitLabel">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">center</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="label" translatable="yes">Select Kit:</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="ManageDrumKitLabel">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">center</property>
-                            <property name="margin_bottom">10</property>
-                            <property name="label" translatable="yes">Manage Drum Kits:</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">0</property>
-                            <property name="top_attach">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <object class="GtkLabel" id="KitVolumeLabel">
-                            <property name="visible">True</property>
-                            <property name="can_focus">False</property>
-                            <property name="halign">end</property>
-                          </object>
-                          <packing>
-                            <property name="left_attach">1</property>
-                            <property name="top_attach">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </object>
-                    </child>
-                  </object>
-                </child>
-                <child type="label">
-                  <object class="GtkLabel" id="DrumKitFrameLabel">
-                    <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="halign">center</property>
-                    <property name="label" translatable="yes">Drum Kit</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkGrid" id="BottomGrid2">
-                <property name="width_request">740</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">center</property>
+                <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <property name="row_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="FadersFrame">
-                    <property name="width_request">330</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
                     <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                     <property name="margin_bottom">10</property>
+                    <property name="hexpand">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">out</property>
                     <child>
                       <object class="GtkAlignment" id="alignment2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
+                        <property name="hexpand">True</property>
                         <property name="left_padding">12</property>
                         <child>
                           <object class="GtkGrid" id="FadersMainGrid">
@@ -360,6 +180,7 @@ Author: Jérémy Oden
                             <property name="margin_right">10</property>
                             <property name="margin_top">10</property>
                             <property name="margin_bottom">10</property>
+                            <property name="hexpand">True</property>
                             <child>
                               <object class="GtkBox" id="FadersList">
                                 <property name="width_request">100</property>
@@ -409,10 +230,9 @@ Author: Jérémy Oden
                 </child>
                 <child>
                   <object class="GtkGrid" id="BottomRightGird">
-                    <property name="width_request">420</property>
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="halign">center</property>
+                    <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="row_homogeneous">True</property>
                     <property name="column_homogeneous">True</property>
@@ -683,6 +503,202 @@ Author: Jérémy Oden
                 <property name="top_attach">1</property>
               </packing>
             </child>
+            <child>
+              <object class="GtkGrid" id="BottomGrid1">
+                <property name="height_request">100</property>
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="row_homogeneous">True</property>
+                <child>
+                  <object class="GtkFrame" id="DrumKitFrame">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="margin_left">10</property>
+                    <property name="margin_right">10</property>
+                    <property name="margin_top">3</property>
+                    <property name="margin_bottom">10</property>
+                    <property name="label_xalign">0</property>
+                    <property name="shadow_type">out</property>
+                    <child>
+                      <object class="GtkAlignment" id="alignment1">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="hexpand">True</property>
+                        <property name="left_padding">12</property>
+                        <child>
+                          <object class="GtkGrid" id="DrumKitGrid">
+                            <property name="visible">True</property>
+                            <property name="can_focus">False</property>
+                            <property name="margin_bottom">10</property>
+                            <property name="hexpand">True</property>
+                            <property name="column_spacing">10</property>
+                            <property name="column_homogeneous">True</property>
+                            <child>
+                              <object class="GtkGrid" id="DrumKitFuncGrid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="column_spacing">10</property>
+                                <property name="column_homogeneous">True</property>
+                                <child>
+                                  <object class="GtkButton" id="KitPreferencesButton">
+                                    <property name="label">gtk-preferences</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="use_stock">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="PlayButton">
+                                    <property name="label">gtk-media-play</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="margin_right">10</property>
+                                    <property name="use_stock">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">2</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkComboBoxText" id="KitsList">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="can_default">True</property>
+                                <property name="has_entry">True</property>
+                                <child internal-child="entry">
+                                  <object class="GtkEntry">
+                                    <property name="can_focus">True</property>
+                                    <property name="editable">False</property>
+                                  </object>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkGrid" id="ManageDrumKitGrid">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="row_homogeneous">True</property>
+                                <property name="column_homogeneous">True</property>
+                                <child>
+                                  <object class="GtkButton" id="AddDrumKitButton">
+                                    <property name="label">gtk-add</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="use_stock">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">0</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                                <child>
+                                  <object class="GtkButton" id="DeleteDrumKitButton">
+                                    <property name="label">gtk-delete</property>
+                                    <property name="visible">True</property>
+                                    <property name="can_focus">True</property>
+                                    <property name="receives_default">True</property>
+                                    <property name="use_stock">True</property>
+                                  </object>
+                                  <packing>
+                                    <property name="left_attach">1</property>
+                                    <property name="top_attach">0</property>
+                                  </packing>
+                                </child>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">2</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="SelectKitLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">center</property>
+                                <property name="margin_bottom">10</property>
+                                <property name="label" translatable="yes">Select Kit:</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="ManageDrumKitLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">center</property>
+                                <property name="margin_bottom">10</property>
+                                <property name="label" translatable="yes">Manage Drum Kits:</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">0</property>
+                                <property name="top_attach">1</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <object class="GtkLabel" id="KitVolumeLabel">
+                                <property name="visible">True</property>
+                                <property name="can_focus">False</property>
+                                <property name="halign">end</property>
+                              </object>
+                              <packing>
+                                <property name="left_attach">1</property>
+                                <property name="top_attach">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                            <child>
+                              <placeholder/>
+                            </child>
+                          </object>
+                        </child>
+                      </object>
+                    </child>
+                    <child type="label">
+                      <object class="GtkLabel" id="DrumKitFrameLabel">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="halign">center</property>
+                        <property name="label" translatable="yes">Drum Kit</property>
+                      </object>
+                    </child>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -696,6 +712,8 @@ Author: Jérémy Oden
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Modify Instrument</property>
     <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
@@ -903,6 +921,69 @@ Author: Jérémy Oden
       </object>
     </child>
   </object>
+  <object class="GtkWindow" id="InstrumentSeclectWindow">
+    <property name="can_focus">False</property>
+    <property name="modal">True</property>
+    <property name="transient_for">MainWindow</property>
+    <child>
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="column_homogeneous">True</property>
+        <child>
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="column_homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="label" translatable="yes">Kit name: </property>
+                <property name="justify">right</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="ISKitName">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="hexpand">True</property>
+                <property name="label" translatable="yes">label</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="ISListBox">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="left_attach">0</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkWindow" id="MetronomeConfig">
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Metronome Configuration</property>
@@ -912,6 +993,7 @@ Author: Jérémy Oden
     <property name="default_width">440</property>
     <property name="default_height">120</property>
     <property name="type_hint">dialog</property>
+    <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
@@ -1062,6 +1144,8 @@ Author: Jérémy Oden
     <property name="can_focus">False</property>
     <property name="title" translatable="yes">Add a new drum kit</property>
     <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
@@ -1104,6 +1188,7 @@ Author: Jérémy Oden
           <object class="GtkEntry" id="KitNameEntry">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
+            <property name="max_length">22</property>
           </object>
           <packing>
             <property name="left_attach">1</property>

@@ -5,16 +5,19 @@
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
 ../Source/Widgets/Fader.cpp \
+../Source/Widgets/InstrumentSelector.cpp \
 ../Source/Widgets/SoundTypeAndPath.cpp \
 ../Source/Widgets/TriggerIdAndLocation.cpp 
 
 OBJS += \
 ./Source/Widgets/Fader.o \
+./Source/Widgets/InstrumentSelector.o \
 ./Source/Widgets/SoundTypeAndPath.o \
 ./Source/Widgets/TriggerIdAndLocation.o 
 
 CPP_DEPS += \
 ./Source/Widgets/Fader.d \
+./Source/Widgets/InstrumentSelector.d \
 ./Source/Widgets/SoundTypeAndPath.d \
 ./Source/Widgets/TriggerIdAndLocation.d 
 
