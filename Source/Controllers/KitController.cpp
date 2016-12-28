@@ -229,11 +229,11 @@ namespace Controllers
 		// Retrieve kits names
 		std::vector<std::string> newkitsNames = drumKit->GetKitsNames();
 
-		auto newOldKit = std::mismatch(newkitsNames.cbegin(), newkitsNames.cend(), oldKitsNames.cbegin());
+		auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
 
 		// Get new kit's name and position in the list
-		std::string newKitName = *(newOldKit.first);
-		int pos = std::distance(oldKitsNames.cbegin(), newOldKit.second);
+		std::string newKitName = *(newOldKit.second);
+		int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
 
 		// Insert new kit into list, and activate it
 		kitsList->insert(pos, newKitName);

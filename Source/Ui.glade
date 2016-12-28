@@ -924,6 +924,8 @@ Author: Jérémy Oden
   <object class="GtkWindow" id="InstrumentSeclectWindow">
     <property name="can_focus">False</property>
     <property name="modal">True</property>
+    <property name="window_position">center</property>
+    <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
