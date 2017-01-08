@@ -191,7 +191,7 @@ namespace Controllers
 			}
 			else
 			{
-				activeKit = id - 1;
+				activeKit = 0; //id - 1;
 			}
 
 
@@ -393,7 +393,7 @@ namespace Controllers
 				std::string text = instrumentConfig_Type->get_active_text();
 
 				// Populate only if not already done
-				if(text == "")
+				if(text.empty())
 				{
 
 					for(std::size_t i = 0; i < instrumentTypes.size(); i++)
@@ -467,7 +467,6 @@ namespace Controllers
 
 			for(std::size_t i = 0; i < triggersLocations.size(); i++)
 			{
-				//XXX Need to add the triggers to the kitCreator.
 				triggersIdsAndLocations.push_back(std::make_shared<TriggerIdAndLocation>(triggersLocations, triggersIds));
 			}
 
@@ -622,15 +621,21 @@ namespace Controllers
 
 		kitNameLabel->set_text(kitsList->get_active_text());
 
+		// Load current kit into the kit creator for modifications
+		std::string kitLocation = drumKit->GetKitDataFileName();
+		kitCreator->CreateFromModel(kitLocation.c_str());
+
+		// Get kit's instruments
+		std::vector<std::string> instrumentsNames = kitCreator->GetInstrumentsNames();
+
+		// Reset instruments selectors
 		std::for_each(instrumentsSelectors.begin(), instrumentsSelectors.end(), [](InstrumentSelectorPtr& i) { i.reset(); });
 		instrumentsSelectors.clear();
 
-		for(int i = 0; i < 2; i++)
-		{
-			InstrumentSelectorPtr is(new InstrumentSelector("Instrument" + std::to_string(i)));
-			instrumentsSelectors.push_back(is);
-		}
+		// Create new instruments selectors
+		std::transform(instrumentsNames.cbegin(), instrumentsNames.cend(), std::back_inserter(instrumentsSelectors), [](const std::string& name) { return std::make_shared<InstrumentSelector>(name); });
 
+		// Add selectors to window
 		std::for_each(instrumentsSelectors.cbegin(), instrumentsSelectors.cend(), [&instrumentsBox](const InstrumentSelectorPtr& i) { instrumentsBox->add(*i); });
 
 		instrumentSeclectWindow->show();
