@@ -25,6 +25,7 @@ namespace Widgets
 		InstrumentSelector(const std::string name);
 		virtual ~InstrumentSelector();
 
+		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
 
 	private:
 

@@ -362,7 +362,82 @@ namespace Controllers
 		return;
 	}
 
+	void KitController::ModifyInstrument(int i)
+	{
 
+		// Get instrument name
+		std::vector<std::string> instrumentsNames = kitCreator->GetInstrumentsNames();
+		std::string instrumentName = instrumentsNames[i];
+
+		// Get instrument type
+		std::string instrumentType = kitCreator->GetInstrumentType(i);
+
+		// Get instrument triggers
+		std::vector<int> instrumentTriggersIds = kitCreator->GetInstrumentTriggersIds(i);
+		std::vector<std::string> instrumentLocations = kitCreator->GetInstrumentTriggersLocations(i);
+
+		// Get instrument sounds
+		std::vector<std::string> instrumentSoundsTypes = kitCreator->GetInstrumentSoundsTypes(i);
+		std::vector<std::string> instrumentSoundsLocs = kitCreator->GetInstrumentSoundsLocs(i);
+
+		// Get widgets
+		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
+		Gtk::Entry* instrumentConfig_Name = nullptr;
+
+		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
+		builder->get_widget("InstrumentConfig_Name", instrumentConfig_Name);
+
+		// Set widgets values
+
+		// Set instrument name
+		instrumentConfig_Name->set_text(instrumentName);
+
+		// Create vector of instruments types
+		std::vector<std::string> instrumentTypes = kitCreator->GetInstrumentsTypes();
+
+		// Populate instrument config window
+		{
+
+			std::string text = instrumentConfig_Type->get_active_text();
+
+			// Populate only if not already done
+			if(text.empty())
+			{
+
+				for(std::size_t i = 0; i < instrumentTypes.size(); i++)
+				{
+					instrumentConfig_Type->insert(i, instrumentTypes[i]);
+				}
+
+				// Set default instrument and call ChangeInstrumentType() method
+				instrumentConfig_Type->set_active(0);
+			}
+
+		}
+
+		instrumentConfig_Type->set_active_text(instrumentType);
+
+		for(std::size_t i = 0; i < triggersIdsAndLocations.size(); i++)
+		{
+			auto& t = triggersIdsAndLocations[i];
+
+			t->SetTriggerId(instrumentTriggersIds[i]);
+			t->SetTriggerLoc(instrumentLocations[i]);
+		}
+
+		for(std::size_t i = 0; i < soundsTypesAndPaths.size(); i++)
+		{
+			auto& s = soundsTypesAndPaths[i];
+
+			s->SetSoundType(instrumentSoundsTypes[i]);
+			s->SetSound(instrumentSoundsLocs[i]);
+		}
+
+		// Show window
+		instrumentConfigWindow->show();
+
+		return;
+	}
 
 	void KitController::AddInstrumentToKit()
 	{
@@ -495,7 +570,11 @@ namespace Controllers
 	void KitController::CancelInstrumentModif()
 	{
 
-		kitCreator->CreateNewKit();
+		if(this->numInstrumentsToCreate != 0)
+		{
+			kitCreator->CreateNewKit();
+		}
+
 		this->numInstrumentsToCreate = 0;
 
 		this->instrumentConfigWindow->hide();
@@ -523,28 +602,39 @@ namespace Controllers
 		kitCreator->SetInstrumentName(instrumentName.c_str());
 		kitCreator->SetInstrumentType(instrumentType.c_str());
 
-		// Add instrument sounds
-		for(const auto& sound : soundsTypesAndPaths)
+		// Check if we are modifying or adding an instrument
+		bool isModif = (numInstrumentsToCreate == 0);
+
+		if(isModif)
 		{
-			std::string soundType = sound->GetSoundType();
-			std::string soundFile = sound->GetSound();
 
-			kitCreator->AddInstrumentSound(soundFile.c_str(), soundType.c_str());
 		}
-
-		// Add instrument triggers
-		for(const auto& trigger : triggersIdsAndLocations)
+		else
 		{
-			int id = trigger->GetTriggerId();
-			std::string location = trigger->GetTriggerLoc();
 
-			kitCreator->AddInstrumentTrigger(id, location.c_str());
+			// Add instrument sounds
+			for(const auto& sound : soundsTypesAndPaths)
+			{
+				std::string soundType = sound->GetSoundType();
+				std::string soundFile = sound->GetSound();
+
+				kitCreator->AddInstrumentSound(soundFile.c_str(), soundType.c_str());
+			}
+
+			// Add instrument triggers
+			for(const auto& trigger : triggersIdsAndLocations)
+			{
+				int id = trigger->GetTriggerId();
+				std::string location = trigger->GetTriggerLoc();
+
+				kitCreator->AddInstrumentTrigger(id, location.c_str());
+			}
+
+			kitCreator->AddInstrumentToKit();
+
+
+			AddInstrumentToKit();
 		}
-
-		kitCreator->AddInstrumentToKit();
-
-
-		AddInstrumentToKit();
 
 		return;
 	}
@@ -637,6 +727,13 @@ namespace Controllers
 
 		// Add selectors to window
 		std::for_each(instrumentsSelectors.cbegin(), instrumentsSelectors.cend(), [&instrumentsBox](const InstrumentSelectorPtr& i) { instrumentsBox->add(*i); });
+
+		// Connect signals
+		for (std::size_t i = 0; i < instrumentsSelectors.size(); i++)
+		{
+			auto& is = instrumentsSelectors[i];
+			is->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::ModifyInstrument), i));
+		}
 
 		instrumentSeclectWindow->show();
 
