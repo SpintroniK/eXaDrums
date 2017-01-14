@@ -111,6 +111,7 @@ namespace Controllers
 
 		// Class variables
 		int numInstrumentsToCreate;
+		int instrumentToModify;
 
 
 	};

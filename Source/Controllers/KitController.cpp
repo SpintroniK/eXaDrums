@@ -27,6 +27,7 @@ namespace Controllers
 	{
 
 		numInstrumentsToCreate = 0;
+		instrumentToModify = -1;
 
 		std::string dataFolder = drumKit->GetDataLocation();
 
@@ -433,6 +434,9 @@ namespace Controllers
 			s->SetSound(instrumentSoundsLocs[i]);
 		}
 
+		// Keep track of the instrument id
+		instrumentToModify = i;
+
 		// Show window
 		instrumentConfigWindow->show();
 
@@ -598,21 +602,53 @@ namespace Controllers
 		// Get instrument type
 		std::string instrumentType = instrumentConfig_Type->get_entry_text();
 
-		// Create instrument
-		kitCreator->CreateNewInstrument();
-		kitCreator->SetInstrumentVolume(1.0f);
-		kitCreator->SetInstrumentName(instrumentName.c_str());
-		kitCreator->SetInstrumentType(instrumentType.c_str());
-
 		// Check if we are modifying or adding an instrument
 		bool isModif = (numInstrumentsToCreate == 0);
 
 		if(isModif)
 		{
 
+			// Get instrument id
+			int id = instrumentToModify;
+
+			// Modify instrument
+			{
+				// Retrieve triggers ids and locations
+				std::vector<std::pair<int, std::string>> trigIdsAndLocs;
+				for(const auto& t : triggersIdsAndLocations)
+				{
+					trigIdsAndLocs.push_back({t->GetTriggerId(), t->GetTriggerLoc()});
+				}
+
+				// Retrieve sounds types and locations
+				std::vector<std::pair<std::string, std::string>> sndTypesAndLocs;
+				for(const auto& s : soundsTypesAndPaths)
+				{
+					sndTypesAndLocs.push_back({s->GetSoundType(), s->GetSound()});
+				}
+
+				// Modify triggers ids and locations
+				kitCreator->SetInstrumentTriggersIdsAndLocs(id, trigIdsAndLocs);
+
+				// Modify sounds
+				kitCreator->SetInstrumentSoundsTypesAndLocs(id, sndTypesAndLocs);
+
+				// Save kit
+				//kitCreator->SaveKit();
+
+			}
+
+			// We're done, so we disable instrument modification
+			instrumentToModify = -1;
 		}
 		else
 		{
+
+			// Create instrument
+			kitCreator->CreateNewInstrument();
+			kitCreator->SetInstrumentVolume(1.0f);
+			kitCreator->SetInstrumentName(instrumentName.c_str());
+			kitCreator->SetInstrumentType(instrumentType.c_str());
 
 			// Add instrument sounds
 			for(const auto& sound : soundsTypesAndPaths)
@@ -747,14 +783,14 @@ namespace Controllers
 	void KitController::ShowKeyboard()
 	{
 		HideKeyboard();
-		std::system("onboard --size=800x160 -x 0 -y 280 &");
+		//std::system("onboard --size=800x160 -x 0 -y 280 &");
 		return;
 	}
 
 	void KitController::HideKeyboard()
 	{
 
-		std::system("killall onboard");
+		//std::system("killall onboard");
 		return;
 	}
 
