@@ -496,8 +496,10 @@ namespace Controllers
 			instrumentConfigWindow->hide();
 
 			AddNewKit();
-
 			KitAdded();
+
+			kitCreator->CreateNewKit();
+			this->numInstrumentsToCreate = 0;
 
 		}
 		else
@@ -702,6 +704,7 @@ namespace Controllers
 
 	void KitController::ShowInstrumentSeclectWindow()
 	{
+
 
 		Gtk::Label* kitNameLabel = nullptr;
 		Gtk::Box* instrumentsBox = nullptr;
