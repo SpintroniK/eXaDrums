@@ -36,6 +36,8 @@ namespace Controllers
 
 		Gtk::Button* instrumentConfigOkay = nullptr;
 		Gtk::Button* instrumentConfigCancel = nullptr;
+		Gtk::Button* instrumentSelectSave = nullptr;
+		Gtk::Button* instrumentSelectCancel = nullptr;
 		Gtk::Button* kitNameCancel = nullptr;
 		Gtk::Button* KitNameOk = nullptr;
 
@@ -52,6 +54,8 @@ namespace Controllers
 			builder->get_widget("KitPreferencesButton", kitPreferencesButton);
 			builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
 			builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
+			builder->get_widget("ISSave", instrumentSelectSave);
+			builder->get_widget("ISCancel", instrumentSelectCancel);
 			builder->get_widget("KitNameCancel", kitNameCancel);
 			builder->get_widget("KitNameOk", KitNameOk);
 
@@ -96,6 +100,8 @@ namespace Controllers
 			kitPreferencesButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentSeclectWindow));
 			instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
 			instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
+			instrumentSelectSave->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveKitPreferences));
+			instrumentSelectCancel->signal_clicked().connect(sigc::mem_fun(instrumentSeclectWindow, &Gtk::Window::hide));
 			kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
 			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
 
@@ -627,11 +633,20 @@ namespace Controllers
 					sndTypesAndLocs.push_back({s->GetSoundType(), s->GetSound()});
 				}
 
+				// Change instrument name
+				kitCreator->SetInstrumentName(id, instrumentName.c_str());
+
 				// Modify triggers ids and locations
 				kitCreator->SetInstrumentTriggersIdsAndLocs(id, trigIdsAndLocs);
 
 				// Modify sounds
 				kitCreator->SetInstrumentSoundsTypesAndLocs(id, sndTypesAndLocs);
+
+
+				// Change instrument name on the kit config window
+				instrumentsSelectors[id]->SetInstrumentName(instrumentName);
+
+				instrumentConfigWindow->hide();
 
 				// Save kit
 				//kitCreator->SaveKit();
@@ -742,13 +757,13 @@ namespace Controllers
 	{
 
 
-		Gtk::Label* kitNameLabel = nullptr;
+		Gtk::Entry* kitNameEntry = nullptr;
 		Gtk::Box* instrumentsBox = nullptr;
 
-		builder->get_widget("ISKitName", kitNameLabel);
+		builder->get_widget("ISKitName", kitNameEntry);
 		builder->get_widget("ISListBox", instrumentsBox);
 
-		kitNameLabel->set_text(kitsList->get_active_text());
+		kitNameEntry->set_text(kitsList->get_active_text());
 
 		// Load current kit into the kit creator for modifications
 		std::string kitLocation = drumKit->GetKitDataFileName();
@@ -779,6 +794,59 @@ namespace Controllers
 		return;
 	}
 
+	void KitController::SaveKitPreferences()
+	{
+
+		// Get kit name
+		Gtk::Entry* kitName = nullptr;
+		builder->get_widget("ISKitName", kitName);
+		std::string name = kitName->get_text();
+
+		// Set kit name
+		kitCreator->SetKitName(name.c_str());
+
+		// Save kit parameters to file
+		kitCreator->SaveKit();
+
+		// Reload kits
+		{
+
+			bool isStarted = drumKit->IsStarted();
+			// Stop  module
+			if(isStarted)
+			{
+				PlayDrums();
+			}
+
+			// Reload kits
+			drumKit->ReloadKits();
+
+
+			//XXX Set new kit name in kits list (temporary method)
+			if(name != kitsList->get_active_text())
+			{
+				int pos = kitsList->get_active_row_number();
+				kitsList->set_active(pos - 1);
+				kitsList->remove_text(pos);
+				kitsList->insert(pos, name);
+				kitsList->set_active(pos);
+			}
+
+			// Set active kit
+			ChangeKit();
+
+			if(isStarted)
+			{
+				PlayDrums();
+			}
+
+		}
+
+		// Close window
+		instrumentSeclectWindow->hide();
+
+		return;
+	}
 
 	void KitController::ShowKeyboard()
 	{

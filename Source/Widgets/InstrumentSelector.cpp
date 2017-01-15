@@ -12,7 +12,7 @@ namespace Widgets
 {
 
 	InstrumentSelector::InstrumentSelector(const std::string name)
-	: instrumentName(name), preferencesButton(Gtk::StockID("gtk-preferences")), deleteButton(Gtk::StockID("gtk-delete"))
+	: instrumentName(name), preferencesButton(Gtk::StockID("gtk-preferences")), deleteButton(Gtk::StockID("gtk-remove"))
 	{
 
 		this->set_column_homogeneous(true);
