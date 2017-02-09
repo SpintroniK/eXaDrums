@@ -24,6 +24,7 @@ namespace Controllers
 		// Set controllers
 		metronomeController = std::unique_ptr<MetronomeController>(new MetronomeController(this->builder, this->drumKit));
 		kitController = std::unique_ptr<KitController>(new KitController(this->builder, this->drumKit));
+		configController = std::unique_ptr<ConfigController>(new ConfigController(this->builder, this->drumKit));
 
 
 		// Get all widgets
