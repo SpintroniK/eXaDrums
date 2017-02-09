@@ -4,16 +4,19 @@
 
 # Add inputs and outputs from these tool invocations to the build variables 
 CPP_SRCS += \
+../Source/Controllers/ConfigController.cpp \
 ../Source/Controllers/KitController.cpp \
 ../Source/Controllers/MainController.cpp \
 ../Source/Controllers/MetronomeController.cpp 
 
 OBJS += \
+./Source/Controllers/ConfigController.o \
 ./Source/Controllers/KitController.o \
 ./Source/Controllers/MainController.o \
 ./Source/Controllers/MetronomeController.o 
 
 CPP_DEPS += \
+./Source/Controllers/ConfigController.d \
 ./Source/Controllers/KitController.d \
 ./Source/Controllers/MainController.d \
 ./Source/Controllers/MetronomeController.d 
