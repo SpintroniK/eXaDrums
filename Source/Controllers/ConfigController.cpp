@@ -27,11 +27,16 @@ namespace Controllers
 
 		// Get all widgets
 		{
+
+			// Buttons
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
 			builder->get_widget("SoundEffectsButton", soundEffectsButton);
 			builder->get_widget("SensorsConfigButton", sensorsConfigButton);
+
+			// Windows
+			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
 
 		}
 
@@ -52,6 +57,8 @@ namespace Controllers
 
 	ConfigController::~ConfigController()
 	{
+
+		delete sensorsConfigWindow;
 
 		return;
 	}
@@ -85,6 +92,8 @@ namespace Controllers
 
 	void ConfigController::ShowSensorsConfigWindow()
 	{
+
+		sensorsConfigWindow->show();
 
 		return;
 	}
