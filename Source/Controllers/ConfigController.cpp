@@ -16,7 +16,7 @@ namespace Controllers
 {
 
 	ConfigController::ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)
-	: builder(builder), drumKit(drumKit)
+	: builder(builder), drumKit(drumKit), drumsConfig(*drumKit.get())
 	{
 
 		Gtk::Button* mixerConfigButton = nullptr;

@@ -97,7 +97,7 @@ namespace Controllers
 			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
 			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
 			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKitWindow));
-			kitPreferencesButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentSeclectWindow));
+			kitPreferencesButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentSelectWindow));
 			instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
 			instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
 			instrumentSelectSave->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveKitPreferences));
@@ -753,7 +753,7 @@ namespace Controllers
 		return;
 	}
 
-	void KitController::ShowInstrumentSeclectWindow()
+	void KitController::ShowInstrumentSelectWindow()
 	{
 
 

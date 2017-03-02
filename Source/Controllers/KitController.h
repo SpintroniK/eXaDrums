@@ -60,7 +60,7 @@ namespace Controllers
 		void ChangeInstrumentType();
 		void ValidateInstrumentData();
 		void CancelInstrumentModif();
-		void ShowInstrumentSeclectWindow();
+		void ShowInstrumentSelectWindow();
 		void SaveKitPreferences();
 
 		// Faders

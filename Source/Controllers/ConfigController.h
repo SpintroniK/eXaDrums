@@ -9,6 +9,7 @@
 #define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
 
 #include <Source/Api/eXaDrums.h>
+#include <Source/Api/Config_api.h>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
@@ -38,6 +39,9 @@ namespace Controllers
 
 		// Widgets
 		Gtk::Window* sensorsConfigWindow;
+
+		// eXaDrums
+		eXaDrumsApi::Config drumsConfig;
 
 
 	};
