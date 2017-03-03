@@ -8,6 +8,7 @@
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
+#include <gtkmm/comboboxtext.h>
 
 
 using namespace eXaDrumsApi;
@@ -48,6 +49,21 @@ namespace Controllers
 			triggersConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowTriggersConfigWindow));
 			soundEffectsButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundEffectsWindow));
 			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
+
+		}
+
+		// Configure sensors window
+		{
+			Gtk::ComboBoxText* sensorsTypesList = nullptr;
+			builder->get_widget("SensorsTypes", sensorsTypesList);
+
+			std::vector<std::string> sensorsTypes = drumsConfig.GetSensorsTypes();
+
+			// Append values to combobox
+			std::for_each(sensorsTypes.cbegin(), sensorsTypes.cend(), [&](const std::string& s) { sensorsTypesList->append(s); });
+
+			const std::string selectedType = drumsConfig.GetSensorsType();
+			sensorsTypesList->set_active_text(selectedType);
 
 		}
 
@@ -93,7 +109,9 @@ namespace Controllers
 	void ConfigController::ShowSensorsConfigWindow()
 	{
 
+
 		sensorsConfigWindow->show();
+
 
 		return;
 	}
