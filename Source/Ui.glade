@@ -1312,7 +1312,7 @@ Author: Jérémy Oden
             <property name="visible">True</property>
             <property name="can_focus">False</property>
             <property name="halign">end</property>
-            <property name="label" translatable="yes">Sampling Rate: </property>
+            <property name="label" translatable="yes">Frequency: </property>
           </object>
           <packing>
             <property name="left_attach">0</property>
@@ -1341,26 +1341,6 @@ Author: Jérémy Oden
           <packing>
             <property name="left_attach">0</property>
             <property name="top_attach">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkComboBoxText" id="SensorsSamplingRate">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkComboBoxText" id="SensorsResolution">
-            <property name="visible">True</property>
-            <property name="can_focus">False</property>
-          </object>
-          <packing>
-            <property name="left_attach">1</property>
-            <property name="top_attach">1</property>
           </packing>
         </child>
         <child>
@@ -1400,7 +1380,44 @@ Author: Jérémy Oden
           </packing>
         </child>
         <child>
-          <placeholder/>
+          <object class="GtkEntry" id="SensorsSamplingRate">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="max_length">7</property>
+            <property name="width_chars">8</property>
+            <property name="max_width_chars">7</property>
+            <property name="input_purpose">number</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkEntry" id="SensorsResolution">
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="max_length">2</property>
+            <property name="width_chars">2</property>
+            <property name="max_width_chars">2</property>
+            <property name="input_purpose">number</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes"> Hz</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">0</property>
+          </packing>
         </child>
         <child>
           <placeholder/>

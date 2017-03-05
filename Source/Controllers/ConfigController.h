@@ -33,6 +33,7 @@ namespace Controllers
 		void ShowTriggersConfigWindow();
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
+		void SaveSensorsConfig();
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
@@ -41,7 +42,7 @@ namespace Controllers
 		Gtk::Window* sensorsConfigWindow;
 
 		// eXaDrums
-		eXaDrumsApi::Config drumsConfig;
+		eXaDrumsApi::Config config;
 
 
 	};

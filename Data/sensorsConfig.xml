@@ -1,5 +1,5 @@
 <SensorsConfig>
-	<SamplingRate>2000000</SamplingRate>
-	<Resolution>12</Resolution>
-	<Type>Hdd</Type>
+    <SamplingRate>2000000</SamplingRate>
+    <Resolution>12</Resolution>
+    <Type>Hdd</Type>
 </SensorsConfig>
