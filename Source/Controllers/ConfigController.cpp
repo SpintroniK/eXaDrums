@@ -89,7 +89,10 @@ namespace Controllers
 			const std::string selectedType = config.GetSensorsType();
 			sensorsTypesList->set_active_text(selectedType);
 
-
+			Gtk::Entry* hddDataFolder = nullptr;
+			builder->get_widget("SensorsDataFolder", hddDataFolder);
+			std::string dataFolder = config.GetSensorsDataFolder();
+			hddDataFolder->set_text(dataFolder);
 
 		}
 
@@ -149,18 +152,23 @@ namespace Controllers
 		Gtk::Entry* samplingRate = nullptr;
 		Gtk::Entry* resolution = nullptr;
 		Gtk::ComboBoxText* sensorsTypesList = nullptr;
+		Gtk::Entry* hddDataFolder = nullptr;
 
 		builder->get_widget("SensorsSamplingRate", samplingRate);
 		builder->get_widget("SensorsResolution", resolution);
 		builder->get_widget("SensorsTypes", sensorsTypesList);
+		builder->get_widget("SensorsDataFolder", hddDataFolder);
 
 		int sRate = std::stoi(samplingRate->get_text());
 		int res = std::stoi(resolution->get_text());
 		std::string type = sensorsTypesList->get_active_text();
+		std::string dataFolder = hddDataFolder->get_text();
+
 
 		config.SetSensorsSamplingRate(sRate);
 		config.SetSensorsResolution(res);
 		config.SetSensorsType(type);
+		config.SetSensorsDataFolder(dataFolder);
 
 		config.SaveSensorsConfig();
 
