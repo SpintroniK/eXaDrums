@@ -27,6 +27,7 @@ namespace Controllers
 		Gtk::Button* soundEffectsButton = nullptr;
 		Gtk::Button* sensorsConfigButton = nullptr;
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
+		Gtk::Button* sensorsConfigCancelButton = nullptr;
 
 		// Get all widgets
 		{
@@ -37,6 +38,7 @@ namespace Controllers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
 			builder->get_widget("SoundEffectsButton", soundEffectsButton);
 			builder->get_widget("SensorsConfigButton", sensorsConfigButton);
+			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
 
 			// Sensors config
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
@@ -54,6 +56,7 @@ namespace Controllers
 			triggersConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowTriggersConfigWindow));
 			soundEffectsButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundEffectsWindow));
 			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
+			sensorsConfigCancelButton->signal_clicked().connect(sigc::mem_fun(sensorsConfigWindow, &Gtk::Window::hide));
 
 			// Sensors config
 			sensorsConfigOkayButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveSensorsConfig));
@@ -138,9 +141,7 @@ namespace Controllers
 	void ConfigController::ShowSensorsConfigWindow()
 	{
 
-
 		sensorsConfigWindow->show();
-
 
 		return;
 	}
@@ -171,6 +172,8 @@ namespace Controllers
 		config.SetSensorsDataFolder(dataFolder);
 
 		config.SaveSensorsConfig();
+
+		sensorsConfigWindow->hide();
 
 		return;
 	}
