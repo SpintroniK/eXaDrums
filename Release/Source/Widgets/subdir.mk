@@ -7,19 +7,22 @@ CPP_SRCS += \
 ../Source/Widgets/Fader.cpp \
 ../Source/Widgets/InstrumentSelector.cpp \
 ../Source/Widgets/SoundTypeAndPath.cpp \
-../Source/Widgets/TriggerIdAndLocation.cpp 
+../Source/Widgets/TriggerIdAndLocation.cpp \
+../Source/Widgets/TriggerSelector.cpp 
 
 OBJS += \
 ./Source/Widgets/Fader.o \
 ./Source/Widgets/InstrumentSelector.o \
 ./Source/Widgets/SoundTypeAndPath.o \
-./Source/Widgets/TriggerIdAndLocation.o 
+./Source/Widgets/TriggerIdAndLocation.o \
+./Source/Widgets/TriggerSelector.o 
 
 CPP_DEPS += \
 ./Source/Widgets/Fader.d \
 ./Source/Widgets/InstrumentSelector.d \
 ./Source/Widgets/SoundTypeAndPath.d \
-./Source/Widgets/TriggerIdAndLocation.d 
+./Source/Widgets/TriggerIdAndLocation.d \
+./Source/Widgets/TriggerSelector.d 
 
 
 # Each subdirectory must supply rules for building sources it contributes

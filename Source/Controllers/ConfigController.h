@@ -9,7 +9,7 @@
 #define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
 
 #include <Source/Api/eXaDrums.h>
-#include <Source/Api/Config_api.h>
+#include <Source/Api/Config/Config_api.h>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>

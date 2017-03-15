@@ -15,7 +15,7 @@
 #include "../Widgets/InstrumentSelector.h"
 
 #include <Source/Api/eXaDrums.h>
-#include <Source/Api/KitCreator_api.h>
+#include <Source/Api/KitCreator/KitCreator_api.h>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
