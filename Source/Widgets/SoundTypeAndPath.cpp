@@ -61,10 +61,5 @@ namespace Widgets
 		return;
 	}
 
-	SoundTypeAndPath::~SoundTypeAndPath()
-	{
-
-		return;
-	}
 
 } /* namespace Widgets */

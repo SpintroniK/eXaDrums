@@ -10,9 +10,11 @@
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/entry.h>
+#include <gtkmm/box.h>
 
 
 using namespace eXaDrumsApi;
+using namespace Widgets;
 
 namespace Controllers
 {
@@ -45,6 +47,7 @@ namespace Controllers
 
 			// Windows
 			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
+			builder->get_widget("TriggerSeclectWindow", triggersConfigWindow);
 
 		}
 
@@ -107,6 +110,7 @@ namespace Controllers
 	{
 
 		delete sensorsConfigWindow;
+		delete triggersConfigWindow;
 
 		return;
 	}
@@ -128,6 +132,29 @@ namespace Controllers
 
 	void ConfigController::ShowTriggersConfigWindow()
 	{
+
+		Gtk::Box* triggersBox = nullptr;
+		builder->get_widget("TSListBox", triggersBox);
+
+		const std::vector<TriggerParameters>& triggersParameters = config.GetTriggersParameters();
+
+		std::for_each(triggersSelectors.begin(), triggersSelectors.end(), [](TriggerSelectorPtr& t) { t.reset(); });
+		triggersSelectors.clear();
+
+		for(const auto& t : triggersParameters)
+		{
+			triggersSelectors.push_back(std::make_shared<TriggerSelector>(t.sensorId));
+		}
+
+		std::for_each(triggersSelectors.cbegin(), triggersSelectors.cend(), [&](const TriggerSelectorPtr& t){ triggersBox->add(*t); });
+
+		// Connect signals
+		for(const auto& ts : triggersSelectors)
+		{
+			ts->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &ConfigController::ModifyTrigger), ts->GetSensorId()));
+		}
+
+		triggersConfigWindow->show();
 
 		return;
 	}
@@ -177,5 +204,16 @@ namespace Controllers
 
 		return;
 	}
+
+
+	void ConfigController::ModifyTrigger(int sensorId)
+	{
+
+
+
+		return;
+	}
+
+
 
 } /* namespace Controllers */

@@ -23,7 +23,7 @@ namespace Widgets
 	public:
 
 		InstrumentSelector(const std::string name);
-		virtual ~InstrumentSelector();
+		virtual ~InstrumentSelector() = default;
 
 		void SetInstrumentName(std::string name) { instrumentName.set_text(name); }
 

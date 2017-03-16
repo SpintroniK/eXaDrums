@@ -25,7 +25,7 @@ namespace Widgets
 	public:
 
 		SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds);
-		virtual ~SoundTypeAndPath();
+		virtual ~SoundTypeAndPath() = default;
 
 		void SetSoundType(const std::string t) { typesList.set_active_text(t); }
 		void SetSound(const std::string t) { soundsList.set_active_text(t); }

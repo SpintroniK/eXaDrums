@@ -783,7 +783,7 @@ namespace Controllers
 		std::for_each(instrumentsSelectors.cbegin(), instrumentsSelectors.cend(), [&instrumentsBox](const InstrumentSelectorPtr& i) { instrumentsBox->add(*i); });
 
 		// Connect signals
-		for (std::size_t i = 0; i < instrumentsSelectors.size(); i++)
+		for(std::size_t i = 0; i < instrumentsSelectors.size(); i++)
 		{
 			auto& is = instrumentsSelectors[i];
 			is->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::ModifyInstrument), i));

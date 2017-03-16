@@ -24,7 +24,7 @@ namespace Widgets
 	public:
 
 		Fader(const std::string& name, int instrumentId, int vol);
-		virtual ~Fader();
+		virtual ~Fader() = default;
 
 		Gtk::Scale& GetScale() { return volScale; };
 

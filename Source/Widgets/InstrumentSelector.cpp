@@ -34,10 +34,5 @@ namespace Widgets
 		return;
 	}
 
-	InstrumentSelector::~InstrumentSelector()
-	{
-
-		return;
-	}
 
 } /* namespace Widgets */

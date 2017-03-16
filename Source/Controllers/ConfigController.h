@@ -11,6 +11,8 @@
 #include <Source/Api/eXaDrums.h>
 #include <Source/Api/Config/Config_api.h>
 
+#include "../Widgets/TriggerSelector.h"
+
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
 
@@ -34,12 +36,17 @@ namespace Controllers
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
+		void ModifyTrigger(int sensorId);
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 
 		// Widgets
+		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
+
+		// Windows
 		Gtk::Window* sensorsConfigWindow;
+		Gtk::Window* triggersConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;

@@ -60,10 +60,4 @@ namespace Widgets
 		return;
 	}
 
-	TriggerIdAndLocation::~TriggerIdAndLocation()
-	{
-
-		return;
-	}
-
 } /* namespace Widgets */

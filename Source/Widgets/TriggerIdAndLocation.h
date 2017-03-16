@@ -25,7 +25,7 @@ namespace Widgets
 	public:
 
 		TriggerIdAndLocation(const std::vector<std::string>& locations, const std::vector<int>& ids);
-		virtual ~TriggerIdAndLocation();
+		virtual ~TriggerIdAndLocation() = default;
 
 		void SetTriggerLoc(const std::string t) { location.set_active_text(t); };
 		void SetTriggerId(const int id) { triggerId.set_active_text(std::to_string(id)); }

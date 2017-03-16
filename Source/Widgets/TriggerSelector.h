@@ -9,8 +9,11 @@
 #define SOURCE_WIDGETS_TRIGGERSELECTOR_H_
 
 #include <gtkmm/grid.h>
+#include <gtkmm/label.h>
+#include <gtkmm/button.h>
 
 #include <memory>
+#include <string>
 
 namespace Widgets
 {
@@ -20,8 +23,19 @@ namespace Widgets
 
 	public:
 
-		TriggerSelector();
-		virtual ~TriggerSelector();
+		TriggerSelector(int sensorId);
+		virtual ~TriggerSelector() = default;
+
+
+		int GetSensorId() const { return sensorId; }
+		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
+
+
+	private:
+
+		int sensorId;
+		Gtk::Label label;
+		Gtk::Button preferencesButton;
 
 	};
 

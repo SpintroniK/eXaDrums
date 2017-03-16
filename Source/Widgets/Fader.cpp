@@ -39,11 +39,5 @@ namespace Widgets
 		return;
 	}
 
-	Fader::~Fader()
-	{
-
-
-		return;
-	}
 
 } /* namespace Gui */
