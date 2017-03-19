@@ -47,6 +47,7 @@ namespace Controllers
 		// Windows
 		Gtk::Window* sensorsConfigWindow;
 		Gtk::Window* triggersConfigWindow;
+		Gtk::Window* triggerConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;

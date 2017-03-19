@@ -48,6 +48,7 @@ namespace Controllers
 			// Windows
 			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
 			builder->get_widget("TriggerSeclectWindow", triggersConfigWindow);
+			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
 
 		}
 
@@ -99,6 +100,25 @@ namespace Controllers
 			builder->get_widget("SensorsDataFolder", hddDataFolder);
 			std::string dataFolder = config.GetSensorsDataFolder();
 			hddDataFolder->set_text(dataFolder);
+
+		}
+
+		// Configure triggers window
+		{
+			// Triggers types
+			Gtk::ComboBoxText* types = nullptr;
+			builder->get_widget("TCTypes", types);
+
+			std::vector<std::string> typesVec = config.GetTriggersTypes();
+			std::for_each(typesVec.cbegin(), typesVec.cend(), [&](const std::string& s) { types->append(s); });
+
+			// Triggers responses
+			Gtk::ComboBoxText* responses = nullptr;
+			builder->get_widget("TCResponses", responses);
+
+			std::vector<std::string> responsesVec = config.GetTriggersResponses();
+			std::for_each(responsesVec.cbegin(), responsesVec.cend(), [&](const std::string& s) { responses->append(s); });
+
 
 		}
 
@@ -209,7 +229,42 @@ namespace Controllers
 	void ConfigController::ModifyTrigger(int sensorId)
 	{
 
+		// Create pointers
+		Gtk::Entry* sensorNb = nullptr;
+		Gtk::Entry* threshold = nullptr;
+		Gtk::Entry* scanTime = nullptr;
+		Gtk::Entry* maskTime = nullptr;
+		Gtk::ComboBoxText* types = nullptr;
+		Gtk::ComboBoxText* responses = nullptr;
 
+		// Get widgets
+		{
+			builder->get_widget("TCSensorNb", sensorNb);
+			builder->get_widget("TCThreshold", threshold);
+			builder->get_widget("TCScanTime", scanTime);
+			builder->get_widget("TCMaskTime", maskTime);
+			builder->get_widget("TCTypes", types);
+			builder->get_widget("TCResponses", responses);
+		}
+
+		const std::vector<TriggerParameters>& triggers = config.GetTriggersParameters();
+		const TriggerParameters& trigger = triggers[sensorId];
+
+		const std::string type(trigger.type);
+		const std::string response(trigger.response);
+
+		// Set fields values
+		{
+			sensorNb->set_text(std::to_string(trigger.sensorId));
+			threshold->set_text(std::to_string(trigger.threshold));
+			scanTime->set_text(std::to_string(trigger.scanTime));
+			maskTime->set_text(std::to_string(trigger.maskTime));
+			types->set_active_text(type);
+			responses->set_active_text(response);
+		}
+
+
+		triggerConfigWindow->show();
 
 		return;
 	}
