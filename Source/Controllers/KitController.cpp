@@ -161,6 +161,7 @@ namespace Controllers
 
 		Gtk::MessageDialog d("Are you sure you want to delete the current drum kit?", false, Gtk::MessageType::MESSAGE_QUESTION, Gtk::ButtonsType::BUTTONS_YES_NO);
 		d.set_title("Delete Kit");
+
 		// Get answer
 		int answer = d.run();
 

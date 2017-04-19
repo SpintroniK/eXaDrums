@@ -50,28 +50,28 @@ Author: Jérémy Oden
     <property name="page_increment">10</property>
   </object>
   <object class="GtkWindow" id="MainWindow">
-    <property name="width_request">780</property>
+    <property name="width_request">710</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
     <property name="window_position">center</property>
+    <property name="default_width">760</property>
+    <property name="default_height">480</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="decorated">False</property>
     <property name="deletable">False</property>
     <property name="gravity">center</property>
     <child>
       <object class="GtkGrid" id="MainGrid">
+        <property name="width_request">760</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="halign">center</property>
-        <property name="hexpand">True</property>
+        <property name="margin_left">12</property>
         <child>
           <object class="GtkGrid" id="TopGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">4</property>
-            <property name="margin_right">4</property>
             <property name="margin_top">4</property>
-            <property name="hexpand">True</property>
             <property name="row_homogeneous">True</property>
             <property name="column_homogeneous">True</property>
             <child>
@@ -143,23 +143,18 @@ Author: Jérémy Oden
           <object class="GtkGrid" id="BottomGrid">
             <property name="visible">True</property>
             <property name="can_focus">False</property>
-            <property name="margin_left">4</property>
-            <property name="margin_right">4</property>
-            <property name="hexpand">True</property>
             <property name="vexpand">True</property>
             <property name="column_homogeneous">True</property>
             <child>
               <object class="GtkGrid" id="BottomGrid2">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
                 <property name="vexpand">True</property>
                 <property name="row_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="FadersFrame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
                     <property name="margin_bottom">10</property>
@@ -170,7 +165,6 @@ Author: Jérémy Oden
                       <object class="GtkAlignment" id="alignment2">
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="hexpand">True</property>
                         <property name="left_padding">12</property>
                         <child>
                           <object class="GtkGrid" id="FadersMainGrid">
@@ -232,17 +226,14 @@ Author: Jérémy Oden
                   <object class="GtkGrid" id="BottomRightGird">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
                     <property name="row_homogeneous">True</property>
                     <property name="column_homogeneous">True</property>
                     <child>
                       <object class="GtkFrame" id="RhythmCoachFrame">
-                        <property name="width_request">420</property>
+                        <property name="width_request">220</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">10</property>
-                        <property name="margin_right">10</property>
                         <property name="margin_top">10</property>
                         <property name="margin_bottom">10</property>
                         <property name="label_xalign">0</property>
@@ -383,11 +374,9 @@ Author: Jérémy Oden
                     </child>
                     <child>
                       <object class="GtkFrame" id="AdvancedFrame">
-                        <property name="width_request">420</property>
+                        <property name="width_request">390</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
-                        <property name="margin_left">10</property>
-                        <property name="margin_right">10</property>
                         <property name="margin_top">10</property>
                         <property name="margin_bottom">10</property>
                         <property name="label_xalign">0</property>
@@ -508,14 +497,11 @@ Author: Jérémy Oden
                 <property name="height_request">100</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="hexpand">True</property>
                 <property name="row_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="DrumKitFrame">
                     <property name="visible">True</property>
                     <property name="can_focus">False</property>
-                    <property name="margin_left">10</property>
-                    <property name="margin_right">10</property>
                     <property name="margin_top">3</property>
                     <property name="margin_bottom">10</property>
                     <property name="label_xalign">0</property>
@@ -578,6 +564,7 @@ Author: Jérémy Oden
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="can_default">True</property>
+                                <property name="halign">center</property>
                                 <property name="has_entry">True</property>
                                 <child internal-child="entry">
                                   <object class="GtkEntry">
@@ -710,6 +697,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="InstrumentConfigWindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Modify Instrument</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
@@ -923,6 +911,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="InstrumentSeclectWindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="gravity">center</property>
@@ -1032,14 +1021,14 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="MetronomeConfig">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Metronome Configuration</property>
+    <property name="opacity">0.84999999999999998</property>
+    <property name="type">popup</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">440</property>
     <property name="default_height">120</property>
-    <property name="type_hint">dialog</property>
-    <property name="gravity">center</property>
+    <property name="gravity">south-west</property>
     <property name="transient_for">MainWindow</property>
     <child>
       <object class="GtkGrid">
@@ -1188,7 +1177,8 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="NewKitNameWindow">
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Add a new drum kit</property>
+    <property name="type">popup</property>
+    <property name="title" translatable="yes">Add a new Drum Kit</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="gravity">center</property>
@@ -1291,6 +1281,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="SensorsConfigWindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Sensors Configuration</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -1350,16 +1341,6 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="SensorsTypes">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkEntry" id="SensorsSamplingRate">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -1397,6 +1378,22 @@ Author: Jérémy Oden
               <packing>
                 <property name="left_attach">2</property>
                 <property name="top_attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkComboBoxText" id="SensorsTypes">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="has_entry">True</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
               </packing>
             </child>
             <child>
@@ -1501,6 +1498,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="TriggerConfigurationWindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Trigger Configuration</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
@@ -1615,26 +1613,6 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkComboBoxText" id="TCTypes">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkComboBoxText" id="TCResponses">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">5</property>
-              </packing>
-            </child>
-            <child>
               <object class="GtkEntry" id="TCThreshold">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -1665,22 +1643,36 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkComboBoxText" id="TCTypes">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="has_entry">True</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">1</property>
+              </packing>
             </child>
             <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
-            </child>
-            <child>
-              <placeholder/>
+              <object class="GtkComboBoxText" id="TCResponses">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="has_entry">True</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">5</property>
+              </packing>
             </child>
           </object>
           <packing>
@@ -1744,6 +1736,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="TriggerSeclectWindow">
     <property name="can_focus">False</property>
+    <property name="type">popup</property>
     <property name="title" translatable="yes">Triggers Configuration</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>

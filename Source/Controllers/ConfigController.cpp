@@ -158,7 +158,7 @@ namespace Controllers
 
 		const std::vector<TriggerParameters>& triggersParameters = config.GetTriggersParameters();
 
-		std::for_each(triggersSelectors.begin(), triggersSelectors.end(), [](TriggerSelectorPtr& t) { t.reset(); });
+		//std::for_each(triggersSelectors.begin(), triggersSelectors.end(), [](TriggerSelectorPtr& t) { t.reset(); });
 		triggersSelectors.clear();
 
 		for(const auto& t : triggersParameters)
