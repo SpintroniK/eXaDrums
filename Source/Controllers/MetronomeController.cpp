@@ -25,6 +25,7 @@ namespace Controllers
 			this->builder->get_widget("MetronomeConfigSave", metronomeConfigSave);
 			this->builder->get_widget("MetronomeSoundType", clickTypes);
 			this->builder->get_widget("ClickTempoScale", clickTempoScale);
+			this->builder->get_widget("ClickVolumeScale", clickVolumeScale);
 			this->builder->get_widget("EnableClickButton", enableClickButton);
 			this->builder->get_widget("RhythmList", rhythmList);
 			this->builder->get_widget("BpmeasList", bpmeasList);
@@ -34,11 +35,14 @@ namespace Controllers
 		{
 			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::SaveMetronomeConfig));
 			clickTempoScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeTempo));
+			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeVolume));
 			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::EnableClick));
 		}
 
 		// Set tempo value
 		clickTempoScale->set_value(drumKit->GetTempo());
+		// Metronome not running by defautl
+		clickVolumeScale->property_sensitive() = false;
 
 		// Configure Metronome Window
 		{
@@ -105,6 +109,9 @@ namespace Controllers
 
 		drumKit->EnableMetronome(enable);
 
+		clickVolumeScale->property_sensitive() = enable;
+		clickVolumeScale->set_value(drumKit->GetClickVolume());
+
 		return;
 	}
 
@@ -113,6 +120,16 @@ namespace Controllers
 
 		int tempo = (int) this->clickTempoScale->get_value();
 		drumKit->ChangeTempo(tempo);
+
+		return;
+	}
+
+	void MetronomeController::ChangeVolume() const
+	{
+
+		int volume = (int) this->clickVolumeScale->get_value();
+		drumKit->ChangeVolume(volume);
+		clickVolumeScale->property_sensitive() = true;
 
 		return;
 	}

@@ -37,6 +37,7 @@ namespace Controllers
 		// Signals
 		void EnableClick() const;
 		void ChangeTempo() const;
+		void ChangeVolume() const;
 		void SaveMetronomeConfig();
 
 
@@ -46,6 +47,7 @@ namespace Controllers
 		Gtk::Window* metronomeWindow;
 		Gtk::ComboBoxText* clickTypes;
 		Gtk::Scale* clickTempoScale;
+		Gtk::Scale* clickVolumeScale;
 		Gtk::Button* metronomeConfigSave;
 		Gtk::CheckButton* enableClickButton;
 		Gtk::ComboBoxText* rhythmList;
