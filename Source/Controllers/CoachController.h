@@ -14,6 +14,7 @@
 #include <gtkmm/window.h>
 #include <gtkmm/button.h>
 #include <gtkmm/scale.h>
+#include <gtkmm/levelbar.h>
 
 
 namespace Controllers
@@ -31,7 +32,7 @@ namespace Controllers
 
 		void OpenRhythmCoach();
 		void CloseRhythmCoach();
-		bool UpdateClickMeter();
+		bool UpdateCoach();
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
@@ -40,7 +41,9 @@ namespace Controllers
 		Gtk::Button* coachButton;
 		Gtk::Button* coachCloseButton;
 		Gtk::Scale* clickMeter;
-		sigc::connection clickMeterTimeout;
+		Gtk::LevelBar* hitMeterBar;
+
+		sigc::connection coachTimeout;
 
 	};
 
