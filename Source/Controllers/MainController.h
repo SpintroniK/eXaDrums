@@ -12,6 +12,7 @@
 #include "MetronomeController.h"
 #include "KitController.h"
 #include "ConfigController.h"
+#include "CoachController.h"
 
 #include <Source/Api/eXaDrums.h>
 
@@ -54,6 +55,7 @@ namespace Controllers
 
 		// Controllers
 		std::unique_ptr<MetronomeController> metronomeController;
+		std::unique_ptr<CoachController> coachController;
 		std::unique_ptr<KitController> kitController;
 		std::unique_ptr<ConfigController> configController;
 

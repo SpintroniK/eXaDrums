@@ -42,6 +42,11 @@ Author: Jérémy Oden
     <property name="step_increment">1</property>
     <property name="page_increment">10</property>
   </object>
+  <object class="GtkAdjustment" id="ClickMeterAdjustment">
+    <property name="upper">100</property>
+    <property name="step_increment">1</property>
+    <property name="page_increment">1</property>
+  </object>
   <object class="GtkAdjustment" id="TempoAdjustment">
     <property name="lower">60</property>
     <property name="upper">240</property>
@@ -330,7 +335,7 @@ Author: Jérémy Oden
                                         <property name="can_focus">True</property>
                                         <property name="hexpand">True</property>
                                         <property name="adjustment">TempoAdjustment</property>
-                                        <property name="fill_level">300</property>
+                                        <property name="fill_level">240</property>
                                         <property name="round_digits">0</property>
                                         <property name="digits">0</property>
                                         <property name="value_pos">right</property>
@@ -736,6 +741,84 @@ Author: Jérémy Oden
             <property name="left_attach">0</property>
             <property name="top_attach">1</property>
           </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="CoachWindow">
+    <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Rhytthm Coach</property>
+    <property name="resizable">False</property>
+    <property name="window_position">center</property>
+    <property name="transient_for">MainWindow</property>
+    <child>
+      <object class="GtkGrid" id="CoachGrid">
+        <property name="visible">True</property>
+        <property name="can_focus">False</property>
+        <property name="margin_left">10</property>
+        <property name="margin_right">10</property>
+        <property name="margin_top">10</property>
+        <property name="margin_bottom">10</property>
+        <property name="row_spacing">4</property>
+        <property name="column_spacing">4</property>
+        <child>
+          <object class="GtkScale" id="ClickMeter">
+            <property name="width_request">200</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="hexpand">True</property>
+            <property name="adjustment">ClickMeterAdjustment</property>
+            <property name="fill_level">100</property>
+            <property name="round_digits">1</property>
+            <property name="draw_value">False</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="CoachCloseButton">
+            <property name="label">gtk-close</property>
+            <property name="visible">True</property>
+            <property name="can_focus">True</property>
+            <property name="receives_default">True</property>
+            <property name="use_stock">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">2</property>
+            <property name="top_attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can_focus">False</property>
+            <property name="label" translatable="yes">&lt;b&gt;Rhythm Coach&lt;/b&gt;</property>
+            <property name="use_markup">True</property>
+          </object>
+          <packing>
+            <property name="left_attach">1</property>
+            <property name="top_attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
         </child>
       </object>
     </child>

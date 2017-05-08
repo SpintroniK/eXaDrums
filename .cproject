@@ -82,7 +82,8 @@
 								<option id="gnu.cpp.link.option.shared.1102288316" name="Shared (-shared)" superClass="gnu.cpp.link.option.shared" useByScannerDiscovery="false" value="false" valueType="boolean"/>
 								<option id="gnu.cpp.link.option.flags.200557072" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="$(shell pkg-config --libs gtkmm-3.0)" valueType="string"/>
 								<option id="gnu.cpp.link.option.libs.932099161" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
-									<listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="eXaDrums"/>
+									<listOptionValue builtIn="false" value="pthread"/>
+									<listOptionValue builtIn="false" value="eXaDrums"/>
 								</option>
 								<option id="gnu.cpp.link.option.paths.711703771" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
 									<listOptionValue builtIn="false" value="../../libeXaDrums/Debug"/>
