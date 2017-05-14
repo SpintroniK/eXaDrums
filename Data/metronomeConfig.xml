@@ -1,6 +1,6 @@
 <Metronome>
-    <Tempo>120</Tempo>
-    <Rhythm>1</Rhythm>
-    <BeatsPerMeasure>3</BeatsPerMeasure>
+    <Tempo>60</Tempo>
+    <Rhythm>2</Rhythm>
+    <BeatsPerMeasure>6</BeatsPerMeasure>
     <ClickType>Sine</ClickType>
 </Metronome>

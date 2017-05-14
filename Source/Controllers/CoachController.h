@@ -41,6 +41,7 @@ namespace Controllers
 		Gtk::Button* coachButton;
 		Gtk::Button* coachCloseButton;
 		Gtk::Scale* clickMeter;
+		Gtk::Scale* jitterMeter;
 		Gtk::LevelBar* hitMeterBar;
 
 		sigc::connection coachTimeout;
