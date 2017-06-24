@@ -28,6 +28,7 @@ namespace Widgets
 		void SetInstrumentName(std::string name) { instrumentName.set_text(name); }
 
 		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
+		Gtk::Button& GetDeleteButton() { return deleteButton; }
 
 	private:
 

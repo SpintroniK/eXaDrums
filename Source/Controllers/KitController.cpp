@@ -450,6 +450,29 @@ namespace Controllers
 		return;
 	}
 
+	void KitController::RemoveInstrument(int i)
+	{
+
+		if(instrumentsSelectors.size() > 1)
+		{
+
+			// Load current kit into the kit creator for modifications
+			std::string kitLocation = drumKit->GetKitDataFileName();
+			kitCreator->CreateFromModel(kitLocation.c_str());
+
+			kitCreator->RemoveInstrument(i);
+
+			// Remove instrument from GUI
+			if(i >= 0 && i < (int)instrumentsSelectors.size())
+			{
+				instrumentsSelectors[i].reset();
+				instrumentsSelectors.erase(instrumentsSelectors.begin() + i);
+			}
+		}
+
+		return;
+	}
+
 	void KitController::AddInstrumentToKit()
 	{
 
@@ -788,6 +811,7 @@ namespace Controllers
 		{
 			auto& is = instrumentsSelectors[i];
 			is->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::ModifyInstrument), i));
+			is->GetDeleteButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::RemoveInstrument), i));
 		}
 
 		instrumentSeclectWindow->show();

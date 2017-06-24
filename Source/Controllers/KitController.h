@@ -52,6 +52,7 @@ namespace Controllers
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		void AddInstrumentToKit();
 		void ModifyInstrument(int i);
+		void RemoveInstrument(int i);
 
 		// Signals
 		void ChangeKit();
