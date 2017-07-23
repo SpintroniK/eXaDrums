@@ -1990,8 +1990,8 @@ Author: Jérémy Oden
             <property name="column_spacing">4</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkButton">
-                <property name="label">gtk-ok</property>
+              <object class="GtkButton" id="TriggerConfigSave">
+                <property name="label">gtk-save</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -2003,7 +2003,7 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="TriggerConfigCancel">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -2016,7 +2016,7 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
+              <object class="GtkButton" id="TriggerConfigApply">
                 <property name="label">gtk-apply</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
@@ -2080,8 +2080,8 @@ Author: Jérémy Oden
             <property name="margin_bottom">4</property>
             <property name="column_spacing">4</property>
             <child>
-              <object class="GtkButton" id="TriggerSelectCancelButton">
-                <property name="label">gtk-cancel</property>
+              <object class="GtkButton" id="TriggerSelectCloseButton">
+                <property name="label">gtk-close</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -2089,19 +2089,6 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="TriggerSelectOkayButton">
-                <property name="label">gtk-save</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-                <property name="use_stock">True</property>
-              </object>
-              <packing>
-                <property name="left_attach">2</property>
                 <property name="top_attach">0</property>
               </packing>
             </child>

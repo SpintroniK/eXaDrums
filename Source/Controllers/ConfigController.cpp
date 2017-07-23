@@ -25,8 +25,17 @@ namespace Controllers
 
 		Gtk::Button* mixerConfigButton = nullptr;
 		Gtk::Button* soundLibraryButton = nullptr;
+
+		// Triggers
 		Gtk::Button* triggersConfigButton = nullptr;
+		Gtk::Button* triggersSelectCloseButton = nullptr;
+		Gtk::Button* triggerConfigCancelButton = nullptr;
+		Gtk::Button* triggerConfigApplyButton = nullptr;
+		Gtk::Button* triggerConfigSaveButton = nullptr;
+
 		Gtk::Button* soundEffectsButton = nullptr;
+
+		// Sensors
 		Gtk::Button* sensorsConfigButton = nullptr;
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
@@ -37,17 +46,25 @@ namespace Controllers
 			// Buttons
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
+
+			// Triggers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
+			builder->get_widget("TriggerSelectCloseButton", triggersSelectCloseButton);
+			builder->get_widget("TriggerConfigCancel", triggerConfigCancelButton);
+			builder->get_widget("TriggerConfigApply", triggerConfigApplyButton);
+			builder->get_widget("TriggerConfigSave", triggerConfigSaveButton);
+
+
 			builder->get_widget("SoundEffectsButton", soundEffectsButton);
+
+			// Sensors
 			builder->get_widget("SensorsConfigButton", sensorsConfigButton);
 			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
-
-			// Sensors config
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
 
 			// Windows
 			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
-			builder->get_widget("TriggerSeclectWindow", triggersConfigWindow);
+			builder->get_widget("TriggerSeclectWindow", triggerSelectWindow);
 			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
 
 		}
@@ -57,12 +74,18 @@ namespace Controllers
 
 			mixerConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowMixerConfigWindow));
 			soundLibraryButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundLibConfigWindow));
-			triggersConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowTriggersConfigWindow));
 			soundEffectsButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundEffectsWindow));
-			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
 			sensorsConfigCancelButton->signal_clicked().connect(sigc::mem_fun(sensorsConfigWindow, &Gtk::Window::hide));
 
+			// Triggers config
+			triggersConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowTriggersConfigWindow));
+			triggersSelectCloseButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::CloseTriggerSelectWindow));
+			triggerConfigCancelButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::CloseTriggerConfigWindow));
+			triggerConfigApplyButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ApplyTriggerConfig));
+			triggerConfigSaveButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveTriggerConfig));
+
 			// Sensors config
+			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
 			sensorsConfigOkayButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveSensorsConfig));
 
 		}
@@ -130,7 +153,8 @@ namespace Controllers
 	{
 
 		delete sensorsConfigWindow;
-		delete triggersConfigWindow;
+		delete triggerSelectWindow;
+		delete triggerConfigWindow;
 
 		return;
 	}
@@ -171,13 +195,120 @@ namespace Controllers
 		// Connect signals
 		for(const auto& ts : triggersSelectors)
 		{
-			ts->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &ConfigController::ModifyTrigger), ts->GetSensorId()));
+			ts->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &ConfigController::TriggerConfiguration), ts->GetSensorId()));
 		}
 
-		triggersConfigWindow->show();
+
+		triggerSelectWindow->show();
 
 		return;
 	}
+
+	void ConfigController::ApplyTriggerConfig()
+	{
+
+
+		// Create pointers
+		Gtk::Entry* sensorNb = nullptr;
+		Gtk::Entry* threshold = nullptr;
+		Gtk::Entry* scanTime = nullptr;
+		Gtk::Entry* maskTime = nullptr;
+		Gtk::ComboBoxText* types = nullptr;
+		Gtk::ComboBoxText* responses = nullptr;
+
+		// Get widgets
+		{
+			builder->get_widget("TCSensorNb", sensorNb);
+			builder->get_widget("TCThreshold", threshold);
+			builder->get_widget("TCScanTime", scanTime);
+			builder->get_widget("TCMaskTime", maskTime);
+			builder->get_widget("TCTypes", types);
+			builder->get_widget("TCResponses", responses);
+		}
+
+		int sensorIdValue = std::stoi(sensorNb->get_text());
+		int thresholdValue = std::stoi(threshold->get_text());
+
+		return;
+	}
+
+	void ConfigController::CloseTriggerSelectWindow()
+	{
+
+		triggerSelectWindow->hide();
+
+		return;
+	}
+
+	void ConfigController::CloseTriggerConfigWindow()
+	{
+
+		config.LoadTriggersConfig();
+		config.SaveTriggersConfig();
+
+		triggerConfigWindow->hide();
+
+		return;
+	}
+
+	void ConfigController::SaveTriggerConfig()
+	{
+
+
+		// Create pointers
+		Gtk::Entry* sensorNb = nullptr;
+		Gtk::Entry* threshold = nullptr;
+		Gtk::Entry* scanTime = nullptr;
+		Gtk::Entry* maskTime = nullptr;
+		Gtk::ComboBoxText* types = nullptr;
+		Gtk::ComboBoxText* responses = nullptr;
+
+		// Get widgets
+		{
+			builder->get_widget("TCSensorNb", sensorNb);
+			builder->get_widget("TCThreshold", threshold);
+			builder->get_widget("TCScanTime", scanTime);
+			builder->get_widget("TCMaskTime", maskTime);
+			builder->get_widget("TCTypes", types);
+			builder->get_widget("TCResponses", responses);
+		}
+
+		TriggerParameters tp;
+		tp.sensorId = std::stoi(sensorNb->get_text());
+		tp.threshold = std::stoi(threshold->get_text());
+		tp.scanTime = std::stoi(scanTime->get_text());
+		tp.maskTime = std::stoi(maskTime->get_text());
+
+		types->get_active_text().copy(tp.type, types->get_active_text().length());
+		responses->get_active_text().copy(tp.response, responses->get_active_text().length());
+
+		// Get triggers parameters
+		config.LoadTriggersConfig();
+		std::vector<TriggerParameters> triggersParameters = config.GetTriggersParameters();
+
+		// Find the trigger we want to modify
+		auto triggerIt = std::find_if(triggersParameters.begin(), triggersParameters.end(), [&](TriggerParameters& t) { return t.sensorId == tp.sensorId; });
+
+		if(triggerIt == triggersParameters.end())
+		{
+			// Error: trigger doesn't exist.
+			throw -1;
+		}
+
+		// Update parameters
+		*triggerIt = tp;
+
+		config.SetTriggersParameters(triggersParameters);
+
+		// Save
+		config.SaveTriggersConfig();
+
+		triggerConfigWindow->hide();
+
+		return;
+	}
+
+
 
 	void ConfigController::ShowSoundEffectsWindow()
 	{
@@ -226,7 +357,7 @@ namespace Controllers
 	}
 
 
-	void ConfigController::ModifyTrigger(int sensorId)
+	void ConfigController::TriggerConfiguration(int sensorId)
 	{
 
 		// Create pointers
