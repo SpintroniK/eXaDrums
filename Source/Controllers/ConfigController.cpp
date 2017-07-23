@@ -12,6 +12,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 
+#include <cstring>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
@@ -279,8 +280,8 @@ namespace Controllers
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
-		types->get_active_text().copy(tp.type, types->get_active_text().length());
-		responses->get_active_text().copy(tp.response, responses->get_active_text().length());
+		std::strcpy(tp.type, types->get_active_text().c_str());
+		std::strcpy(tp.response, responses->get_active_text().c_str());
 
 		// Get triggers parameters
 		config.LoadTriggersConfig();
