@@ -43,11 +43,14 @@ endif
 # All Target
 all: eXaDrums
 
+dependents:
+	-cd /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug && $(MAKE) clean all
+
 # Tool invocations
-eXaDrums: $(OBJS) $(USER_OBJS)
+eXaDrums: $(OBJS) $(USER_OBJS) /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug/libeXaDrums.so
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -o "eXaDrums" $(OBJS) $(USER_OBJS) $(LIBS) -L../../libeXaDrums/Debug $(shell pkg-config --libs gtkmm-3.0)
+	g++ -o "eXaDrums" $(OBJS) $(USER_OBJS) $(LIBS) -L"/home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug" -L../../libeXaDrums/Debug $(shell pkg-config --libs gtkmm-3.0)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
@@ -57,5 +60,6 @@ clean:
 	-@echo ' '
 
 .PHONY: all clean dependents
+/home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug/libeXaDrums.so:
 
 -include ../makefile.targets
