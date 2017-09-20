@@ -14,6 +14,7 @@ namespace Widgets
 	: soundTypeLabel("Sound type: "), soundLabel("Sound: "), typesList(true), soundName(""), soundChange(Gtk::StockID("gtk-edit")), changingSound(false)
 	{
 
+		this->set_hexpand(true);
 
 		// Configure and add sound type label
 		soundTypeLabel.set_halign(Gtk::Align::ALIGN_CENTER);
@@ -49,6 +50,7 @@ namespace Widgets
 
 		this->attach_next_to(soundChange, soundName, Gtk::PositionType::POS_RIGHT, 1, 1);
 		soundChange.set_halign(Gtk::Align::ALIGN_END);
+		soundChange.set_hexpand(true);
 		soundChange.show();
 
 		soundChange.signal_clicked().connect(std::bind(sigc::mem_fun(this, &SoundTypeAndPath::ShowSoundChooser), soundChooser, dataFolder));
