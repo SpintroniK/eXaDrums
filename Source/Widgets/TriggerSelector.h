@@ -23,7 +23,7 @@ namespace Widgets
 
 	public:
 
-		TriggerSelector(int sensorId);
+		explicit TriggerSelector(int sensorId);
 		virtual ~TriggerSelector() = default;
 
 

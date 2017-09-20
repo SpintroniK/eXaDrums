@@ -9,6 +9,7 @@
 
 #include <gtkmm/entry.h>
 #include <gtkmm/messagedialog.h>
+#include <gtkmm/filechooserdialog.h>
 
 #include <functional>
 #include <algorithm>
@@ -22,16 +23,16 @@ using namespace Widgets;
 namespace Controllers
 {
 
-	KitController::KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)
+	KitController::KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums>& drumKit)
 	: builder(builder), drumKit(drumKit)
 	{
 
 		numInstrumentsToCreate = 0;
 		instrumentToModify = -1;
 
-		std::string dataFolder = drumKit->GetDataLocation();
+		std::string dataFolder(drumKit->GetDataLocation());
 
-		this->kitCreator = std::unique_ptr<KitCreator>(new KitCreator(dataFolder.c_str()));
+		this->kitCreator = std::make_unique<KitCreator>(dataFolder.c_str());
 
 
 		Gtk::Button* instrumentConfigOkay = nullptr;
@@ -40,6 +41,10 @@ namespace Controllers
 		Gtk::Button* instrumentSelectCancel = nullptr;
 		Gtk::Button* kitNameCancel = nullptr;
 		Gtk::Button* KitNameOk = nullptr;
+		Gtk::Button* soundChooserCancel = nullptr;
+		Gtk::Button* soundChooserOkay = nullptr;
+
+		Gtk::FileChooserDialog* soundChooser = nullptr;
 
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
 
@@ -58,6 +63,10 @@ namespace Controllers
 			builder->get_widget("ISCancel", instrumentSelectCancel);
 			builder->get_widget("KitNameCancel", kitNameCancel);
 			builder->get_widget("KitNameOk", KitNameOk);
+			builder->get_widget("SoundChooserCancel", soundChooserCancel);
+			builder->get_widget("SoundChooserOkay", soundChooserOkay);
+
+			builder->get_widget("SoundChooser", soundChooser);
 
 
 			// Lists
@@ -104,6 +113,8 @@ namespace Controllers
 			instrumentSelectCancel->signal_clicked().connect(sigc::mem_fun(instrumentSeclectWindow, &Gtk::Window::hide));
 			kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
 			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
+			soundChooserCancel->signal_clicked().connect(sigc::mem_fun(soundChooser, &Gtk::FileChooserDialog::hide));
+			soundChooserOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentSound));
 
 			// Comboboxes
 			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
@@ -581,7 +592,7 @@ namespace Controllers
 				triggersIdsAndLocations.push_back(std::make_shared<TriggerIdAndLocation>(triggersLocations, triggersIds));
 			}
 
-			std::for_each(triggersIdsAndLocations.cbegin(), triggersIdsAndLocations.cend(), [&instrumentConfig_TriggersBox](const TriggerIdAndLocationPtr& t){ instrumentConfig_TriggersBox->add(*t); });
+			std::for_each(triggersIdsAndLocations.cbegin(), triggersIdsAndLocations.cend(), [&](const TriggerIdAndLocationPtr& t){ instrumentConfig_TriggersBox->add(*t); });
 		}
 
 		// Create sounds types and paths
@@ -590,13 +601,16 @@ namespace Controllers
 			std::for_each(soundsTypesAndPaths.begin(), soundsTypesAndPaths.end(), [](SoundTypeAndPathPtr& t) { t.reset(); });
 			soundsTypesAndPaths.clear();
 
+			Gtk::FileChooserDialog* soundChooser = nullptr;
+			this->builder->get_widget("SoundChooser", soundChooser);
+
 			for(std::size_t i = 0; i < soundsTypes.size(); i++)
 			{
-				soundsTypesAndPaths.push_back(std::make_shared<SoundTypeAndPath>(soundsTypes, soundsFiles));
+				soundsTypesAndPaths.push_back(std::make_shared<SoundTypeAndPath>(soundsTypes, drumKit->GetDataLocation(), soundChooser));
 			}
 
 			// Add sounds types to window
-			std::for_each(soundsTypesAndPaths.cbegin(), soundsTypesAndPaths.cend(), [&instrumentConfig_SoundsBox](const SoundTypeAndPathPtr& t){ instrumentConfig_SoundsBox->add(*t); });
+			std::for_each(soundsTypesAndPaths.cbegin(), soundsTypesAndPaths.cend(), [&](const SoundTypeAndPathPtr& t){ instrumentConfig_SoundsBox->add(*t); });
 
 		}
 
@@ -871,6 +885,53 @@ namespace Controllers
 		instrumentSeclectWindow->hide();
 
 		return;
+	}
+
+	void KitController::ChangeInstrumentSound()
+	{
+
+		// Retrieve soundChooser
+		Gtk::FileChooserDialog* soundChooser = nullptr;
+		this->builder->get_widget("SoundChooser", soundChooser);
+
+		// Get new sound's path
+		std::string folder = soundChooser->get_filename();
+
+		// Find which sound's been modified
+		auto itSound = std::find_if(soundsTypesAndPaths.begin(), soundsTypesAndPaths.end(), [](auto& s) { return s->GetChangingSound(); });
+
+		if(itSound == soundsTypesAndPaths.cend())
+		{
+			return;
+		}
+
+		// Get path relative to the sound bank's folder
+		std::string soundLoc;
+		{
+
+			std::string parentFolder("SoundBank");
+			auto pos = folder.find(parentFolder);
+
+			// If the path is invalid
+			if(pos == std::string::npos)
+			{
+				// Close sound chooser
+				soundChooser->hide();
+				return;
+			}
+
+			soundLoc = folder.substr(pos + parentFolder.size() + 1);
+
+		}
+
+		// Set new sound
+		itSound->get()->SetSound(soundLoc);
+
+		// Close sound chooser
+		soundChooser->hide();
+
+		return;
+
 	}
 
 	void KitController::ShowKeyboard()

@@ -11,6 +11,8 @@
 #include <gtkmm/grid.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/label.h>
+#include <gtkmm/filechooserdialog.h>
+#include <gtkmm/button.h>
 
 #include <vector>
 #include <string>
@@ -24,21 +26,29 @@ namespace Widgets
 
 	public:
 
-		SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds);
+		SoundTypeAndPath(const std::vector<std::string>& types, const std::string& dataFolder, Gtk::FileChooserDialog* soundChooser);
 		virtual ~SoundTypeAndPath() = default;
 
-		void SetSoundType(const std::string t) { typesList.set_active_text(t); }
-		void SetSound(const std::string t) { soundsList.set_active_text(t); }
+
+		void ShowSoundChooser(Gtk::FileChooserDialog* soundChooser, const std::string& dataFolder);
+
+		void SetSoundType(const std::string& t) { typesList.set_active_text(t); }
+		void SetSound(const std::string& t) { soundName.set_text(t); }
+		void SetSoundChanged() { changingSound = false; }
 
 		std::string GetSoundType() const { return typesList.get_entry_text(); }
-		std::string GetSound() const { return soundsList.get_entry_text(); }
+		std::string GetSound() const { return soundName.get_text(); }
+		bool GetChangingSound() const { return changingSound; }
 
 	private:
 
 		Gtk::Label soundTypeLabel;
 		Gtk::Label soundLabel;
 		Gtk::ComboBoxText typesList;
-		Gtk::ComboBoxText soundsList;
+		Gtk::Label soundName;
+		Gtk::Button soundChange;
+
+		bool changingSound;
 
 	};
 

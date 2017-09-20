@@ -10,8 +10,8 @@
 namespace Widgets
 {
 
-	SoundTypeAndPath::SoundTypeAndPath(const std::vector<std::string>& types, const std::vector<std::string>& sounds)
-	: soundTypeLabel("Sound type: "), soundLabel("Sound: "), typesList(true), soundsList(true)
+	SoundTypeAndPath::SoundTypeAndPath(const std::vector<std::string>& types, const std::string& dataFolder, Gtk::FileChooserDialog* soundChooser)
+	: soundTypeLabel("Sound type: "), soundLabel("Sound: "), typesList(true), soundName(""), soundChange(Gtk::StockID("gtk-edit")), changingSound(false)
 	{
 
 
@@ -43,17 +43,15 @@ namespace Widgets
 		soundLabel.show();
 
 		// Populate sounds combobox
-		for(const auto& sound : sounds)
-		{
-			soundsList.append(sound);
-		}
-		soundsList.set_active(0);
 
-		// Configure and add sounds to widget
-		soundsList.set_halign(Gtk::Align::ALIGN_CENTER);
-		soundsList.get_entry()->set_width_chars(24);
-		this->attach_next_to(soundsList, soundLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
-		soundsList.show();
+		this->attach_next_to(soundName, soundLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
+		soundName.show();
+
+		this->attach_next_to(soundChange, soundName, Gtk::PositionType::POS_RIGHT, 1, 1);
+		soundChange.set_halign(Gtk::Align::ALIGN_END);
+		soundChange.show();
+
+		soundChange.signal_clicked().connect(std::bind(sigc::mem_fun(this, &SoundTypeAndPath::ShowSoundChooser), soundChooser, dataFolder));
 
 
 		this->show();
@@ -61,5 +59,12 @@ namespace Widgets
 		return;
 	}
 
+
+	void SoundTypeAndPath::ShowSoundChooser(Gtk::FileChooserDialog* soundChooser, const std::string& dataFolder)
+	{
+		this->changingSound = true;
+		soundChooser->set_current_folder(dataFolder + "SoundBank/");
+		soundChooser->show();
+	}
 
 } /* namespace Widgets */

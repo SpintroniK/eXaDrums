@@ -19,11 +19,11 @@
 int main(int argc, char* argv[])
 {
 
-	const std::string mainLocation = std::string(argv[0]);
-	std::size_t pos = mainLocation.find_last_of("/");
+	const std::string mainLocation(argv[0]);
+	const std::size_t pos(mainLocation.find_last_of("/"));
 
-	const std::string mainFolder = mainLocation.substr(0, pos);
-	const std::string uiFileLocation = mainFolder + "/../Source/Ui.glade";
+	const std::string mainFolder(mainLocation.substr(0, pos));
+	const std::string uiFileLocation(mainFolder + "/../Source/Ui.glade");
 
 	// Create application and builder
 	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
@@ -34,7 +34,7 @@ int main(int argc, char* argv[])
 	builder->get_widget_derived("MainWindow", mainWindow);
 
 	// Create controller
-	std::shared_ptr<Controllers::MainController> controller = std::make_shared<Controllers::MainController>(builder, mainFolder);
+	std::unique_ptr<Controllers::MainController> controller{std::make_unique<Controllers::MainController>(builder, mainFolder)};
 
 	// Handle quit button signal
 	Gtk::Button* quitButton = nullptr;

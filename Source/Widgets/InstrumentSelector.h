@@ -22,10 +22,10 @@ namespace Widgets
 
 	public:
 
-		InstrumentSelector(const std::string name);
+		explicit InstrumentSelector(const std::string& name);
 		virtual ~InstrumentSelector() = default;
 
-		void SetInstrumentName(std::string name) { instrumentName.set_text(name); }
+		void SetInstrumentName(const std::string& name) { instrumentName.set_text(name); }
 
 		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
 		Gtk::Button& GetDeleteButton() { return deleteButton; }

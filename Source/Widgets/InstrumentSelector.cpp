@@ -11,7 +11,7 @@
 namespace Widgets
 {
 
-	InstrumentSelector::InstrumentSelector(const std::string name)
+	InstrumentSelector::InstrumentSelector(const std::string& name)
 	: instrumentName(name), preferencesButton(Gtk::StockID("gtk-preferences")), deleteButton(Gtk::StockID("gtk-remove"))
 	{
 

@@ -19,7 +19,7 @@ namespace Controllers
 {
 
 	CoachController::CoachController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit)
-	: builder(builder), drumKit(drumKit)
+	: builder(builder), drumKit(std::move(drumKit))
 	{
 
 		// Get all widgets
@@ -124,7 +124,7 @@ namespace Controllers
 			double fraction = std::exp(-double(dt) / 200000.0);
 			double value = double(drumKit->GetLastTrigValue()) / 100.0;
 
-			hitMeterBar->set_value(value * fraction);
+			hitMeterBar->set_value(std::max(value * fraction, 0.));
 		}
 
 		// Check accuracy

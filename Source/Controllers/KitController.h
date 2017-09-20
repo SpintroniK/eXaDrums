@@ -15,14 +15,12 @@
 #include "../Widgets/InstrumentSelector.h"
 
 #include <Source/Api/eXaDrums.h>
-#include <Source/Api/KitCreator/KitCreator_api.h>
-
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
-
+#include <Source/Api/KitCreator/KitCreator_api.h>
 #include <vector>
 #include <string>
 #include <memory>
@@ -35,7 +33,7 @@ namespace Controllers
 
 	public:
 
-		KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit);
+		KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums>& drumKit);
 		virtual ~KitController();
 
 	private:
@@ -63,6 +61,7 @@ namespace Controllers
 		void CancelInstrumentModif();
 		void ShowInstrumentSelectWindow();
 		void SaveKitPreferences();
+		void ChangeInstrumentSound();
 
 		// Faders
 		void UpdateFaders();
