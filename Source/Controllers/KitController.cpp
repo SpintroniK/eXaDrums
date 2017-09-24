@@ -674,6 +674,9 @@ namespace Controllers
 				// Change instrument name
 				kitCreator->SetInstrumentName(id, instrumentName.c_str());
 
+				// Change instrument type
+				kitCreator->SetInstrumentType(id, instrumentType.c_str());
+
 				// Modify triggers ids and locations
 				kitCreator->SetInstrumentTriggersIdsAndLocs(id, trigIdsAndLocs);
 
@@ -926,6 +929,7 @@ namespace Controllers
 
 		// Set new sound
 		itSound->get()->SetSound(soundLoc);
+		itSound->get()->SetSoundChanged();
 
 		// Close sound chooser
 		soundChooser->hide();

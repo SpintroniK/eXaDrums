@@ -248,6 +248,7 @@ namespace Controllers
 		config.SaveTriggersConfig();
 
 		triggerConfigWindow->hide();
+		triggerSelectWindow->show();
 
 		return;
 	}
@@ -305,6 +306,7 @@ namespace Controllers
 		config.SaveTriggersConfig();
 
 		triggerConfigWindow->hide();
+		triggerSelectWindow->show();
 
 		return;
 	}
@@ -360,6 +362,9 @@ namespace Controllers
 
 	void ConfigController::TriggerConfiguration(int sensorId)
 	{
+
+
+		triggerSelectWindow->hide();
 
 		// Create pointers
 		Gtk::Entry* sensorNb = nullptr;
