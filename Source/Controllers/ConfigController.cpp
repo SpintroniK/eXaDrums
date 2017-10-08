@@ -12,6 +12,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 
+#include <iostream>
 #include <cstring>
 
 using namespace eXaDrumsApi;
@@ -41,6 +42,10 @@ namespace Controllers
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
 
+		// Mixer
+		Gtk::Button* mixerConfigCancelButton = nullptr;
+		Gtk::Button* mixerConfigSaveButton = nullptr;
+
 		// Get all widgets
 		{
 
@@ -63,10 +68,18 @@ namespace Controllers
 			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
 
+			// Mixer
+			builder->get_widget("MixerConfigCancel", mixerConfigCancelButton);
+			builder->get_widget("MixerConfigSave", mixerConfigSaveButton);
+
+			// Comboboxes
+			builder->get_widget("MixerDevices", mixerDevices);
+
 			// Windows
 			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
 			builder->get_widget("TriggerSeclectWindow", triggerSelectWindow);
 			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
+			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
 
 		}
 
@@ -88,6 +101,10 @@ namespace Controllers
 			// Sensors config
 			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
 			sensorsConfigOkayButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveSensorsConfig));
+
+			// Mixer config
+			mixerConfigCancelButton->signal_clicked().connect(sigc::mem_fun(mixerConfigWindow, &Gtk::Window::hide));
+			mixerConfigSaveButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveMixerConfig));
 
 		}
 
@@ -146,6 +163,8 @@ namespace Controllers
 
 		}
 
+
+
 		return;
 	}
 
@@ -156,6 +175,7 @@ namespace Controllers
 		delete sensorsConfigWindow;
 		delete triggerSelectWindow;
 		delete triggerConfigWindow;
+		delete mixerConfigWindow;
 
 		return;
 	}
@@ -165,6 +185,76 @@ namespace Controllers
 	void ConfigController::ShowMixerConfigWindow()
 	{
 
+		Gtk::Button* playButton = nullptr;
+		Gtk::Entry* sampleRate = nullptr;
+		Gtk::Entry* bufferLength = nullptr;
+		Gtk::Entry* periodLength = nullptr;
+
+		builder->get_widget("PlayButton", playButton);
+		builder->get_widget("MixerSamplingRate", sampleRate);
+		builder->get_widget("MixerBufferLength", bufferLength);
+		builder->get_widget("MixerPeriodLength", periodLength);
+
+		if(drumKit->IsStarted())
+		{
+			playButton->set_property("label", Gtk::StockID("gtk-media-play"));
+			drumKit->Stop();
+		}
+
+		// Configure mixer window
+		{
+			mixerDevices->unset_active();
+			mixerDevices->remove_all();
+
+			// Get sound devices
+			std::vector<std::string> devices = config.GetAudioDevicesNames();
+
+			for(const auto& device : devices)
+			{
+				mixerDevices->append(device);
+			}
+
+			// Get selected device
+			std::string devName = config.GetAudioDeviceName();
+			mixerDevices->set_active_text(devName);
+
+			AlsaParamsApi alsaParameters = config.GetAudioDeviceParams();
+
+			sampleRate->set_text(std::to_string(alsaParameters.sampleRate));
+			bufferLength->set_text(std::to_string(alsaParameters.bufferTime));
+			periodLength->set_text(std::to_string(alsaParameters.periodTime));
+
+		}
+
+		mixerConfigWindow->show();
+
+		return;
+	}
+
+	void ConfigController::SaveMixerConfig()
+	{
+
+		Gtk::Entry* sampleRate = nullptr;
+		Gtk::Entry* bufferLength = nullptr;
+		Gtk::Entry* periodLength = nullptr;
+
+		builder->get_widget("MixerSamplingRate", sampleRate);
+		builder->get_widget("MixerBufferLength", bufferLength);
+		builder->get_widget("MixerPeriodLength", periodLength);
+
+		AlsaParamsApi alsaParameters;
+		alsaParameters.sampleRate = std::stoi(sampleRate->get_text());
+		alsaParameters.bufferTime = std::stoi(bufferLength->get_text());
+		alsaParameters.periodTime = std::stoi(periodLength->get_text());
+
+		std::strcpy(alsaParameters.device, mixerDevices->get_active_text().data());
+
+		config.SetAudioDeviceParameters(alsaParameters);
+		config.SaveCurrentAudioDeviceConfig();
+		config.ResetAudioDevice();
+
+
+		mixerConfigWindow->hide();
 
 		return;
 	}
@@ -294,6 +384,7 @@ namespace Controllers
 		if(triggerIt == triggersParameters.end())
 		{
 			// Error: trigger doesn't exist.
+			std::cerr << "Error: trigger " << tp.sensorId << " doesn't exist." << std::endl;
 			throw -1;
 		}
 

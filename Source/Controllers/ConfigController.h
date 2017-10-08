@@ -15,6 +15,7 @@
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
+#include <gtkmm/comboboxtext.h>
 
 namespace Controllers
 {
@@ -40,6 +41,8 @@ namespace Controllers
 		void CloseTriggerConfigWindow();
 		void SaveTriggerConfig();
 
+		// Mixer
+		void SaveMixerConfig();
 
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
@@ -52,10 +55,14 @@ namespace Controllers
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
 
+		// Comboboxes
+		Gtk::ComboBoxText* mixerDevices;
+
 		// Windows
 		Gtk::Window* sensorsConfigWindow;
 		Gtk::Window* triggerSelectWindow;
 		Gtk::Window* triggerConfigWindow;
+		Gtk::Window* mixerConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;
