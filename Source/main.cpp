@@ -39,7 +39,7 @@ int main(int argc, char* argv[])
 	// Handle quit button signal
 	Gtk::Button* quitButton = nullptr;
 	builder->get_widget("QuitButton", quitButton);
-	quitButton->signal_clicked().connect(sigc::mem_fun(mainWindow, &Gui::MainWindow::hide));
+	quitButton->signal_clicked().connect([=] { mainWindow->hide(); });
 
 	// Run application
 	int ret = app->run(*mainWindow);

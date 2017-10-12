@@ -102,25 +102,25 @@ namespace Controllers
 
 		// Connect signals
 		{
-			playButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::PlayDrums));
-			saveFaders->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveFaders));
-			deleteKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::DeleteKitDialog));
-			addDrumKitButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::AddNewKitWindow));
-			kitPreferencesButton->signal_clicked().connect(sigc::mem_fun(this, &KitController::ShowInstrumentSelectWindow));
-			instrumentConfigOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateInstrumentData));
-			instrumentConfigCancel->signal_clicked().connect(sigc::mem_fun(this, &KitController::CancelInstrumentModif));
-			instrumentSelectSave->signal_clicked().connect(sigc::mem_fun(this, &KitController::SaveKitPreferences));
-			instrumentSelectCancel->signal_clicked().connect(sigc::mem_fun(instrumentSeclectWindow, &Gtk::Window::hide));
-			kitNameCancel->signal_clicked().connect(sigc::mem_fun(newKitWindow, &Gtk::Window::hide));
-			KitNameOk->signal_clicked().connect(sigc::mem_fun(this, &KitController::ValidateKitData));
-			soundChooserCancel->signal_clicked().connect(sigc::mem_fun(soundChooser, &Gtk::FileChooserDialog::hide));
-			soundChooserOkay->signal_clicked().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentSound));
+			playButton->signal_clicked().connect([&] { PlayDrums(); });
+			saveFaders->signal_clicked().connect([&] { SaveFaders(); });
+			deleteKitButton->signal_clicked().connect([&] { DeleteKitDialog(); });
+			addDrumKitButton->signal_clicked().connect([&] { AddNewKitWindow(); });
+			kitPreferencesButton->signal_clicked().connect([&] { ShowInstrumentSelectWindow(); });
+			instrumentConfigOkay->signal_clicked().connect([&] { ValidateInstrumentData(); });
+			instrumentConfigCancel->signal_clicked().connect([&] { CancelInstrumentModif(); });
+			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); });
+			instrumentSelectCancel->signal_clicked().connect([&] { instrumentSeclectWindow->hide(); });
+			kitNameCancel->signal_clicked().connect([&] { newKitWindow->hide(); });
+			KitNameOk->signal_clicked().connect([&] { ValidateKitData(); });
+			soundChooserCancel->signal_clicked().connect([=] { soundChooser->hide(); });
+			soundChooserOkay->signal_clicked().connect([&] { ChangeInstrumentSound(); });
 
 			// Comboboxes
-			instrumentConfig_Type->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeInstrumentType));
+			instrumentConfig_Type->signal_changed().connect([&] { ChangeInstrumentType(); });
 
 			// Kits list
-			kitsList->signal_changed().connect(sigc::mem_fun(this, &KitController::ChangeKit));
+			kitsList->signal_changed().connect([&] { ChangeKit(); });
 		}
 
 		return;
@@ -360,12 +360,12 @@ namespace Controllers
 		}
 
 		// Add all faders to GUI
-		std::for_each(faders.cbegin(), faders.cend(), [this](const FaderPtr& f){ this->fadersList->add(*f); });
+		std::for_each(faders.cbegin(), faders.cend(), [&](const FaderPtr& f){ this->fadersList->add(*f); });
 
 		// Connect faders signals
 		for(FaderPtr& fader : faders)
 		{
-			fader->GetScale().signal_value_changed().connect(std::bind(sigc::mem_fun(this, &KitController::SetInstrumentVolume), std::ref(fader)));
+			fader->GetScale().signal_value_changed().connect([&] { SetInstrumentVolume(fader); });
 		}
 
 		return;
@@ -827,8 +827,8 @@ namespace Controllers
 		for(std::size_t i = 0; i < instrumentsSelectors.size(); i++)
 		{
 			auto& is = instrumentsSelectors[i];
-			is->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::ModifyInstrument), i));
-			is->GetDeleteButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &KitController::RemoveInstrument), i));
+			is->GetPreferencesButton().signal_clicked().connect([=] { ModifyInstrument(i); });
+			is->GetDeleteButton().signal_clicked().connect([=] { RemoveInstrument(i); });
 		}
 
 		instrumentSeclectWindow->show();

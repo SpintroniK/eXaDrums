@@ -34,8 +34,8 @@ namespace Controllers
 
 		// Connect all signals
 		{
-			coachButton->signal_clicked().connect(sigc::mem_fun(this, &CoachController::OpenRhythmCoach));
-			coachCloseButton->signal_clicked().connect(sigc::mem_fun(this, &CoachController::CloseRhythmCoach));
+			coachButton->signal_clicked().connect([&]{ OpenRhythmCoach(); });
+			coachCloseButton->signal_clicked().connect([&]{ CloseRhythmCoach(); });
 		}
 
 

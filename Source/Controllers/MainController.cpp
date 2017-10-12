@@ -45,11 +45,11 @@ namespace Controllers
 		// Connect all signals
 		{
 			// Buttons
-			aboutButton->signal_clicked().connect(sigc::mem_fun(this, &MainController::ShowAboutDialog));
-			rhythmCoachPrefButton->signal_clicked().connect(sigc::mem_fun(*metronomeController, &MetronomeController::ShowMetronomePrefs));
+			aboutButton->signal_clicked().connect([&] { ShowAboutDialog(); });
+			rhythmCoachPrefButton->signal_clicked().connect([&] { metronomeController->ShowMetronomePrefs(); });
 
 			// Dialog
-			aboutDialog->signal_response().connect(std::bind(sigc::mem_fun(this, &MainController::HideAboutDialog), 0));
+			aboutDialog->signal_response().connect([&](int i) { HideAboutDialog(i); });
 
 		}
 

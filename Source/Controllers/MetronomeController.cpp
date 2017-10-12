@@ -33,10 +33,10 @@ namespace Controllers
 
 		// Connect all signals
 		{
-			metronomeConfigSave->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::SaveMetronomeConfig));
-			clickTempoScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeTempo));
-			clickVolumeScale->signal_value_changed().connect(sigc::mem_fun(this, &MetronomeController::ChangeVolume));
-			enableClickButton->signal_clicked().connect(sigc::mem_fun(this, &MetronomeController::EnableClick));
+			metronomeConfigSave->signal_clicked().connect([&] { SaveMetronomeConfig(); });
+			clickTempoScale->signal_value_changed().connect([&] { ChangeTempo(); });
+			clickVolumeScale->signal_value_changed().connect([&] { ChangeVolume(); });
+			enableClickButton->signal_clicked().connect([&] { EnableClick(); });
 		}
 
 		// Set tempo value

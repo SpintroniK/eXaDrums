@@ -53,7 +53,7 @@ namespace Widgets
 		soundChange.set_hexpand(true);
 		soundChange.show();
 
-		soundChange.signal_clicked().connect(std::bind(sigc::mem_fun(this, &SoundTypeAndPath::ShowSoundChooser), soundChooser, dataFolder));
+		soundChange.signal_clicked().connect([=] { ShowSoundChooser(soundChooser, dataFolder); });
 
 
 		this->show();

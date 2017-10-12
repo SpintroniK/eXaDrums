@@ -86,25 +86,25 @@ namespace Controllers
 		// Connect signals
 		{
 
-			mixerConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowMixerConfigWindow));
-			soundLibraryButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundLibConfigWindow));
-			soundEffectsButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSoundEffectsWindow));
-			sensorsConfigCancelButton->signal_clicked().connect(sigc::mem_fun(sensorsConfigWindow, &Gtk::Window::hide));
+			mixerConfigButton->signal_clicked().connect([&] { ShowMixerConfigWindow(); });
+			soundLibraryButton->signal_clicked().connect([&] { ShowSoundLibConfigWindow(); });
+			soundEffectsButton->signal_clicked().connect([&] { ShowSoundEffectsWindow(); });
+			sensorsConfigCancelButton->signal_clicked().connect([&] { sensorsConfigWindow->hide(); });
 
 			// Triggers config
-			triggersConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowTriggersConfigWindow));
-			triggersSelectCloseButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::CloseTriggerSelectWindow));
-			triggerConfigCancelButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::CloseTriggerConfigWindow));
-			triggerConfigApplyButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ApplyTriggerConfig));
-			triggerConfigSaveButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveTriggerConfig));
+			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
+			triggersSelectCloseButton->signal_clicked().connect([&] { CloseTriggerSelectWindow(); });
+			triggerConfigCancelButton->signal_clicked().connect([&] { CloseTriggerConfigWindow(); });
+			triggerConfigApplyButton->signal_clicked().connect([&] { ApplyTriggerConfig(); });
+			triggerConfigSaveButton->signal_clicked().connect([&] { SaveTriggerConfig(); });
 
 			// Sensors config
-			sensorsConfigButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::ShowSensorsConfigWindow));
-			sensorsConfigOkayButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveSensorsConfig));
+			sensorsConfigButton->signal_clicked().connect([&] { ShowSensorsConfigWindow(); });
+			sensorsConfigOkayButton->signal_clicked().connect([&] { SaveSensorsConfig(); });
 
 			// Mixer config
-			mixerConfigCancelButton->signal_clicked().connect(sigc::mem_fun(mixerConfigWindow, &Gtk::Window::hide));
-			mixerConfigSaveButton->signal_clicked().connect(sigc::mem_fun(this, &ConfigController::SaveMixerConfig));
+			mixerConfigCancelButton->signal_clicked().connect([&] { mixerConfigWindow->hide(); });
+			mixerConfigSaveButton->signal_clicked().connect([&] { SaveMixerConfig(); });
 
 		}
 
@@ -249,8 +249,8 @@ namespace Controllers
 
 		std::strcpy(alsaParameters.device, mixerDevices->get_active_text().data());
 
-		config.SetAudioDeviceParameters(alsaParameters);
-		config.SaveCurrentAudioDeviceConfig();
+
+		config.SaveAudioDeviceConfig(alsaParameters);
 		config.ResetAudioDevice();
 
 
@@ -286,7 +286,7 @@ namespace Controllers
 		// Connect signals
 		for(const auto& ts : triggersSelectors)
 		{
-			ts->GetPreferencesButton().signal_clicked().connect(std::bind(sigc::mem_fun(this, &ConfigController::TriggerConfiguration), ts->GetSensorId()));
+			ts->GetPreferencesButton().signal_clicked().connect([&] { TriggerConfiguration(ts->GetSensorId()); });
 		}
 
 
