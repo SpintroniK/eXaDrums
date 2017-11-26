@@ -189,11 +189,13 @@ namespace Controllers
 		Gtk::Entry* sampleRate = nullptr;
 		Gtk::Entry* bufferLength = nullptr;
 		Gtk::Entry* periodLength = nullptr;
+		Gtk::Entry* nbChannels = nullptr;
 
 		builder->get_widget("PlayButton", playButton);
 		builder->get_widget("MixerSamplingRate", sampleRate);
 		builder->get_widget("MixerBufferLength", bufferLength);
 		builder->get_widget("MixerPeriodLength", periodLength);
+		builder->get_widget("MixerNbChannels", nbChannels);
 
 		if(drumKit->IsStarted())
 		{
@@ -223,6 +225,7 @@ namespace Controllers
 			sampleRate->set_text(std::to_string(alsaParameters.sampleRate));
 			bufferLength->set_text(std::to_string(alsaParameters.bufferTime));
 			periodLength->set_text(std::to_string(alsaParameters.periodTime));
+			nbChannels->set_text(std::to_string(alsaParameters.nChannels));
 
 		}
 
@@ -237,15 +240,18 @@ namespace Controllers
 		Gtk::Entry* sampleRate = nullptr;
 		Gtk::Entry* bufferLength = nullptr;
 		Gtk::Entry* periodLength = nullptr;
+		Gtk::Entry* nbChannels = nullptr;
 
 		builder->get_widget("MixerSamplingRate", sampleRate);
 		builder->get_widget("MixerBufferLength", bufferLength);
 		builder->get_widget("MixerPeriodLength", periodLength);
+		builder->get_widget("MixerNbChannels", nbChannels);
 
 		AlsaParamsApi alsaParameters;
 		alsaParameters.sampleRate = std::stoi(sampleRate->get_text());
 		alsaParameters.bufferTime = std::stoi(bufferLength->get_text());
 		alsaParameters.periodTime = std::stoi(periodLength->get_text());
+		alsaParameters.nChannels = std::stoi(nbChannels->get_text());
 
 		std::strcpy(alsaParameters.device, mixerDevices->get_active_text().data());
 
