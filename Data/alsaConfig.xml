@@ -1,10 +1,10 @@
 <root>
-	<device>default</device>
-	<capture>0</capture>
-	<format>SND_PCM_FORMAT_S16_LE</format>
-	<sampleRate>48000</sampleRate>
-	<nChannels>1</nChannels>
-	<bufferTime>5000</bufferTime>
-	<periodTime>2500</periodTime>
-	<access>SND_PCM_ACCESS_RW_INTERLEAVED</access>
+    <device>default</device>
+    <capture>0</capture>
+    <format>SND_PCM_FORMAT_S16_LE</format>
+    <sampleRate>48000</sampleRate>
+    <nChannels>2</nChannels>
+    <bufferTime>5000</bufferTime>
+    <periodTime>1666</periodTime>
+    <access>SND_PCM_ACCESS_RW_INTERLEAVED</access>
 </root>
