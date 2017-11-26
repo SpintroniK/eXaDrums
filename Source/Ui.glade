@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.0 
+<!-- Generated with glade 3.20.1 
 
 Copyright (c) Jérémy Oden
 All rights reserved.
@@ -50,6 +50,7 @@ Author: Jérémy Oden
   <object class="GtkFileFilter" id="SoundsFilter">
     <patterns>
       <pattern>*.raw</pattern>
+      <pattern>*.wav</pattern>
     </patterns>
   </object>
   <object class="GtkAdjustment" id="TempoAdjustment">
@@ -754,6 +755,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="CoachWindow">
     <property name="can_focus">False</property>
@@ -999,6 +1003,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="InstrumentConfigWindow">
     <property name="can_focus">False</property>
@@ -1213,6 +1220,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkFileChooserDialog" id="SoundChooser">
     <property name="can_focus">False</property>
@@ -1275,6 +1285,9 @@ Author: Jérémy Oden
           <placeholder/>
         </child>
       </object>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="InstrumentSeclectWindow">
@@ -1385,6 +1398,9 @@ Author: Jérémy Oden
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="MetronomeConfig">
@@ -1542,6 +1558,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="MixerConfigWindow">
     <property name="can_focus">False</property>
@@ -1581,29 +1600,29 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkComboBoxText" id="MixerDevices">
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="label" translatable="yes">Sampling rate [Hz]: </property>
-                <property name="justify">right</property>
+                <property name="has_entry">True</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can_focus">False</property>
+                  </object>
+                </child>
               </object>
               <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">1</property>
+                <property name="left_attach">1</property>
+                <property name="top_attach">0</property>
               </packing>
             </child>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkEntry" id="MixerPeriodLength">
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="label" translatable="yes">Buffer length [µs]: </property>
-                <property name="justify">right</property>
+                <property name="can_focus">True</property>
               </object>
               <packing>
-                <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="left_attach">1</property>
+                <property name="top_attach">4</property>
               </packing>
             </child>
             <child>
@@ -1612,6 +1631,29 @@ Author: Jérémy Oden
                 <property name="can_focus">False</property>
                 <property name="halign">end</property>
                 <property name="label" translatable="yes">Period length [µs]: </property>
+                <property name="justify">right</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">4</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="MixerBufferLength">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">3</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Buffer length [µs]: </property>
                 <property name="justify">right</property>
               </object>
               <packing>
@@ -1626,43 +1668,41 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="MixerBufferLength">
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
                 <property name="top_attach">2</property>
               </packing>
             </child>
             <child>
-              <object class="GtkEntry" id="MixerPeriodLength">
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Sampling rate [Hz]: </property>
+                <property name="justify">right</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Number of channels: </property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="MixerNbChannels">
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkComboBoxText" id="MixerDevices">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="has_entry">True</property>
-                <child internal-child="entry">
-                  <object class="GtkEntry">
-                    <property name="can_focus">False</property>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="left_attach">1</property>
-                <property name="top_attach">0</property>
+                <property name="top_attach">1</property>
               </packing>
             </child>
           </object>
@@ -1713,6 +1753,9 @@ Author: Jérémy Oden
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="NewKitNameWindow">
@@ -1817,6 +1860,9 @@ Author: Jérémy Oden
           <placeholder/>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="SensorsConfigWindow">
@@ -2033,6 +2079,9 @@ Author: Jérémy Oden
           </packing>
         </child>
       </object>
+    </child>
+    <child type="titlebar">
+      <placeholder/>
     </child>
   </object>
   <object class="GtkWindow" id="TriggerConfigurationWindow">
@@ -2271,6 +2320,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkWindow" id="TriggerSeclectWindow">
     <property name="can_focus">False</property>
@@ -2341,6 +2393,9 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
   </object>
   <object class="GtkAboutDialog" id="eXaDrumsAboutDialog">
     <property name="can_focus">False</property>
@@ -2382,6 +2437,9 @@ Author: Jérémy Oden
           <placeholder/>
         </child>
       </object>
+    </child>
+    <child>
+      <placeholder/>
     </child>
   </object>
 </interface>

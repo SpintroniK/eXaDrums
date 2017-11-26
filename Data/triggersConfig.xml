@@ -3,7 +3,7 @@
         <Threshold>120</Threshold>
         <ScanTime>4000</ScanTime>
         <MaskTime>60000</MaskTime>
-        <Response>Exponential</Response>
+        <Response>Linear</Response>
     </Trigger>
     <Trigger sensorType="Discrete" sensorId="1">
         <Threshold>100</Threshold>
