@@ -1,0 +1,13 @@
+<root>
+    <kitName>PadTest</kitName>
+    <kitFolder/>
+    <Instrument type="Pad" volume="100">
+        <instrumentName>Instrument 1</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">0</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">SnareDrum/snare1.wav</sound>
+        </sounds>
+    </Instrument>
+</root>
