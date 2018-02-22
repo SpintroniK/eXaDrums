@@ -43,7 +43,6 @@ namespace Controllers
 		Gtk::Button* KitNameOk = nullptr;
 		Gtk::Button* soundChooserCancel = nullptr;
 		Gtk::Button* soundChooserOkay = nullptr;
-
 		Gtk::FileChooserDialog* soundChooser = nullptr;
 
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
@@ -54,6 +53,7 @@ namespace Controllers
 		{
 			// Buttons
 			builder->get_widget("PlayButton", playButton);
+			builder->get_widget("RecordButton", recordButton);
 			builder->get_widget("DeleteDrumKitButton", deleteKitButton);
 			builder->get_widget("AddDrumKitButton", addDrumKitButton);
 			builder->get_widget("KitPreferencesButton", kitPreferencesButton);
@@ -103,6 +103,7 @@ namespace Controllers
 		// Connect signals
 		{
 			playButton->signal_clicked().connect([&] { PlayDrums(); });
+			recordButton->signal_toggled().connect([&] { EnableRecording(); });
 			saveFaders->signal_clicked().connect([&] { SaveFaders(); });
 			deleteKitButton->signal_clicked().connect([&] { DeleteKitDialog(); });
 			addDrumKitButton->signal_clicked().connect([&] { AddNewKitWindow(); });
@@ -273,6 +274,13 @@ namespace Controllers
 
 
 		return;
+	}
+
+	void KitController::EnableRecording()
+	{
+		bool isRecording = this->recordButton->get_active();
+
+		drumKit->EnableRecording(isRecording);
 	}
 
 	void KitController::PlayDrums()

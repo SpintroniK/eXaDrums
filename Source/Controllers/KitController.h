@@ -18,6 +18,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/togglebutton.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
 #include <Source/Api/KitCreator/KitCreator_api.h>
@@ -45,6 +46,7 @@ namespace Controllers
 		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
 		void DeleteKit(const int& id);
 		void KitAdded();
+		void EnableRecording();
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
@@ -88,6 +90,7 @@ namespace Controllers
 		Gtk::Button* deleteKitButton;
 		Gtk::Button* addDrumKitButton;
 		Gtk::Button* playButton;
+		Gtk::ToggleButton* recordButton;
 		Gtk::Button* kitPreferencesButton;
 
 		// Comboboxes
