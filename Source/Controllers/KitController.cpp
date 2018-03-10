@@ -43,10 +43,12 @@ namespace Controllers
 		Gtk::Button* KitNameOk = nullptr;
 		Gtk::Button* soundChooserCancel = nullptr;
 		Gtk::Button* soundChooserOkay = nullptr;
+		Gtk::Button* recorderCancel = nullptr;
+		Gtk::Button* recorderSave = nullptr;
+
 		Gtk::FileChooserDialog* soundChooser = nullptr;
 
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
-
 
 
 		// Get all widgets
@@ -65,6 +67,8 @@ namespace Controllers
 			builder->get_widget("KitNameOk", KitNameOk);
 			builder->get_widget("SoundChooserCancel", soundChooserCancel);
 			builder->get_widget("SoundChooserOkay", soundChooserOkay);
+			builder->get_widget("RecorderCancel", recorderCancel);
+			builder->get_widget("RecorderSave", recorderSave);
 
 			builder->get_widget("SoundChooser", soundChooser);
 
@@ -84,6 +88,7 @@ namespace Controllers
 			builder->get_widget("NewKitNameWindow", newKitWindow);
 			builder->get_widget("InstrumentConfigWindow", instrumentConfigWindow);
 			builder->get_widget("InstrumentSeclectWindow", instrumentSeclectWindow);
+			builder->get_widget("RecorderWindow", recorderWindow);
 
 
 		}
@@ -116,6 +121,8 @@ namespace Controllers
 			KitNameOk->signal_clicked().connect([&] { ValidateKitData(); });
 			soundChooserCancel->signal_clicked().connect([=] { soundChooser->hide(); });
 			soundChooserOkay->signal_clicked().connect([&] { ChangeInstrumentSound(); });
+			recorderCancel->signal_clicked().connect([&] { recorderWindow->hide(); });
+			recorderSave->signal_clicked().connect([&] { RecorderExport(); });
 
 			// Comboboxes
 			instrumentConfig_Type->signal_changed().connect([&] { ChangeInstrumentType(); });
@@ -134,6 +141,7 @@ namespace Controllers
 		delete newKitWindow;
 		delete instrumentConfigWindow;
 		delete instrumentSeclectWindow;
+		delete recorderWindow;
 
 		return;
 	}
@@ -281,6 +289,25 @@ namespace Controllers
 		bool isRecording = this->recordButton->get_active();
 
 		drumKit->EnableRecording(isRecording);
+
+		if(!isRecording)
+		{
+			recorderWindow->show();
+		}
+	}
+
+	void KitController::RecorderExport()
+	{
+		Gtk::Entry* recorderFileName = nullptr;
+		builder->get_widget("RecorderFileName", recorderFileName);
+
+		auto txt = recorderFileName->get_text();
+
+		std::string fileName{txt.data()};
+
+		drumKit->RecorderExport(fileName);
+
+		recorderWindow->hide();
 	}
 
 	void KitController::PlayDrums()

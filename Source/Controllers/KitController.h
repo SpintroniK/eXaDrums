@@ -15,13 +15,15 @@
 #include "../Widgets/InstrumentSelector.h"
 
 #include <Source/Api/eXaDrums.h>
+#include <Source/Api/KitCreator/KitCreator_api.h>
+
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/togglebutton.h>
 #include <gtkmm/box.h>
 #include <gtkmm/window.h>
-#include <Source/Api/KitCreator/KitCreator_api.h>
+
 #include <vector>
 #include <string>
 #include <memory>
@@ -47,6 +49,7 @@ namespace Controllers
 		void DeleteKit(const int& id);
 		void KitAdded();
 		void EnableRecording();
+		void RecorderExport();
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
@@ -111,7 +114,7 @@ namespace Controllers
 		Gtk::Window* newKitWindow;
 		Gtk::Window* instrumentConfigWindow;
 		Gtk::Window* instrumentSeclectWindow;
-
+		Gtk::Window* recorderWindow;
 
 		// Class variables
 		int numInstrumentsToCreate;
