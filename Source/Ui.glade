@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.20.2 
+<!-- Generated with glade 3.22.1 
 
 Copyright (c) Jérémy Oden
 All rights reserved.
@@ -71,23 +71,23 @@ Author: Jérémy Oden
     <property name="page_increment">10</property>
   </object>
   <object class="GtkWindow" id="MainWindow">
-    <property name="width_request">710</property>
+    <property name="width_request">800</property>
     <property name="can_focus">False</property>
     <property name="halign">center</property>
     <property name="window_position">center</property>
-    <property name="default_width">760</property>
-    <property name="default_height">480</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="decorated">False</property>
     <property name="deletable">False</property>
     <property name="gravity">center</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid" id="MainGrid">
-        <property name="width_request">760</property>
         <property name="visible">True</property>
         <property name="can_focus">False</property>
         <property name="halign">center</property>
-        <property name="margin_left">12</property>
+        <property name="margin_left">4</property>
         <child>
           <object class="GtkGrid" id="TopGrid">
             <property name="visible">True</property>
@@ -789,9 +789,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="CoachWindow">
     <property name="can_focus">False</property>
@@ -802,6 +799,9 @@ Author: Jérémy Oden
     <property name="decorated">False</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid" id="CoachGrid">
         <property name="visible">True</property>
@@ -1037,9 +1037,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="InstrumentConfigWindow">
     <property name="can_focus">False</property>
@@ -1049,6 +1046,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1254,9 +1254,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkFileChooserDialog" id="SoundChooser">
     <property name="can_focus">False</property>
@@ -1271,6 +1268,9 @@ Author: Jérémy Oden
     <property name="filter">SoundsFilter</property>
     <property name="preview_widget_active">False</property>
     <property name="use_preview_label">False</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox">
         <property name="can_focus">False</property>
@@ -1320,9 +1320,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child>
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="InstrumentSeclectWindow">
     <property name="can_focus">False</property>
@@ -1331,6 +1328,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1433,9 +1433,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="MetronomeConfig">
     <property name="can_focus">False</property>
@@ -1448,6 +1445,9 @@ Author: Jérémy Oden
     <property name="default_height">120</property>
     <property name="gravity">south-west</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1592,9 +1592,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="MixerConfigWindow">
     <property name="can_focus">False</property>
@@ -1604,6 +1601,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1788,9 +1788,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="NewKitNameWindow">
     <property name="can_focus">False</property>
@@ -1800,6 +1797,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1895,9 +1895,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="RecorderWindow">
     <property name="can_focus">False</property>
@@ -1907,6 +1904,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child>
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -1974,9 +1974,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child>
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="SensorsConfigWindow">
     <property name="can_focus">False</property>
@@ -1986,6 +1983,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -2193,9 +2193,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="TriggerConfigurationWindow">
     <property name="can_focus">False</property>
@@ -2205,6 +2202,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -2433,9 +2433,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkWindow" id="TriggerSeclectWindow">
     <property name="can_focus">False</property>
@@ -2446,6 +2443,9 @@ Author: Jérémy Oden
     <property name="window_position">center</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
+    <child type="titlebar">
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
@@ -2506,9 +2506,6 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-    <child type="titlebar">
-      <placeholder/>
-    </child>
   </object>
   <object class="GtkAboutDialog" id="eXaDrumsAboutDialog">
     <property name="can_focus">False</property>
@@ -2530,6 +2527,9 @@ Author: Jérémy Oden
     <property name="authors">Jérémy Oden</property>
     <property name="logo">eXaDrums_logo_small.png</property>
     <property name="license_type">bsd</property>
+    <child>
+      <placeholder/>
+    </child>
     <child internal-child="vbox">
       <object class="GtkBox" id="eXaDrumsAboutDialogBox">
         <property name="can_focus">False</property>
@@ -2550,9 +2550,6 @@ Author: Jérémy Oden
           <placeholder/>
         </child>
       </object>
-    </child>
-    <child>
-      <placeholder/>
     </child>
   </object>
 </interface>

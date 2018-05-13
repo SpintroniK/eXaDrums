@@ -19,27 +19,27 @@
 int main(int argc, char* argv[])
 {
 
-	const std::string mainLocation(argv[0]);
-	const std::size_t pos(mainLocation.find_last_of("/"));
+	const std::string mainLocation{argv[0]};
+	const std::size_t pos{mainLocation.find_last_of("/")};
 
-	const std::string mainFolder(mainLocation.substr(0, pos));
-	const std::string uiFileLocation(mainFolder + "/../Source/Ui.glade");
+	const std::string mainFolder{mainLocation.substr(0, pos)};
+	const std::string uiFileLocation{mainFolder + "/../Source/Ui.glade"};
 
 	// Create application and builder
-	Glib::RefPtr<Gtk::Application> app = Gtk::Application::create(argc, argv);
-	Glib::RefPtr<Gtk::Builder> builder = Gtk::Builder::create_from_file(uiFileLocation);
+	auto app = Gtk::Application::create(argc, argv);
+	auto builder = Gtk::Builder::create_from_file(uiFileLocation);
 
 	// Get main window
 	Gui::MainWindow* mainWindow = nullptr;
 	builder->get_widget_derived("MainWindow", mainWindow);
 
 	// Create controller
-	std::unique_ptr<Controllers::MainController> controller{std::make_unique<Controllers::MainController>(builder, mainFolder)};
+	auto controller = std::make_unique<Controllers::MainController>(builder, mainFolder);
 
 	// Handle quit button signal
 	Gtk::Button* quitButton = nullptr;
 	builder->get_widget("QuitButton", quitButton);
-	quitButton->signal_clicked().connect([=] { mainWindow->hide(); });
+	quitButton->signal_clicked().connect([&] { mainWindow->hide(); });
 
 	// Run application
 	int ret = app->run(*mainWindow);
