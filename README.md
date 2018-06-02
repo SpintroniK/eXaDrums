@@ -1,19 +1,15 @@
-<p align="center">
-  <img src="https://github.com/SpintroniK/eXaDrums/raw/master/Source/eXaDrums_logo_small.png" alt="eXaDrums" />
-</p>
-
-<h1 align="center">eXaDrums</h1> 
-<h3 align="center"> Electronic drums for Linux.</h3>
-<br />
+![eXaDrums](https://github.com/SpintroniK/eXaDrums/raw/master/Source/eXaDrums_logo_small.png)
+ # eXaDrums
+ ## Electronic drums for Linux.
+ 
 eXaDrums is a drum module that is compatible with most Linux distributions.
 It was originally created for the Raspberry Pi 2B and its official 7" touchscreen. 
-<br /><br />
-<p align="center">
-  <img src="https://cdn.hackaday.io/images/8733491471887978425.png" alt="eXaDrums GUI" />
-</p>
-<p align="center"><i>A screenshot of eXaDrums' user interface running on a Raspberry Pi (Ubuntu MATE).</i></p>
+
+  ![eXaDrums GUI](https://cdn.hackaday.io/images/3984431527888931486.png)
+  
+*A screenshot of eXaDrums' user interface running on a Raspberry Pi.*
 This repository holds the official graphical user interface of the eXaDrums software. 
-To use it, you will have to install <a href="https://github.com/SpintroniK/libeXaDrums">libeXaDrums</a>, and follow the instructions below.
+To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/libeXaDrums), and follow the instructions below.
 
 ## Table of content
 
