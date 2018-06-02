@@ -8,6 +8,7 @@ It was originally created for the Raspberry Pi 2B and its official 7" touchscree
   ![eXaDrums GUI](https://cdn.hackaday.io/images/3984431527888931486.png)
   
 *A screenshot of eXaDrums' user interface running on a Raspberry Pi.*
+
 This repository holds the official graphical user interface of the eXaDrums software. 
 To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/libeXaDrums), and follow the instructions below.
 
