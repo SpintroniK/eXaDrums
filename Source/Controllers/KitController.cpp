@@ -211,18 +211,7 @@ namespace Controllers
 			}
 
 			// Deselect kit
-			int activeKit;
-
-			if(id == 0)
-			{
-				activeKit = 1;
-			}
-			else
-			{
-				activeKit = 0; //id - 1;
-			}
-
-
+			int activeKit = (id == 0)? 1 : 0;
 			kitsList->set_active(activeKit);
 
 			// Delete kit
@@ -899,14 +888,21 @@ namespace Controllers
 			drumKit->ReloadKits();
 
 
-			//XXX Set new kit name in kits list (temporary method)
+			//XXX Doesn't update the active entry when there's only one kit
 			if(name != kitsList->get_active_text())
 			{
-				int pos = kitsList->get_active_row_number();
-				kitsList->set_active(pos - 1);
-				kitsList->remove_text(pos);
-				kitsList->insert(pos, name);
-				kitsList->set_active(pos);
+				kitsList->get_active()->set_value(0, name);
+
+				if(drumKit->GetKitsNames().size() > 1 && kitsList->get_active_row_number() == 0)
+				{
+					kitsList->set_active(1);
+				}
+				else
+				{
+					kitsList->set_active(0);
+				}
+
+				kitsList->set_active_text(name);
 			}
 
 			// Set active kit
