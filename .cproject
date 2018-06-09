@@ -159,7 +159,7 @@
                                 								
                                 <option id="gnu.cpp.link.option.libs.932099161" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
                                     									
-                                    <listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="eXaDrums"/>
+                                    <listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="exadrums"/>
                                     									
                                     <listOptionValue builtIn="false" value="tinyxml2"/>
                                     									
@@ -225,7 +225,7 @@
                         						
                         <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libeXaDrums/Debug"/>
                         						
-                        <entry flags="RESOLVED" kind="libraryFile" name="eXaDrums" srcPrefixMapping="" srcRootPath=""/>
+                        <entry flags="RESOLVED" kind="libraryFile" name="exadrums" srcPrefixMapping="" srcRootPath=""/>
                         					
                     </externalSetting>
                     				
@@ -325,7 +325,7 @@
                                 								
                                 <option id="gnu.cpp.link.option.libs.2091091103" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
                                     									
-                                    <listOptionValue builtIn="false" value="eXaDrums"/>
+                                    <listOptionValue builtIn="false" value="exadrums"/>
                                     								
                                 </option>
                                 								
