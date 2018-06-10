@@ -36,17 +36,19 @@ namespace Controllers
 
 	public:
 
-		MainController(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder);
+		MainController(const std::string& mainFolder);
 		virtual ~MainController();
+
+		void Create(Glib::RefPtr<Gtk::Builder>& builder);
 
 	private:
 
 		// Signals methods
-
 		// Dialogs
 		void ShowAboutDialog();
 		void HideAboutDialog(int responseId);
 
+		bool isCreated = false;
 
 		std::string mainFolder;
 
@@ -60,12 +62,11 @@ namespace Controllers
 		std::unique_ptr<ConfigController> configController;
 
 		// Buttons
-		Gtk::Button* aboutButton;
-		Gtk::Button* rhythmCoachPrefButton;
-
+		Gtk::Button* aboutButton = nullptr;
+		Gtk::Button* rhythmCoachPrefButton = nullptr;
 
 		// Dialogs
-		Gtk::AboutDialog* aboutDialog;
+		Gtk::AboutDialog* aboutDialog = nullptr;
 
 		// Windows
 

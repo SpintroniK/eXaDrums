@@ -5,18 +5,18 @@
  *      Author: jeremy
  */
 
-
+#include "exadrumsConfig.h"
 #include "Controllers/MainController.h"
 #include "MainWindow/MainWindow.h"
 
 #include <gtkmm/application.h>
 #include <gtkmm/builder.h>
+#include <gtkmm/aboutdialog.h>
 #include <gtkmm/button.h>
 
 #include <string>
-#include <memory>
 
-int main(int argc, char* argv[])
+int main(int argc, char** argv)
 {
 
 	const std::string mainLocation{argv[0]};
@@ -25,27 +25,40 @@ int main(int argc, char* argv[])
 	const std::string mainFolder{mainLocation.substr(0, pos)};
 	const std::string uiFileLocation{mainFolder + "/../Source/Ui.glade"};
 
-	// Create application and builder
-	auto app = Gtk::Application::create(argc, argv);
-	auto builder = Gtk::Builder::create_from_file(uiFileLocation);
+	// Init main controller
+	Controllers::MainController controller(mainFolder);
 
-	// Get main window
+	auto app = Gtk::Application::create(argc, argv, "org.eXaDrums", Gio::APPLICATION_HANDLES_COMMAND_LINE);
+	app->signal_command_line().connect([&](const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd){ return CommandLineParser(cmd, app); }, false);
+
 	Gui::MainWindow* mainWindow = nullptr;
-	builder->get_widget_derived("MainWindow", mainWindow);
+	auto quit = [&] { mainWindow->hide(); };
 
-	// Create controller
-	auto controller = std::make_unique<Controllers::MainController>(builder, mainFolder);
+	// Create main controller and Gui only if the app has been activated
+	app->signal_activate().connect([&]
+	{
+		auto builder = Gtk::Builder::create_from_file(uiFileLocation);
+		controller.Create(builder);
 
-	// Handle quit button signal
-	Gtk::Button* quitButton = nullptr;
-	builder->get_widget("QuitButton", quitButton);
-	quitButton->signal_clicked().connect([&] { mainWindow->hide(); });
+		// Get about dialog and set software version
+		Gtk::AboutDialog* aboutDialog = nullptr;
+		builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
+		aboutDialog->set_version(ExaDrumsVersion());
+
+		// Get main window
+		builder->get_widget_derived("MainWindow", mainWindow);
+
+		// Handle quit button signal
+		Gtk::Button* quitButton = nullptr;
+		builder->get_widget("QuitButton", quitButton);
+		quitButton->signal_clicked().connect(quit);
+
+		app->add_window(*mainWindow);
+		mainWindow->show();
+
+	}, false);
+
 
 	// Run application
-	int ret = app->run(*mainWindow);
-
-	// Delete pointers (dialogs and windows)
-	delete mainWindow;
-
-	return ret;
+	return app->run();
 }

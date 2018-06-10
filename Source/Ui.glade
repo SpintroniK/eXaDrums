@@ -1256,11 +1256,13 @@ Author: Jérémy Oden
     </child>
   </object>
   <object class="GtkFileChooserDialog" id="SoundChooser">
+    <property name="width_request">640</property>
     <property name="can_focus">False</property>
-    <property name="title" translatable="yes">Choose a sound file</property>
-    <property name="resizable">False</property>
+    <property name="halign">center</property>
+    <property name="title" translatable="yes">Select a sound file and click OK</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="default_width">640</property>
     <property name="icon_name">applications-multimedia</property>
     <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
@@ -1268,7 +1270,7 @@ Author: Jérémy Oden
     <property name="filter">SoundsFilter</property>
     <property name="preview_widget_active">False</property>
     <property name="use_preview_label">False</property>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child internal-child="vbox">

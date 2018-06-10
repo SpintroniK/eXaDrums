@@ -13,9 +13,15 @@ using namespace eXaDrumsApi;
 namespace Controllers
 {
 
-	MainController::MainController(Glib::RefPtr<Gtk::Builder>& builder, std::string const& mainFolder)
-	: mainFolder(mainFolder), builder(builder)
+	MainController::MainController(const std::string& mainFolder) : mainFolder(mainFolder)
 	{
+
+	}
+
+	void MainController::Create(Glib::RefPtr<Gtk::Builder>& bd)
+	{
+
+		this->builder = bd;
 
 		// Start drum kit
 		const std::string moduleLocation(mainFolder+"/../Data/");
@@ -37,12 +43,9 @@ namespace Controllers
 			// Dialogs
 			builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
 
-			// Windows
-
 		}
 
-
-		// Connect all signals
+		// Connect all the signals
 		{
 			// Buttons
 			aboutButton->signal_clicked().connect([&] { ShowAboutDialog(); });
@@ -53,19 +56,21 @@ namespace Controllers
 
 		}
 
+		isCreated = true;
+
 		return;
 	}
 
 	MainController::~MainController()
 	{
 
-		// Delete all pointers (dialogs and windows)
-		delete aboutDialog;
-
-		// Stop drum kit
-		if(drumKit->IsStarted())
+		if(isCreated)
 		{
-			drumKit->Stop();
+			// Stop drum kit
+			if(drumKit->IsStarted())
+			{
+				drumKit->Stop();
+			}
 		}
 
 		return;
