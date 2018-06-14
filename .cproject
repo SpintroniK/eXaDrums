@@ -29,7 +29,7 @@
             			
             <storageModule moduleId="cdtBuildSystem" version="4.0.0">
                 				
-                <configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.config.gnu.cross.exe.debug.1190647531" name="Debug" parent="cdt.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
+                <configuration artifactName="${ProjName}" buildArtefactType="org.eclipse.cdt.build.core.buildArtefactType.exe" buildProperties="org.eclipse.cdt.build.core.buildArtefactType=org.eclipse.cdt.build.core.buildArtefactType.exe,org.eclipse.cdt.build.core.buildType=org.eclipse.cdt.build.core.buildType.debug" cleanCommand="rm -rf" description="" errorParsers="org.eclipse.cdt.core.GmakeErrorParser;org.eclipse.cdt.core.CWDLocator;org.eclipse.cdt.core.GCCErrorParser;org.eclipse.cdt.core.GASErrorParser;org.eclipse.cdt.core.GLDErrorParser" id="cdt.managedbuild.config.gnu.cross.exe.debug.1190647531" name="Debug" optionalBuildProperties="" parent="cdt.managedbuild.config.gnu.cross.exe.debug" postannouncebuildStep="" postbuildStep="" preannouncebuildStep="" prebuildStep="">
                     					
                     <folderInfo id="cdt.managedbuild.config.gnu.cross.exe.debug.1190647531." name="/" resourcePath="">
                         						
@@ -47,7 +47,7 @@
                                 								
                                 <option id="gnu.c.compiler.option.dialect.std.1386380689" name="Language standard" superClass="gnu.c.compiler.option.dialect.std" useByScannerDiscovery="true" value="gnu.c.compiler.dialect.default" valueType="enumerated"/>
                                 								
-                                <option id="gnu.c.compiler.option.include.paths.743479072" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.c.compiler.option.include.paths.743479072" name="Include paths (-I)" superClass="gnu.c.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/libeXaDrums}&quot;"/>
                                     									
@@ -71,9 +71,9 @@
                                 								
                                 <option id="gnu.cpp.compiler.option.other.other.1309858476" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 " valueType="string"/>
                                 								
-                                <option id="gnu.cpp.compiler.option.dialect.flags.265059067" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="-std=c++14" valueType="string"/>
+                                <option id="gnu.cpp.compiler.option.dialect.flags.265059067" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="-std=c++17" valueType="string"/>
                                 								
-                                <option id="gnu.cpp.compiler.option.include.paths.821141514" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.compiler.option.include.paths.821141514" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/libeXaDrums}&quot;"/>
                                     									
@@ -157,7 +157,7 @@
                                 								
                                 <option id="gnu.cpp.link.option.flags.200557072" name="Linker flags" superClass="gnu.cpp.link.option.flags" useByScannerDiscovery="false" value="$(shell pkg-config --libs gtkmm-3.0)" valueType="string"/>
                                 								
-                                <option id="gnu.cpp.link.option.libs.932099161" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.link.option.libs.932099161" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
                                     									
                                     <listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="exadrums"/>
                                     									
@@ -169,9 +169,9 @@
                                     								
                                 </option>
                                 								
-                                <option id="gnu.cpp.link.option.paths.711703771" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.cpp.link.option.paths.711703771" name="Library search path (-L)" superClass="gnu.cpp.link.option.paths" useByScannerDiscovery="false" valueType="libPaths">
                                     									
-                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/libeXaDrums/Debug}&quot;"/>
+                                    <listOptionValue builtIn="false" value="&quot;${workspace_loc:/libeXaDrums/Release}&quot;"/>
                                     									
                                     <listOptionValue builtIn="false" value="../../libeXaDrums/Debug"/>
                                     								
@@ -193,7 +193,7 @@
                             							
                             <tool command="as" commandLinePattern="${COMMAND} ${FLAGS} ${OUTPUT_FLAG} ${OUTPUT_PREFIX}${OUTPUT} ${INPUTS}" errorParsers="org.eclipse.cdt.core.GASErrorParser" id="cdt.managedbuild.tool.gnu.cross.assembler.1314364672" name="Cross GCC Assembler" superClass="cdt.managedbuild.tool.gnu.cross.assembler">
                                 								
-                                <option id="gnu.both.asm.option.include.paths.1404022959" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
+                                <option IS_BUILTIN_EMPTY="false" IS_VALUE_EMPTY="false" id="gnu.both.asm.option.include.paths.1404022959" name="Include paths (-I)" superClass="gnu.both.asm.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									
                                     <listOptionValue builtIn="false" value="&quot;${workspace_loc:/libeXaDrums}&quot;"/>
                                     								
@@ -225,7 +225,7 @@
                         						
                         <entry flags="VALUE_WORKSPACE_PATH" kind="includePath" name="/libeXaDrums"/>
                         						
-                        <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libeXaDrums/Debug"/>
+                        <entry flags="VALUE_WORKSPACE_PATH" kind="libraryPath" name="/libeXaDrums/Release"/>
                         						
                         <entry flags="RESOLVED" kind="libraryFile" name="exadrums" srcPrefixMapping="" srcRootPath=""/>
                         					
@@ -305,7 +305,7 @@
                                 								
                                 <option id="gnu.cpp.compiler.option.other.other.405206050" name="Other flags" superClass="gnu.cpp.compiler.option.other.other" useByScannerDiscovery="false" value="-c -fmessage-length=0 $(shell pkg-config --cflags gtkmm-3.0)" valueType="string"/>
                                 								
-                                <option id="gnu.cpp.compiler.option.dialect.flags.678091804" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="-std=c++14" valueType="string"/>
+                                <option id="gnu.cpp.compiler.option.dialect.flags.678091804" name="Other dialect flags" superClass="gnu.cpp.compiler.option.dialect.flags" useByScannerDiscovery="true" value="-std=c++17" valueType="string"/>
                                 								
                                 <option id="gnu.cpp.compiler.option.include.paths.564263092" name="Include paths (-I)" superClass="gnu.cpp.compiler.option.include.paths" useByScannerDiscovery="false" valueType="includePath">
                                     									

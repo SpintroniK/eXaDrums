@@ -54,8 +54,7 @@ namespace eXaDrums
 		template <typename... T>
 		static constexpr auto VersionToStr(const T&... v)
 		{
-			std::string result;
-			(void)std::initializer_list<std::common_type_t<T...>>{ (result += std::to_string(v) + VERSION_SEPARATOR, 0)... };
+			std::string result = ( (std::to_string(v) + VERSION_SEPARATOR) + ... );
 			result.pop_back();
 			return result;
 		}
