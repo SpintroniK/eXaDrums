@@ -1260,6 +1260,7 @@ Author: Jérémy Oden
     <property name="can_focus">False</property>
     <property name="halign">center</property>
     <property name="title" translatable="yes">Select a sound file and click OK</property>
+    <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
     <property name="default_width">640</property>
@@ -1275,6 +1276,7 @@ Author: Jérémy Oden
     </child>
     <child internal-child="vbox">
       <object class="GtkBox">
+        <property name="width_request">640</property>
         <property name="can_focus">False</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
@@ -1316,9 +1318,6 @@ Author: Jérémy Oden
             <property name="fill">False</property>
             <property name="position">0</property>
           </packing>
-        </child>
-        <child>
-          <placeholder/>
         </child>
       </object>
     </child>

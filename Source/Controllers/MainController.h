@@ -36,10 +36,10 @@ namespace Controllers
 
 	public:
 
-		MainController(const std::string& mainFolder);
+		MainController();
 		virtual ~MainController();
 
-		void Create(Glib::RefPtr<Gtk::Builder>& builder);
+		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf);
 
 	private:
 
@@ -49,8 +49,6 @@ namespace Controllers
 		void HideAboutDialog(int responseId);
 
 		bool isCreated = false;
-
-		std::string mainFolder;
 
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 		Glib::RefPtr<Gtk::Builder> builder;

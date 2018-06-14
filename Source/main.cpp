@@ -16,20 +16,23 @@
 
 #include <string>
 
+using namespace eXaDrums;
+
 int main(int argc, char** argv)
 {
 
-	const std::string mainLocation{argv[0]};
-	const std::size_t pos{mainLocation.find_last_of("/")};
+	Config config;
 
-	const std::string mainFolder{mainLocation.substr(0, pos)};
-	const std::string uiFileLocation{mainFolder + "/../Source/Ui.glade"};
+	if(!config.IsInstalledForUser())
+	{
+		config.InstallForUser();
+	}
 
 	// Init main controller
-	Controllers::MainController controller(mainFolder);
+	Controllers::MainController controller;
 
 	auto app = Gtk::Application::create(argc, argv, "org.eXaDrums", Gio::APPLICATION_HANDLES_COMMAND_LINE);
-	app->signal_command_line().connect([&](const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd){ return CommandLineParser(cmd, app); }, false);
+	app->signal_command_line().connect([&](const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd){ return config.CommandLineParser(cmd, app); }, false);
 
 	Gui::MainWindow* mainWindow = nullptr;
 	auto quit = [&] { mainWindow->hide(); };
@@ -37,13 +40,13 @@ int main(int argc, char** argv)
 	// Create main controller and Gui only if the app has been activated
 	app->signal_activate().connect([&]
 	{
-		auto builder = Gtk::Builder::create_from_file(uiFileLocation);
-		controller.Create(builder);
+		auto builder = Gtk::Builder::create_from_file(config.UiPath());
+		controller.Create(builder, config.UserDataPath());
 
 		// Get about dialog and set software version
 		Gtk::AboutDialog* aboutDialog = nullptr;
 		builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
-		aboutDialog->set_version(ExaDrumsVersion());
+		aboutDialog->set_version(Config::ExaDrumsVersion());
 
 		// Get main window
 		builder->get_widget_derived("MainWindow", mainWindow);

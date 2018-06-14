@@ -161,6 +161,8 @@
                                     									
                                     <listOptionValue builtIn="false" srcPrefixMapping="" srcRootPath="" value="exadrums"/>
                                     									
+                                    <listOptionValue builtIn="false" value="stdc++fs"/>
+                                    									
                                     <listOptionValue builtIn="false" value="tinyxml2"/>
                                     									
                                     <listOptionValue builtIn="false" value="pthread"/>
@@ -326,6 +328,8 @@
                                 <option id="gnu.cpp.link.option.libs.2091091103" name="Libraries (-l)" superClass="gnu.cpp.link.option.libs" useByScannerDiscovery="false" valueType="libs">
                                     									
                                     <listOptionValue builtIn="false" value="exadrums"/>
+                                    									
+                                    <listOptionValue builtIn="false" value="stdc++fs"/>
                                     								
                                 </option>
                                 								

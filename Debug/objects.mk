@@ -4,5 +4,5 @@
 
 USER_OBJS :=
 
-LIBS := -lexadrums -ltinyxml2 -lpthread
+LIBS := -lexadrums -lstdc++fs -ltinyxml2 -lpthread
 

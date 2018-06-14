@@ -13,12 +13,27 @@ using namespace eXaDrumsApi;
 namespace Controllers
 {
 
-	MainController::MainController(const std::string& mainFolder) : mainFolder(mainFolder)
+	MainController::MainController()
 	{
 
 	}
 
-	void MainController::Create(Glib::RefPtr<Gtk::Builder>& bd)
+	MainController::~MainController()
+	{
+
+		if(isCreated)
+		{
+			// Stop drum kit
+			if(drumKit->IsStarted())
+			{
+				drumKit->Stop();
+			}
+		}
+
+		return;
+	}
+
+	void MainController::Create(Glib::RefPtr<Gtk::Builder>& bd, const std::string& mainFolder)
 	{
 
 		this->builder = bd;
@@ -61,20 +76,6 @@ namespace Controllers
 		return;
 	}
 
-	MainController::~MainController()
-	{
-
-		if(isCreated)
-		{
-			// Stop drum kit
-			if(drumKit->IsStarted())
-			{
-				drumKit->Stop();
-			}
-		}
-
-		return;
-	}
 
 	// PRIVATE METHODS
 
