@@ -5,6 +5,7 @@
  *      Author: jeremy
  */
 
+#include "../Util/Util.h"
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
@@ -17,6 +18,7 @@
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
+using namespace Util;
 
 namespace Controllers
 {
@@ -34,6 +36,7 @@ namespace Controllers
 		Gtk::Button* triggerConfigCancelButton = nullptr;
 		Gtk::Button* triggerConfigApplyButton = nullptr;
 		Gtk::Button* triggerConfigSaveButton = nullptr;
+		Gtk::Button* addtriggerButton = nullptr;
 
 		Gtk::Button* soundEffectsButton = nullptr;
 
@@ -59,6 +62,7 @@ namespace Controllers
 			builder->get_widget("TriggerConfigCancel", triggerConfigCancelButton);
 			builder->get_widget("TriggerConfigApply", triggerConfigApplyButton);
 			builder->get_widget("TriggerConfigSave", triggerConfigSaveButton);
+			builder->get_widget("AddTriggerButton", addtriggerButton);
 
 
 			builder->get_widget("SoundEffectsButton", soundEffectsButton);
@@ -301,33 +305,6 @@ namespace Controllers
 		return;
 	}
 
-	void ConfigController::ApplyTriggerConfig()
-	{
-
-
-		// Create pointers
-		Gtk::Entry* sensorNb = nullptr;
-		Gtk::Entry* threshold = nullptr;
-		Gtk::Entry* scanTime = nullptr;
-		Gtk::Entry* maskTime = nullptr;
-		Gtk::ComboBoxText* types = nullptr;
-		Gtk::ComboBoxText* responses = nullptr;
-
-		// Get widgets
-		{
-			builder->get_widget("TCSensorNb", sensorNb);
-			builder->get_widget("TCThreshold", threshold);
-			builder->get_widget("TCScanTime", scanTime);
-			builder->get_widget("TCMaskTime", maskTime);
-			builder->get_widget("TCTypes", types);
-			builder->get_widget("TCResponses", responses);
-		}
-
-		int sensorIdValue = std::stoi(sensorNb->get_text());
-		int thresholdValue = std::stoi(threshold->get_text());
-
-		return;
-	}
 
 	void ConfigController::CloseTriggerSelectWindow()
 	{
@@ -349,36 +326,44 @@ namespace Controllers
 		return;
 	}
 
-	void ConfigController::SaveTriggerConfig()
+	TriggerParameters ConfigController::GetCurrentTriggerParams() const
 	{
 
-
-		// Create pointers
-		Gtk::Entry* sensorNb = nullptr;
-		Gtk::Entry* threshold = nullptr;
-		Gtk::Entry* scanTime = nullptr;
-		Gtk::Entry* maskTime = nullptr;
-		Gtk::ComboBoxText* types = nullptr;
-		Gtk::ComboBoxText* responses = nullptr;
-
 		// Get widgets
-		{
-			builder->get_widget("TCSensorNb", sensorNb);
-			builder->get_widget("TCThreshold", threshold);
-			builder->get_widget("TCScanTime", scanTime);
-			builder->get_widget("TCMaskTime", maskTime);
-			builder->get_widget("TCTypes", types);
-			builder->get_widget("TCResponses", responses);
-		}
+		auto sensorNb = GetWidget<Gtk::Entry>(builder, "TCSensorNb");
+		auto threshold = GetWidget<Gtk::Entry>(builder, "TCThreshold");;
+		auto scanTime = GetWidget<Gtk::Entry>(builder, "TCScanTime");
+		auto maskTime = GetWidget<Gtk::Entry>(builder, "TCMaskTime");;
+		auto types = GetWidget<Gtk::ComboBoxText>(builder, "TCTypes");
+		auto responses = GetWidget<Gtk::ComboBoxText>(builder, "TCResponses");
 
+		// Convert to trigger parameters
 		TriggerParameters tp;
+
 		tp.sensorId = std::stoi(sensorNb->get_text());
 		tp.threshold = std::stoi(threshold->get_text());
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
-		std::strcpy(tp.type, types->get_active_text().c_str());
-		std::strcpy(tp.response, responses->get_active_text().c_str());
+		std::strcpy(tp.type, types->get_active_text().data());
+		std::strcpy(tp.response, responses->get_active_text().data());
+
+		return tp;
+	}
+
+	void ConfigController::ApplyTriggerConfig()
+	{
+
+		TriggerParameters params = GetCurrentTriggerParams();
+		config.SetTriggerParameters(params.sensorId, params);
+
+		return;
+	}
+
+	void ConfigController::SaveTriggerConfig()
+	{
+
+		TriggerParameters tp = GetCurrentTriggerParams();
 
 		// Get triggers parameters
 		config.LoadTriggersConfig();

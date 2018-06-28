@@ -6,6 +6,7 @@
  */
 
 #include "exadrumsConfig.h"
+#include "Util/Util.h"
 #include "Controllers/MainController.h"
 #include "MainWindow/MainWindow.h"
 
@@ -17,6 +18,7 @@
 #include <string>
 
 using namespace eXaDrums;
+using namespace Util;
 
 int main(int argc, char** argv)
 {
@@ -44,17 +46,13 @@ int main(int argc, char** argv)
 		controller.Create(builder, config.UserDataPath());
 
 		// Get about dialog and set software version
-		Gtk::AboutDialog* aboutDialog = nullptr;
-		builder->get_widget("eXaDrumsAboutDialog", aboutDialog);
-		aboutDialog->set_version(Config::ExaDrumsVersion());
+		GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(Config::ExaDrumsVersion());
 
 		// Get main window
 		builder->get_widget_derived("MainWindow", mainWindow);
 
 		// Handle quit button signal
-		Gtk::Button* quitButton = nullptr;
-		builder->get_widget("QuitButton", quitButton);
-		quitButton->signal_clicked().connect(quit);
+		GetWidget<Gtk::Button>(builder, "QuitButton")->signal_clicked().connect(quit);
 
 		app->add_window(*mainWindow);
 		mainWindow->show();

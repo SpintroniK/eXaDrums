@@ -40,6 +40,7 @@ namespace Controllers
 		void CloseTriggerSelectWindow();
 		void CloseTriggerConfigWindow();
 		void SaveTriggerConfig();
+		eXaDrumsApi::TriggerParameters GetCurrentTriggerParams() const;
 
 		// Mixer
 		void SaveMixerConfig();
