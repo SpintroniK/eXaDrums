@@ -1,0 +1,14 @@
+./Release/exadrums
+./Data/alsaConfig.xml
+./Data/Kits
+./Data/metronomeConfig.xml
+./Data/Rec
+./Data/sensorsConfig.xml
+./Data/SoundBank
+./Data/triggersConfig.xml
+./out.raw
+./Source/eXaDrums_logo_small.png
+./Source/Ui.glade
+./eXaDrums.desktop
+./eXaDrums.png
+./eXaDrums.xpm

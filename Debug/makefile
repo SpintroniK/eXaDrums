@@ -41,22 +41,22 @@ endif
 # Add inputs and outputs from these tool invocations to the build variables 
 
 # All Target
-all: eXaDrums
+all: exadrums
 
 dependents:
 	-cd /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug && $(MAKE) all
 
 # Tool invocations
-eXaDrums: $(OBJS) $(USER_OBJS) /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug/exadrums.so.0
+exadrums: $(OBJS) $(USER_OBJS) /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug/exadrums.so.0
 	@echo 'Building target: $@'
 	@echo 'Invoking: Cross G++ Linker'
-	g++ -o "eXaDrums" $(OBJS) $(USER_OBJS) $(LIBS) -L"/home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug" -L../../libeXaDrums/Debug $(shell pkg-config --libs gtkmm-3.0)
+	g++ -o "exadrums" $(OBJS) $(USER_OBJS) $(LIBS) -L"/home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug" -L../../libeXaDrums/Debug $(shell pkg-config --libs gtkmm-3.0)
 	@echo 'Finished building target: $@'
 	@echo ' '
 
 # Other Targets
 clean:
-	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(C_DEPS)$(CPP_DEPS) eXaDrums
+	-$(RM) $(CC_DEPS)$(C++_DEPS)$(EXECUTABLES)$(OBJS)$(C_UPPER_DEPS)$(CXX_DEPS)$(C_DEPS)$(CPP_DEPS) exadrums
 	-@echo ' '
 
 .PHONY: all clean dependents

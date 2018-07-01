@@ -1,5 +1,5 @@
 <root>
-    <kitName>PadTest</kitName>
+    <kitName>PadTest0</kitName>
     <kitFolder/>
     <Instrument type="Pad" volume="100">
         <instrumentName>Instrument 1</instrumentName>

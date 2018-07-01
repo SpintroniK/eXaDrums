@@ -4,7 +4,7 @@
     <format>SND_PCM_FORMAT_S16_LE</format>
     <sampleRate>48000</sampleRate>
     <nChannels>2</nChannels>
-    <bufferTime>5000</bufferTime>
-    <periodTime>1666</periodTime>
+    <bufferTime>50000</bufferTime>
+    <periodTime>25000</periodTime>
     <access>SND_PCM_ACCESS_RW_INTERLEAVED</access>
 </root>

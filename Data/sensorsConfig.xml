@@ -2,5 +2,5 @@
     <SamplingRate>2000000</SamplingRate>
     <Resolution>12</Resolution>
     <Type>Hdd</Type>
-    <HddDataFolder>/home/jeremy/Desktop/Prog/eXaDrums/eXaDrums/</HddDataFolder>
+    <HddDataFolder>/usr/share/eXaDrums/Data/data/</HddDataFolder>
 </SensorsConfig>

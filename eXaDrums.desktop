@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=eXaDrums
+Icon=eXaDrums
+Exec=/usr/bin/exadrums
+Comment=Drum module for Linux.
+Categories=AudioVideo;Utility;
+Terminal=false
+Name[en_GB]=eXaDrums

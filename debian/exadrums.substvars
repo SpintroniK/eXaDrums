@@ -1,0 +1,3 @@
+shlibs:Depends=libatkmm-1.6-1v5 (>= 2.24.0), libc6 (>= 2.14), libexadrums0 (>= 0.1.0), libgcc1 (>= 1:3.0), libglib2.0-0 (>= 2.12.0), libglibmm-2.4-1v5 (>= 2.54.0), libgtkmm-3.0-1v5 (>= 3.22.0), libsigc++-2.0-0v5 (>= 2.2.0), libstdc++6 (>= 5.2)
+misc:Depends=
+misc:Pre-Depends=
