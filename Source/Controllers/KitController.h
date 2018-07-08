@@ -22,6 +22,7 @@
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/togglebutton.h>
 #include <gtkmm/box.h>
+#include <gtkmm/filechooserdialog.h>
 #include <gtkmm/window.h>
 
 #include <vector>
@@ -114,7 +115,7 @@ namespace Controllers
 		Gtk::Window* newKitWindow;
 		Gtk::Window* instrumentConfigWindow;
 		Gtk::Window* instrumentSeclectWindow;
-		Gtk::Window* recorderWindow;
+		Gtk::FileChooserDialog* recorderWindow;
 
 		// Class variables
 		int numInstrumentsToCreate;

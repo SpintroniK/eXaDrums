@@ -90,7 +90,6 @@ namespace Controllers
 			builder->get_widget("InstrumentSeclectWindow", instrumentSeclectWindow);
 			builder->get_widget("RecorderWindow", recorderWindow);
 
-
 		}
 
 		// Populate Kits list
@@ -287,12 +286,8 @@ namespace Controllers
 
 	void KitController::RecorderExport()
 	{
-		Gtk::Entry* recorderFileName = nullptr;
-		builder->get_widget("RecorderFileName", recorderFileName);
 
-		auto txt = recorderFileName->get_text();
-
-		std::string fileName{txt.data()};
+		std::string fileName = recorderWindow->get_filename();
 
 		drumKit->RecorderExport(fileName);
 
