@@ -297,7 +297,9 @@ namespace Controllers
 		for(const auto& ts : triggersSelectors)
 		{
 			ts->GetPreferencesButton().signal_clicked().connect([&] { TriggerConfiguration(ts->GetSensorId()); });
+			ts->GetDeleteButton().signal_clicked().connect([&] { TriggerDelete(ts->GetSensorId()); });
 		}
+
 
 
 		triggerSelectWindow->show();
@@ -441,6 +443,18 @@ namespace Controllers
 		return;
 	}
 
+	void ConfigController::TriggerDelete(int sensorId)
+	{
+
+		if(config.GetNbTriggers() > 1)
+		{
+			// Delete trigger
+			config.DeleteTrigger(sensorId);
+
+			// Update triggers config window
+			ShowTriggersConfigWindow();
+		}
+	}
 
 	void ConfigController::TriggerConfiguration(int sensorId)
 	{

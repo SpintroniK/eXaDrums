@@ -49,6 +49,7 @@ namespace Controllers
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
 		void TriggerConfiguration(int sensorId);
+		void TriggerDelete(int sensorId);
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;

@@ -8,6 +8,8 @@
 #ifndef SOURCE_EXADRUMSCONFIG_H_
 #define SOURCE_EXADRUMSCONFIG_H_
 
+#include <Source/Api/eXaDrums.h>
+
 #if __has_include(<filesystem>)
 	#include <filesystem>
 	namespace fs = std::filesystem;
@@ -66,6 +68,7 @@ namespace eXaDrums
 
 		int CommandLineParser(const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd, Glib::RefPtr<Gtk::Application>& app)
 		{
+			using namespace eXaDrumsApi;
 
 			Glib::OptionContext optionContext;
 			Glib::OptionGroup optionGroup("options", "Application Options: ");
@@ -88,7 +91,7 @@ namespace eXaDrums
 			if(versionEntry.second)
 			{
 				std::cout << "eXaDrums version " << ExaDrumsVersion() << "\n\n";
-				//std::cout << "using libeXaDrums version " << EXADRUMS_MAJOR_VERSION << "." << EXADRUMS_MINOR_VERSION << "." << EXADRUMS_PATCH_VERSION << "\n";
+				std::cout << "using libeXaDrums version " << VersionToStr(LIBEXADRUMS_MAJOR_VERSION, LIBEXADRUMS_MINOR_VERSION, LIBEXADRUMS_PATCH_VERSION) << "\n";
 				std::cout << "using gtkmm version " << VersionToStr(GTKMM_MAJOR_VERSION, GTKMM_MINOR_VERSION, GTKMM_MICRO_VERSION) << std::endl;
 				return 0;
 			}

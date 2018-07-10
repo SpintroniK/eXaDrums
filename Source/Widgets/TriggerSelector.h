@@ -29,6 +29,7 @@ namespace Widgets
 
 		int GetSensorId() const { return sensorId; }
 		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
+		Gtk::Button& GetDeleteButton() { return deleteButton; }
 
 
 	private:
@@ -36,6 +37,7 @@ namespace Widgets
 		int sensorId;
 		Gtk::Label label;
 		Gtk::Button preferencesButton;
+		Gtk::Button deleteButton;
 
 	};
 
