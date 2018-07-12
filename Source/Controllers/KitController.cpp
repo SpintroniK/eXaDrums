@@ -586,7 +586,6 @@ namespace Controllers
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
 
 
-
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 
 		// Retrieve triggers locations
@@ -808,6 +807,9 @@ namespace Controllers
 		this->newKitWindow->hide();
 		HideKeyboard();
 
+		// Refresh triggers ids
+		ChangeInstrumentType();
+		
 		AddInstrumentToKit();
 
 		return;

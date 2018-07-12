@@ -14,7 +14,6 @@
 #include <gtkmm/box.h>
 
 #include <iostream>
-#include <cstring>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
@@ -37,6 +36,8 @@ namespace Controllers
 		Gtk::Button* triggerConfigApplyButton = nullptr;
 		Gtk::Button* triggerConfigSaveButton = nullptr;
 		Gtk::Button* addtriggerButton = nullptr;
+		Gtk::Button* triggerAddCancel = nullptr;
+		Gtk::Button* triggerAddAdd = nullptr;
 
 		Gtk::Button* soundEffectsButton = nullptr;
 
@@ -63,6 +64,8 @@ namespace Controllers
 			builder->get_widget("TriggerConfigApply", triggerConfigApplyButton);
 			builder->get_widget("TriggerConfigSave", triggerConfigSaveButton);
 			builder->get_widget("AddTriggerButton", addtriggerButton);
+			builder->get_widget("TriggerAddCancel", triggerAddCancel);
+			builder->get_widget("TriggerAddAdd", triggerAddAdd);
 
 
 			builder->get_widget("SoundEffectsButton", soundEffectsButton);
@@ -83,6 +86,7 @@ namespace Controllers
 			builder->get_widget("SensorsConfigWindow", sensorsConfigWindow);
 			builder->get_widget("TriggerSeclectWindow", triggerSelectWindow);
 			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
+			builder->get_widget("TriggerAddWindow", triggerAddWindow);
 			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
 
 		}
@@ -101,6 +105,9 @@ namespace Controllers
 			triggerConfigCancelButton->signal_clicked().connect([&] { CloseTriggerConfigWindow(); });
 			triggerConfigApplyButton->signal_clicked().connect([&] { ApplyTriggerConfig(); });
 			triggerConfigSaveButton->signal_clicked().connect([&] { SaveTriggerConfig(); });
+			addtriggerButton->signal_clicked().connect([&] { triggerSelectWindow->hide(); triggerAddWindow->show(); });
+			triggerAddCancel->signal_clicked().connect([&] { triggerAddWindow->hide(); triggerSelectWindow->show(); });
+			triggerAddAdd->signal_clicked().connect([&] { AddTrigger(); });
 
 			// Sensors config
 			sensorsConfigButton->signal_clicked().connect([&] { ShowSensorsConfigWindow(); });
@@ -164,9 +171,26 @@ namespace Controllers
 			std::vector<std::string> responsesVec = config.GetTriggersResponses();
 			std::for_each(responsesVec.cbegin(), responsesVec.cend(), [&](const std::string& s) { responses->append(s); });
 
-
 		}
 
+		// Add trigger window
+		{
+			// Triggers types
+			Gtk::ComboBoxText* types = nullptr;
+			builder->get_widget("TATypes", types);
+
+			std::vector<std::string> typesVec = config.GetTriggersTypes();
+			std::for_each(typesVec.cbegin(), typesVec.cend(), [&](const std::string& s) { types->append(s); });
+			types->set_active(0);
+
+			// Triggers responses
+			Gtk::ComboBoxText* responses = nullptr;
+			builder->get_widget("TAResponses", responses);
+
+			std::vector<std::string> responsesVec = config.GetTriggersResponses();
+			std::for_each(responsesVec.cbegin(), responsesVec.cend(), [&](const std::string& s) { responses->append(s); });
+			responses->set_active(0);
+		}
 
 
 		return;
@@ -175,11 +199,6 @@ namespace Controllers
 
 	ConfigController::~ConfigController()
 	{
-
-		delete sensorsConfigWindow;
-		delete triggerSelectWindow;
-		delete triggerConfigWindow;
-		delete mixerConfigWindow;
 
 		return;
 	}
@@ -300,8 +319,6 @@ namespace Controllers
 			ts->GetDeleteButton().signal_clicked().connect([&] { TriggerDelete(ts->GetSensorId()); });
 		}
 
-
-
 		triggerSelectWindow->show();
 
 		return;
@@ -347,8 +364,8 @@ namespace Controllers
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
-		std::strcpy(tp.type, types->get_active_text().data());
-		std::strcpy(tp.response, responses->get_active_text().data());
+		std::copy(types->get_active_text().begin(), types->get_active_text().end(), tp.type);
+		std::copy(responses->get_active_text().begin(), responses->get_active_text().end(), tp.response);
 
 		return tp;
 	}
@@ -496,10 +513,32 @@ namespace Controllers
 			responses->set_active_text(response);
 		}
 
-
 		triggerConfigWindow->show();
 
 		return;
+	}
+
+	void ConfigController::AddTrigger()
+	{
+		const auto sensorId = GetWidget<Gtk::Entry>(builder, "TASensorNb")->get_text();
+		const auto threshold = GetWidget<Gtk::Entry>(builder, "TAThreshold")->get_text();
+		const auto scanTime = GetWidget<Gtk::Entry>(builder, "TAScanTime")->get_text();
+		const auto maskTime = GetWidget<Gtk::Entry>(builder, "TAMaskTime")->get_text();
+		const auto type = GetWidget<Gtk::ComboBoxText>(builder, "TATypes")->get_active_text();
+		const auto response = GetWidget<Gtk::ComboBoxText>(builder, "TAResponses")->get_active_text();
+
+		TriggerParameters trigger;
+		trigger.sensorId = std::stoi(sensorId.raw());
+		trigger.threshold = std::stoi(threshold.raw());
+		trigger.scanTime = std::stoi(scanTime.raw());
+		trigger.maskTime = std::stoi(maskTime.raw());
+		std::copy(type.begin(), type.end(), trigger.type);
+		std::copy(response.begin(), response.end(), trigger.response);
+
+		config.AddTrigger(trigger);
+
+		triggerAddWindow->hide();
+		ShowTriggersConfigWindow();
 	}
 
 

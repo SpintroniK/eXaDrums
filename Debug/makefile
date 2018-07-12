@@ -44,7 +44,7 @@ endif
 all: exadrums
 
 dependents:
-	-cd /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug && $(MAKE) clean all
+	-cd /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug && $(MAKE) all
 
 # Tool invocations
 exadrums: $(OBJS) $(USER_OBJS) /home/jeremy/Desktop/Prog/eXaDrums/libeXaDrums/Debug/exadrums.so.0

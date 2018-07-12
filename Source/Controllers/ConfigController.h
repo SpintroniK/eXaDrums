@@ -49,6 +49,7 @@ namespace Controllers
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
 		void TriggerConfiguration(int sensorId);
+		void AddTrigger();
 		void TriggerDelete(int sensorId);
 
 		Glib::RefPtr<Gtk::Builder> builder;
@@ -64,6 +65,7 @@ namespace Controllers
 		Gtk::Window* sensorsConfigWindow;
 		Gtk::Window* triggerSelectWindow;
 		Gtk::Window* triggerConfigWindow;
+		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
 
 		// eXaDrums
