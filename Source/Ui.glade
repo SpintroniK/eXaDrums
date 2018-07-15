@@ -1325,6 +1325,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="InstrumentSeclectWindow">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Kit Configuration</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
@@ -2183,6 +2184,7 @@ Author: Jérémy Oden
   </object>
   <object class="GtkWindow" id="TriggerAddWindow">
     <property name="can_focus">False</property>
+    <property name="title" translatable="yes">Add Trigger</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>

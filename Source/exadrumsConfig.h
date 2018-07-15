@@ -43,15 +43,9 @@ namespace eXaDrums
 
 	public:
 
-		Config()
-		{
+		Config() = default;
+		~Config() = default;
 
-		}
-
-		~Config()
-		{
-
-		}
 
 		template <typename... T>
 		static constexpr auto VersionToStr(const T&... v)
@@ -82,6 +76,10 @@ namespace eXaDrums
 			auto configEntry = MakeOption<Glib::ustring>("config", 'c', "Change configuration directory");
 			optionGroup.add_entry(configEntry.first, configEntry.second);
 
+			// Add reset config entry
+			auto resetConfigEntry = MakeOption<bool>("reset-config", 'r', "Reset to default configuration");
+			optionGroup.add_entry(resetConfigEntry.first, resetConfigEntry.second);
+
 			// Get arguments
 			int argc;
 			char** argv = cmd->get_arguments(argc);
@@ -94,6 +92,30 @@ namespace eXaDrums
 				std::cout << "using libeXaDrums version " << VersionToStr(LIBEXADRUMS_MAJOR_VERSION, LIBEXADRUMS_MINOR_VERSION, LIBEXADRUMS_PATCH_VERSION) << "\n";
 				std::cout << "using gtkmm version " << VersionToStr(GTKMM_MAJOR_VERSION, GTKMM_MINOR_VERSION, GTKMM_MICRO_VERSION) << std::endl;
 				return 0;
+			}
+
+			if(resetConfigEntry.second)
+			{
+				std::cout << "This will reset the configuration to defaults. \n Current settings will be lost.\n";
+				std::cout << "Do you want to continue? [Y/n] ";
+
+				std::string input;
+				std::cin >> input;
+
+				if(std::tolower(input[0]) == 'y')
+				{
+					ResetConfig();
+					std::cout << "The configuration has been reset." << std::endl;
+				}
+
+				std::cout << "Do you want to start eXaDrums? [Y/n] ";
+				std::cin >> input;
+
+				if(std::tolower(input[0]) != 'y')
+				{
+					return 0;
+				}
+
 			}
 
 			if(!configEntry.second.empty())
@@ -122,6 +144,14 @@ namespace eXaDrums
 
 			fs::create_directory(userPath);
 			fs::copy(RootDataPath(), UserDataPath(), fs::copy_options::recursive);
+
+			return true;
+		}
+
+		bool ResetConfig()
+		{
+			fs::remove_all(userPath);
+			InstallForUser();
 
 			return true;
 		}

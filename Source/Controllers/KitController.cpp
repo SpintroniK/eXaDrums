@@ -185,7 +185,7 @@ namespace Controllers
 		int answer = d.run();
 
 		// Check answer
-		switch (answer)
+		switch(answer)
 		{
 			case Gtk::ResponseType::RESPONSE_NO: break;
 			case Gtk::ResponseType::RESPONSE_YES: this->DeleteKit(GetCurrentKitId()); break;
@@ -807,9 +807,7 @@ namespace Controllers
 		this->newKitWindow->hide();
 		HideKeyboard();
 
-		// Refresh triggers ids
 		ChangeInstrumentType();
-		
 		AddInstrumentToKit();
 
 		return;
