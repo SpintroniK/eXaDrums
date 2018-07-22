@@ -14,8 +14,10 @@
 #include <gtkmm/builder.h>
 
 
-#ifndef __arm__
-#define __arm__ (!(1==1))
+#if defined(__arm__) || defined(__aarch64__)
+constexpr bool setFullscreen = true;
+#else
+constexpr bool setFullscreen = false;
 #endif
 
 namespace Gui

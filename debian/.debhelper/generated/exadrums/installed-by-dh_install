@@ -10,5 +10,7 @@
 ./Source/eXaDrums_logo_small.png
 ./Source/Ui.glade
 ./eXaDrums.desktop
+./exadrums-root
+./eXaDrums-root.desktop
 ./eXaDrums.png
 ./eXaDrums.xpm

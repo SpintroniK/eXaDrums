@@ -4,5 +4,7 @@ out.raw usr/share/eXaDrums/Data/data
 Source/eXaDrums_logo_small.png usr/share/eXaDrums/Ui
 Source/Ui.glade usr/share/eXaDrums/Ui
 eXaDrums.desktop usr/share/applications
+exadrums-root usr/share/eXaDrums
+eXaDrums-root.desktop usr/share/applications
 eXaDrums.png usr/share/icons/hicolor/128x128/apps
 eXaDrums.xpm usr/share/pixmaps

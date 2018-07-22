@@ -102,7 +102,7 @@ namespace eXaDrums
 				std::string input;
 				std::cin >> input;
 
-				if(std::tolower(input[0]) == 'y')
+				if(std::tolower(input.front()) == 'y')
 				{
 					ResetConfig();
 					std::cout << "The configuration has been reset." << std::endl;
@@ -111,7 +111,7 @@ namespace eXaDrums
 				std::cout << "Do you want to start eXaDrums? [Y/n] ";
 				std::cin >> input;
 
-				if(std::tolower(input[0]) != 'y')
+				if(std::tolower(input.front()) != 'y')
 				{
 					return 0;
 				}

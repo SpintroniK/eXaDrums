@@ -14,7 +14,7 @@ namespace Gui
 	: Gtk::Window(baseObject)
 	{
 
-		if(!__arm__)
+		if(!setFullscreen)
 		{
 			set_size_request(800, 480);
 		}
