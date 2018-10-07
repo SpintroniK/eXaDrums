@@ -39,8 +39,7 @@ namespace Controllers
 		this->builder = bd;
 
 		// Start drum kit
-		const std::string moduleLocation(mainFolder+"/../Data/");
-		drumKit = std::shared_ptr<eXaDrums>(new eXaDrums(moduleLocation.c_str()));
+		drumKit = std::shared_ptr<eXaDrums>(new eXaDrums(mainFolder.data()));
 
 		// Set controllers
 		metronomeController = std::unique_ptr<MetronomeController>(new MetronomeController(this->builder, this->drumKit));
