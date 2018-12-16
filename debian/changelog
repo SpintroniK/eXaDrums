@@ -1,3 +1,9 @@
+exadrums (0.2.0) unstable; urgency=medium
+
+  * Ensure compatibility with libeXaDrums 0.2.0.
+
+ -- Jeremy Oden <jerem.oden@gmail.com>  Sun, 16 Dec 2018 10:43:40 +0000
+
 exadrums (0.1.0) unstable; urgency=medium
 
   * Initial Release.

@@ -1,13 +1,13 @@
 Package: exadrums-dbgsym
 Package-Type: ddeb
 Source: exadrums
-Version: 0.1.0
+Version: 0.2.0
 Auto-Built-Package: debug-symbols
 Architecture: amd64
 Maintainer: Jeremy Oden <jerem.oden@gmail.com>
 Installed-Size: 123
-Depends: exadrums (= 0.1.0)
+Depends: exadrums (= 0.2.0)
 Section: debug
 Priority: optional
 Description: debug symbols for exadrums
-Build-Ids: abd76eaa0fe282df84bf16789ef351d52760687a
+Build-Ids: 0f6fe04786f55c3607160bc4fb3387523465cf18

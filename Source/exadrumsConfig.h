@@ -34,7 +34,7 @@ namespace eXaDrums
 {
 
 	constexpr auto EXADRUMS_MAJOR_VERSION = 0;
-	constexpr auto EXADRUMS_MINOR_VERSION = 1;
+	constexpr auto EXADRUMS_MINOR_VERSION = 2;
 	constexpr auto EXADRUMS_PATCH_VERSION = 0;
 	constexpr char VERSION_SEPARATOR[] = ".";
 
