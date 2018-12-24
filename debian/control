@@ -2,14 +2,22 @@ Source: exadrums
 Section: sound
 Priority: optional
 Maintainer: Jeremy Oden <jerem.oden@gmail.com>
-Build-Depends: debhelper (>= 10)
-Standards-Version: 4.1.2
+Build-Depends:
+ debhelper (>= 11),
+ libasound-dev,
+ libexadrums-dev,
+ libgtkmm-3.0-dev,
+ pkg-config,
+Standards-Version: 4.2.1
+Rules-Requires-Root: no
 Homepage: http://www.freewebmaster.fr
-#Vcs-Git: https://anonscm.debian.org/git/collab-maint/exadrums.git
-#Vcs-Browser: https://anonscm.debian.org/cgit/collab-maint/exadrums.git
+Vcs-Browser: https://github.com/SpintroniK/eXaDrums
+Vcs-Git: https://github.com/SpintroniK/eXaDrums.git
 
 Package: exadrums
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: Drum module For Linux
- A drum module software for Linux.
+Description: software drum module (graphical user interface)
+ Todo.
+ .
+ This package provides the graphical user interface.

@@ -1,4 +1,4 @@
-Release/exadrums usr/bin
+exadrums usr/bin
 Data/* usr/share/eXaDrums/Data
 out.raw usr/share/eXaDrums/Data/data
 Source/eXaDrums_logo_small.png usr/share/eXaDrums/Ui

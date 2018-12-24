@@ -1,0 +1,121 @@
+Description: add a simple Makefile
+ Upstream build system is complex, unconfigurable and lacks an install
+ target. Fix the first two issues.
+Author: Nicolas Boulenguez <nicolas@debian.org>
+
+--- /dev/null
++++ b/Makefile
+@@ -0,0 +1,43 @@
++#!/usr/bin/make -f
++
++# These defaults may be overriden by the environment or the command line.
++# For a debug build, use "make CXXFLAGS=-g".
++CPPFLAGS                      ?=
++CXX                           ?= g++
++CXXFLAGS                      ?= -O3
++LDFLAGS                       ?=
++LDLIBS                        ?=
++
++main                          := exadrums
++
++cpp_files                     := $(shell find Source -name '*.cpp')
++objects                       := $(cpp_files:cpp=o)
++
++# --as-needed ensures that objects and libraries are listed in a way
++# compatible with most distributions where it is the default. It also
++# removes dependencies like -lpthread on architectures where it is
++# actually unused.
++pkg-config_modules            := alsa tinyxml2 gtkmm-3.0
++local_cxxflags                := `pkg-config --cflags $(pkg-config_modules)` \
++                                 -Wall -std=c++17
++local_ldflags                 := -Wl,--as-needed
++local_ldlibs                  := `pkg-config --libs $(pkg-config_modules)` \
++                                 -lexadrums -lstdc++fs
++
++.PHONY: all clean
++
++all: $(main)
++
++$(main): $(objects)
++	$(LINK.cc) \
++	  $(local_cxxflags) $(local_ldflags) \
++	  -o $(main) \
++	  $(objects) $(local_ldlibs) $(LDLIBS)
++
++$(objects): %.o: %.cpp
++	$(COMPILE.cc) \
++	  $(local_cxxflags) \
++	  $< -o $@
++
++clean:
++	$(RM) $(main) $(objects)
+--- a/Source/Controllers/CoachController.h
++++ b/Source/Controllers/CoachController.h
+@@ -8,7 +8,7 @@
+ #ifndef SOURCE_CONTROLLERS_COACHCONTROLLER_H_
+ #define SOURCE_CONTROLLERS_COACHCONTROLLER_H_
+ 
+-#include <Source/Api/eXaDrums.h>
++#include <eXaDrums/Api/eXaDrums.h>
+ 
+ #include <gtkmm/builder.h>
+ #include <gtkmm/window.h>
+--- a/Source/Controllers/ConfigController.h
++++ b/Source/Controllers/ConfigController.h
+@@ -8,8 +8,8 @@
+ #ifndef SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
+ #define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
+ 
+-#include <Source/Api/eXaDrums.h>
+-#include <Source/Api/Config/Config_api.h>
++#include <eXaDrums/Api/eXaDrums.h>
++#include <eXaDrums/Api/Config/Config_api.h>
+ 
+ #include "../Widgets/TriggerSelector.h"
+ 
+--- a/Source/Controllers/KitController.h
++++ b/Source/Controllers/KitController.h
+@@ -14,8 +14,8 @@
+ #include "../Widgets/SoundTypeAndPath.h"
+ #include "../Widgets/InstrumentSelector.h"
+ 
+-#include <Source/Api/eXaDrums.h>
+-#include <Source/Api/KitCreator/KitCreator_api.h>
++#include <eXaDrums/Api/eXaDrums.h>
++#include <eXaDrums/Api/KitCreator/KitCreator_api.h>
+ 
+ #include <gtkmm/builder.h>
+ #include <gtkmm/button.h>
+--- a/Source/Controllers/MainController.h
++++ b/Source/Controllers/MainController.h
+@@ -14,7 +14,7 @@
+ #include "ConfigController.h"
+ #include "CoachController.h"
+ 
+-#include <Source/Api/eXaDrums.h>
++#include <eXaDrums/Api/eXaDrums.h>
+ 
+ #include <gtkmm/builder.h>
+ #include <gtkmm/button.h>
+--- a/Source/Controllers/MetronomeController.h
++++ b/Source/Controllers/MetronomeController.h
+@@ -8,7 +8,7 @@
+ #ifndef SOURCE_CONTROLLERS_METRONOMECONTROLLER_H_
+ #define SOURCE_CONTROLLERS_METRONOMECONTROLLER_H_
+ 
+-#include <Source/Api/eXaDrums.h>
++#include <eXaDrums/Api/eXaDrums.h>
+ 
+ #include <gtkmm/builder.h>
+ #include <gtkmm/window.h>
+--- a/Source/exadrumsConfig.h
++++ b/Source/exadrumsConfig.h
+@@ -8,7 +8,7 @@
+ #ifndef SOURCE_EXADRUMSCONFIG_H_
+ #define SOURCE_EXADRUMSCONFIG_H_
+ 
+-#include <Source/Api/eXaDrums.h>
++#include <eXaDrums/Api/eXaDrums.h>
+ 
+ #if __has_include(<filesystem>)
+ 	#include <filesystem>
