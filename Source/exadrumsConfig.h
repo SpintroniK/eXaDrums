@@ -8,7 +8,7 @@
 #ifndef SOURCE_EXADRUMSCONFIG_H_
 #define SOURCE_EXADRUMSCONFIG_H_
 
-#include <Source/Api/eXaDrums.h>
+#include <libexadrums/Api/eXaDrums.h>
 
 #if __has_include(<filesystem>)
 	#include <filesystem>

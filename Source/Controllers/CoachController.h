@@ -8,7 +8,7 @@
 #ifndef SOURCE_CONTROLLERS_COACHCONTROLLER_H_
 #define SOURCE_CONTROLLERS_COACHCONTROLLER_H_
 
-#include <Source/Api/eXaDrums.h>
+#include <libexadrums/Api/eXaDrums.h>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
