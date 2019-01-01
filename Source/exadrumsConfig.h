@@ -196,7 +196,7 @@ namespace eXaDrums
 		}
 
 		fs::path userPath = fs::path{std::getenv("HOME")}/".eXaDrums";
-		const fs::path rootPath{"/usr/share/eXaDrums"};
+		const fs::path rootPath{"/usr/share/exadrums"};
 
 	};
 
