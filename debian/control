@@ -3,7 +3,7 @@ Section: sound
 Priority: optional
 Maintainer: Jeremy Oden <jerem.oden@gmail.com>
 Build-Depends:
- debhelper (>= 11),
+ debhelper (>= 10),
  libasound-dev,
  libexadrums-dev,
  libgtkmm-3.0-dev,
