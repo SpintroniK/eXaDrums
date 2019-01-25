@@ -17,7 +17,19 @@ Vcs-Git: https://github.com/SpintroniK/eXaDrums.git
 Package: exadrums
 Architecture: any
 Depends: ${shlibs:Depends}, ${misc:Depends}
-Description: software drum module (graphical user interface)
- Todo.
+Description: Software drum module (graphical user interface)
+ ExaDrums is a virtual drum module that allows drummers play with custom-made 
+ drum kits.
  .
- This package provides the graphical user interface.
+ It is user-friendly and combines high quality stereo sound with low latency.
+ .
+ Each drum kit provides individual sliders in order to control the volume of 
+ its drum pads.
+ .
+ A built-in metronome can be combined with a rhythm coach to make practice 
+ sessions easier and efficient.
+ .
+ The drum triggers can be adjusted so that their response feels as natural as 
+ possible, and different sensor interfaces include a virtual (on-screen) multi 
+ pad and external sensors.
+ .

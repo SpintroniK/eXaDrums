@@ -24,8 +24,7 @@ dist_pkgdata_DATA = \
   Data/SoundBank/BassDrum/BassDrum1.wav \
   Data/SoundBank/HiHat/hihat.wav \
   Data/SoundBank/SnareDrum/snare1.wav \
-  Data/triggersConfig.xml \
-  exadrums-root
+  Data/triggersConfig.xml
 
 # Install an empty directory.
 emptyrecdir = $(pkgdatadir)/Data/Rec
@@ -41,8 +40,7 @@ dist_ui_DATA = \
 
 desktopdir = $(datadir)/applications
 dist_desktop_DATA = \
-  eXaDrums.desktop \
-  eXaDrums-root.desktop
+  eXaDrums.desktop
 
 pngdir = $(datadir)/icons/hicolor/128x128/apps
 dist_png_DATA = eXaDrums.png
