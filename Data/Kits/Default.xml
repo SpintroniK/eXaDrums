@@ -7,7 +7,7 @@
             <trigger location="DrumHead">0</trigger>
         </triggers>
         <sounds>
-            <sound type="DrumHead">SnareDrum/snare1.wav</sound>
+            <sound type="DrumHead">SnareDrum/Snr_Acou_01.wav</sound>
         </sounds>
     </Instrument>
 </root>

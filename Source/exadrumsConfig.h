@@ -145,8 +145,25 @@ namespace eXaDrums
 				return false;
 			}
 
+			// Create directories first
 			fs::create_directory(userPath);
-			fs::copy(RootDataPath(), UserDataPath(), fs::copy_options::recursive);
+			fs::create_directory(UserDataPath());
+			fs::create_directory(UserDataPath()/"Kits");
+			fs::create_directory(UserDataPath()/"Rec");
+			fs::create_directory(UserDataPath()/"SoundBank");
+			fs::create_directory(UserDataPath()/"SoundBank/BassDrum");
+			fs::create_directory(UserDataPath()/"SoundBank/SnareDrum");
+
+			// Copy configuration files
+			copyFiles(rootPath, UserDataPath(), {	fs::path{"alsaConfig.xml"},
+													fs::path{"metronomeConfig.xml"},
+													fs::path{"sensorsConfig.xml"},
+													fs::path{"triggersConfig.xml"}});
+
+			// Install default kit
+			copyFiles(rootPath, UserDataPath()/"Kits", { fs::path{"Default.xml"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/SnareDrum", { fs::path{"Snr_Acou_01.wav"} });
+
 
 			return true;
 		}
@@ -188,6 +205,14 @@ namespace eXaDrums
 		bool IsRoot() const { return isRoot; }
 
 	private:
+
+		void copyFiles(const fs::path& from, const fs::path& to, const std::vector<fs::path>& files)
+		{
+			for(const auto& file : files)
+			{
+				fs::copy_file(from/file, to/file);
+			}
+		}
 
 		template <typename T>
 		std::pair<Glib::OptionEntry, T> MakeOption(const std::string& ln, char sn, const std::string& desc)

@@ -18,12 +18,11 @@ dist_man_MANS = exadrums.1
 
 dist_pkgdata_DATA = \
   Data/alsaConfig.xml \
-  Data/Kits/PadTest.xml \
+  Data/Kits/Default.xml \
   Data/metronomeConfig.xml \
   Data/sensorsConfig.xml \
-  Data/SoundBank/BassDrum/BassDrum1.wav \
-  Data/SoundBank/HiHat/hihat.wav \
-  Data/SoundBank/SnareDrum/snare1.wav \
+  Data/SoundBank/BassDrum/BD_Acou_01.wav \
+  Data/SoundBank/SnareDrum/Snr_Acou_01.wav \
   Data/triggersConfig.xml
 
 # Install an empty directory.
