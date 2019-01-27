@@ -33,3 +33,4 @@ Description: Software drum module (graphical user interface)
  possible, and different sensor interfaces include a virtual (on-screen) multi 
  pad and external sensors.
  .
+ This package provides the graphical user interface.

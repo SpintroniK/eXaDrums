@@ -39,13 +39,13 @@ namespace Controllers
 		this->builder = bd;
 
 		// Start drum kit
-		drumKit = std::shared_ptr<eXaDrums>(new eXaDrums(mainFolder.data()));
+		drumKit = std::make_shared<eXaDrums>(mainFolder.data());
 
 		// Set controllers
-		metronomeController = std::unique_ptr<MetronomeController>(new MetronomeController(this->builder, this->drumKit));
-		coachController = std::unique_ptr<CoachController>(new CoachController(this->builder, this->drumKit));
-		kitController = std::unique_ptr<KitController>(new KitController(this->builder, this->drumKit));
-		configController = std::unique_ptr<ConfigController>(new ConfigController(this->builder, this->drumKit));
+		metronomeController = std::make_unique<MetronomeController>(this->builder, this->drumKit);
+		coachController = std::make_unique<CoachController>(this->builder, this->drumKit);
+		kitController = std::make_unique<KitController>(this->builder, this->drumKit);
+		configController = std::make_unique<ConfigController>(this->builder, this->drumKit);
 
 
 		// Get all widgets

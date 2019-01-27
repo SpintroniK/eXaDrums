@@ -40,7 +40,7 @@ namespace Widgets
 
 	};
 
-	typedef std::shared_ptr<Fader> FaderPtr;
+	using FaderPtr = std::unique_ptr<Fader>;
 
 } /* namespace Gui */
 

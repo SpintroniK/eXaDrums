@@ -30,6 +30,9 @@
 #include <iostream>
 #include <cstdlib>
 
+#include <unistd.h>
+
+
 namespace eXaDrums
 {
 
@@ -182,6 +185,8 @@ namespace eXaDrums
 			return rootPath/"Ui/Ui.glade";
 		}
 
+		bool IsRoot() const { return isRoot; }
+
 	private:
 
 		template <typename T>
@@ -197,6 +202,7 @@ namespace eXaDrums
 
 		fs::path userPath = fs::path{std::getenv("HOME")}/".eXaDrums";
 		const fs::path rootPath{"/usr/share/exadrums"};
+		const bool isRoot = getuid() == 0 && geteuid() == 0;
 
 	};
 

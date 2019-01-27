@@ -1,6 +1,6 @@
 <SensorsConfig>
     <SamplingRate>2000000</SamplingRate>
     <Resolution>12</Resolution>
-    <Type>Hdd</Type>
-    <HddDataFolder>/usr/share/eXaDrums/Data/data/</HddDataFolder>
+    <Type>Virtual</Type>
+    <HddDataFolder>/usr/share/exadrums/Data/data/</HddDataFolder>
 </SensorsConfig>

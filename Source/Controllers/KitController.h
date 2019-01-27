@@ -10,6 +10,7 @@
 
 
 #include "../Widgets/Fader.h"
+#include "../Widgets/VirtualPad.h"
 #include "../Widgets/TriggerIdAndLocation.h"
 #include "../Widgets/SoundTypeAndPath.h"
 #include "../Widgets/InstrumentSelector.h"
@@ -73,6 +74,8 @@ namespace Controllers
 		void UpdateFaders();
 		void SaveFaders() const;
 
+		// Virtual kit
+		void UpdateVirtualKit();
 
 		// Keyboard
 		void ShowKeyboard();
@@ -105,6 +108,10 @@ namespace Controllers
 		std::vector<Widgets::FaderPtr> faders;
 		Gtk::Box* fadersList;
 
+		// Virtual kit
+		Gtk::Box* virtualPadsList;
+		std::vector<Widgets::VirtualPadPtr> virtualPads;
+
 		// Kit creation
 		std::vector<Widgets::TriggerIdAndLocationPtr> triggersIdsAndLocations;
 		std::vector<Widgets::SoundTypeAndPathPtr> soundsTypesAndPaths;
@@ -115,6 +122,7 @@ namespace Controllers
 		Gtk::Window* newKitWindow;
 		Gtk::Window* instrumentConfigWindow;
 		Gtk::Window* instrumentSeclectWindow;
+		Gtk::Window* virtualPadWindow;
 		Gtk::FileChooserDialog* recorderWindow;
 
 		// Class variables

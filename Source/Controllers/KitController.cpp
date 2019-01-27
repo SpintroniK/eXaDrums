@@ -80,6 +80,9 @@ namespace Controllers
 			builder->get_widget("FadersSaveButton", saveFaders);
 			builder->get_widget("FadersList", fadersList);
 
+			// Virtual kit
+			builder->get_widget("VirtualPadsList", virtualPadsList);
+
 			// Comboboxes
 			builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 
@@ -89,17 +92,19 @@ namespace Controllers
 			builder->get_widget("InstrumentConfigWindow", instrumentConfigWindow);
 			builder->get_widget("InstrumentSeclectWindow", instrumentSeclectWindow);
 			builder->get_widget("RecorderWindow", recorderWindow);
+			builder->get_widget("VirtualPadWindow", virtualPadWindow);
 
 		}
 
 		// Populate Kits list
 		CreateKitsList();
 
-
 		// Add faders
 		UpdateFaders();
 		saveFaders->set_sensitive(false);
 
+		// Create virtual kit
+		UpdateVirtualKit();
 
 		// Load current kit
 		drumKit->SelectKit(GetCurrentKitId());
@@ -128,6 +133,18 @@ namespace Controllers
 
 			// Kits list
 			kitsList->signal_changed().connect([&] { ChangeKit(); });
+
+			// Windows
+			virtualPadWindow->signal_key_press_event().connect([&](GdkEventKey* e)
+			{
+				for(const auto& v : virtualPads)
+				{
+					v->PlaySound(e->keyval);
+				}
+
+				return false;
+			}, false);
+
 		}
 
 		return;
@@ -268,7 +285,6 @@ namespace Controllers
 		d.set_title("New kit added");
 		d.run();
 
-
 		return;
 	}
 
@@ -286,7 +302,6 @@ namespace Controllers
 
 	void KitController::RecorderExport()
 	{
-
 		std::string fileName = recorderWindow->get_filename();
 
 		drumKit->RecorderExport(fileName);
@@ -300,11 +315,23 @@ namespace Controllers
 		if(drumKit->IsStarted())
 		{
 			this->playButton->set_property("label", Gtk::StockID("gtk-media-play"));
+
+			if(drumKit->IsSensorVirtual())
+			{
+				virtualPadWindow->hide();
+			}
+
 			drumKit->Stop();
 		}
 		else
 		{
 			this->playButton->set_property("label", Gtk::StockID("gtk-media-stop"));
+
+			if(drumKit->IsSensorVirtual())
+			{
+				virtualPadWindow->show();
+			}
+
 			drumKit->Start();
 		}
 
@@ -329,6 +356,9 @@ namespace Controllers
 		// Update faders
 		this->UpdateFaders();
 		saveFaders->set_sensitive(false);
+
+		// Update virtual kit
+		UpdateVirtualKit();
 
 		// Restart module if needed
 		if(started)
@@ -375,7 +405,7 @@ namespace Controllers
 
 			FaderPtr fader(new Fader(name, i, volume));
 
-			faders.push_back(fader);
+			faders.emplace_back(std::move(fader));
 		}
 
 		// Add all faders to GUI
@@ -388,6 +418,34 @@ namespace Controllers
 		}
 
 		return;
+	}
+
+	void KitController::UpdateVirtualKit()
+	{
+		// Remove current virtual pads
+		std::for_each(virtualPads.begin(), virtualPads.end(), [](VirtualPadPtr& vpad) { vpad.reset(); });
+		virtualPads.clear();
+
+		auto const instNames = drumKit->GetInstrumentsNames();
+		auto const max = static_cast<short>(std::pow(2, drumKit->GetSensorsResolution())/2 - 1);
+
+		// Add new virtual pads
+		for(size_t i = 0; i < instNames.size(); i++)
+		{
+			auto trigsIds = drumKit->GetInstrumentTriggersIds(i);
+			std::vector<std::function<void()>> soundTriggers(trigsIds.size());
+
+			std::transform(trigsIds.begin(), trigsIds.end(), soundTriggers.begin(), [&, max] (int trigId)
+			{
+				return [&, trigId, max] () -> void { drumKit->SetTriggerSensorValue(trigId, 0, max); };
+			});
+
+			VirtualPadPtr vpad(new VirtualPad(instNames[i], std::move(soundTriggers)));
+			virtualPads.emplace_back(std::move(vpad));
+		}
+
+		std::for_each(virtualPads.begin(), virtualPads.end(), [&](const VirtualPadPtr& vpad) { this->virtualPadsList->add(*vpad); });
+
 	}
 
 
