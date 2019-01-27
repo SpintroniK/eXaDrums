@@ -1,13 +1,22 @@
 <root>
-    <kitName>PadTest0</kitName>
+    <kitName>Default</kitName>
     <kitFolder/>
     <Instrument type="Pad" volume="100">
-        <instrumentName>Instrument 1</instrumentName>
+        <instrumentName>Snare Drum</instrumentName>
         <triggers>
             <trigger location="DrumHead">0</trigger>
         </triggers>
         <sounds>
             <sound type="DrumHead">SnareDrum/Snr_Acou_01.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="Pad" volume="100">
+        <instrumentName>Bass Drum</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">1</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">BassDrum/BD_Acou_01.wav</sound>
         </sounds>
     </Instrument>
 </root>

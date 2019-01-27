@@ -163,6 +163,7 @@ namespace eXaDrums
 			// Install default kit
 			copyFiles(rootPath, UserDataPath()/"Kits", { fs::path{"Default.xml"} });
 			copyFiles(rootPath, UserDataPath()/"SoundBank/SnareDrum", { fs::path{"Snr_Acou_01.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/BassDrum", { fs::path{"BD_Acou_01.wav"} });
 
 
 			return true;
