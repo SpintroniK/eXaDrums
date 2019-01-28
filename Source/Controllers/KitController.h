@@ -38,7 +38,7 @@ namespace Controllers
 
 	public:
 
-		KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums>& drumKit);
+		KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums>& drumKit, bool isRoot);
 		virtual ~KitController();
 
 	private:
@@ -92,6 +92,7 @@ namespace Controllers
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 		std::unique_ptr<eXaDrumsApi::KitCreator> kitCreator;
+		bool isRoot;
 
 		// Buttons
 		Gtk::Button* deleteKitButton;

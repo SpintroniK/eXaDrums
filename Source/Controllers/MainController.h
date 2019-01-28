@@ -39,7 +39,7 @@ namespace Controllers
 		MainController();
 		virtual ~MainController();
 
-		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf);
+		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf, bool isRoot);
 
 	private:
 

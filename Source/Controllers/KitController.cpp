@@ -23,8 +23,8 @@ using namespace Widgets;
 namespace Controllers
 {
 
-	KitController::KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums>& drumKit)
-	: builder(builder), drumKit(drumKit)
+	KitController::KitController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums>& drumKit, bool isRoot)
+	: builder(builder), drumKit(drumKit), isRoot(isRoot)
 	{
 
 		numInstrumentsToCreate = 0;
@@ -321,6 +321,7 @@ namespace Controllers
 				virtualPadWindow->hide();
 			}
 
+
 			drumKit->Stop();
 		}
 		else
@@ -330,6 +331,13 @@ namespace Controllers
 			if(drumKit->IsSensorVirtual())
 			{
 				virtualPadWindow->show();
+			}
+
+			if(drumKit->IsSensorSpi() && !isRoot)
+			{
+				Gtk::MessageDialog d("Using SPI sensors may require superuser privileges.", false, Gtk::MessageType::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK);
+				d.set_title("Using SPI sensors without privileges");
+				d.run();
 			}
 
 			drumKit->Start();

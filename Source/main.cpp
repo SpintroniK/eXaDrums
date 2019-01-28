@@ -43,7 +43,7 @@ int main(int argc, char** argv)
 	app->signal_activate().connect([&]
 	{
 		auto builder = Gtk::Builder::create_from_file(config.UiPath());
-		controller.Create(builder, config.UserDataPath());
+		controller.Create(builder, config.UserDataPath(), config.IsRoot());
 
 		// Get about dialog and set software version
 		GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(Config::ExaDrumsVersion());
