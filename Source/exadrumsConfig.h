@@ -153,6 +153,10 @@ namespace eXaDrums
 			fs::create_directory(UserDataPath()/"SoundBank");
 			fs::create_directory(UserDataPath()/"SoundBank/BassDrum");
 			fs::create_directory(UserDataPath()/"SoundBank/SnareDrum");
+			fs::create_directory(UserDataPath()/"SoundBank/Crash");
+			fs::create_directory(UserDataPath()/"SoundBank/HiHat");
+			fs::create_directory(UserDataPath()/"SoundBank/Ride");
+			fs::create_directory(UserDataPath()/"SoundBank/Tom");
 
 			// Copy configuration files
 			copyFiles(rootPath, UserDataPath(), {	fs::path{"alsaConfig.xml"},
