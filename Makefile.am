@@ -22,7 +22,13 @@ dist_pkgdata_DATA = \
   Data/metronomeConfig.xml \
   Data/sensorsConfig.xml \
   Data/SoundBank/BassDrum/BD_Acou_01.wav \
+  Data/SoundBank/Crash/Crash_High.wav \
+  Data/SoundBank/HiHat/HiHat.wav \
+  Data/SoundBank/Ride/RideBell.wav \
+  Data/SoundBank/Ride/RideEdge.wav \
   Data/SoundBank/SnareDrum/Snr_Acou_01.wav \
+  Data/SoundBank/Tom/Tom01.wav \
+  Data/SoundBank/Tom/Tom03.wav \
   Data/triggersConfig.xml
 
 # Install an empty directory.

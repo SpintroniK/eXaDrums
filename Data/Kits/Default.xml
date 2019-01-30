@@ -2,21 +2,68 @@
     <kitName>Default</kitName>
     <kitFolder/>
     <Instrument type="Pad" volume="100">
-        <instrumentName>Snare Drum</instrumentName>
+        <instrumentName>HiHat</instrumentName>
         <triggers>
             <trigger location="DrumHead">0</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">HiHat/HiHat.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="Pad" volume="100">
+        <instrumentName>Snare</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">1</trigger>
         </triggers>
         <sounds>
             <sound type="DrumHead">SnareDrum/Snr_Acou_01.wav</sound>
         </sounds>
     </Instrument>
     <Instrument type="Pad" volume="100">
-        <instrumentName>Bass Drum</instrumentName>
+        <instrumentName>Kick</instrumentName>
         <triggers>
-            <trigger location="DrumHead">1</trigger>
+            <trigger location="DrumHead">2</trigger>
         </triggers>
         <sounds>
             <sound type="DrumHead">BassDrum/BD_Acou_01.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="Pad" volume="35">
+        <instrumentName>Crash</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">3</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">Crash/Crash_High.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="Pad" volume="50">
+        <instrumentName>Tom</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">4</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">Tom/Tom01.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="Pad" volume="50">
+        <instrumentName>Floor Tom</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">5</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">Tom/Tom03.wav</sound>
+        </sounds>
+    </Instrument>
+    <Instrument type="DualZonePad" volume="100">
+        <instrumentName>Ride</instrumentName>
+        <triggers>
+            <trigger location="DrumHead">6</trigger>
+            <trigger location="Rim">7</trigger>
+        </triggers>
+        <sounds>
+            <sound type="DrumHead">Ride/RideEdge.wav</sound>
+            <sound type="RimShot">Ride/RideBell.wav</sound>
         </sounds>
     </Instrument>
 </root>

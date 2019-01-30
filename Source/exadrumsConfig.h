@@ -164,6 +164,12 @@ namespace eXaDrums
 			copyFiles(rootPath, UserDataPath()/"Kits", { fs::path{"Default.xml"} });
 			copyFiles(rootPath, UserDataPath()/"SoundBank/SnareDrum", { fs::path{"Snr_Acou_01.wav"} });
 			copyFiles(rootPath, UserDataPath()/"SoundBank/BassDrum", { fs::path{"BD_Acou_01.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/Crash", { fs::path{"Crash_High.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/HiHat", { fs::path{"HiHat.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/Ride", { fs::path{"RideBell.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/Ride", { fs::path{"RideEdge.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/Tom", { fs::path{"Tom01.wav"} });
+			copyFiles(rootPath, UserDataPath()/"SoundBank/Tom", { fs::path{"Tom03.wav"} });
 
 
 			return true;

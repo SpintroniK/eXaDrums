@@ -11,4 +11,40 @@
         <MaskTime>60000</MaskTime>
         <Response>Linear</Response>
     </Trigger>
+    <Trigger sensorType="Discrete" sensorId="2">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
+    <Trigger sensorType="Discrete" sensorId="3">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
+    <Trigger sensorType="Discrete" sensorId="4">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
+    <Trigger sensorType="Discrete" sensorId="5">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
+    <Trigger sensorType="Discrete" sensorId="6">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
+    <Trigger sensorType="Discrete" sensorId="7">
+        <Threshold>120</Threshold>
+        <ScanTime>4000</ScanTime>
+        <MaskTime>60000</MaskTime>
+        <Response>Linear</Response>
+    </Trigger>
 </Triggers>
