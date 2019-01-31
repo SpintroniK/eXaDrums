@@ -90,6 +90,6 @@ exadrums_SOURCES = \
   Source/Widgets/TriggerIdAndLocation.h \
   Source/Widgets/TriggerSelector.cpp \
   Source/Widgets/TriggerSelector.h \
-  VirtualPad.h \
+  Source/Widgets/VirtualPad.h \
   Source/exadrumsConfig.h \
   Source/main.cpp
