@@ -1,5 +1,5 @@
-exadrums (0.2.0-1) unstable; urgency=medium
+exadrums (0.3.0) unstable; urgency=medium
 
-  * Initial Debian packaging.
+  * Initial Debian packaging. Closes: #919328.
 
- -- Jeremy Oden <jerem.oden@gmail.com>  Sat, 22 Dec 2018 23:39:34 +0100
+ -- Jeremy Oden <jerem.oden@gmail.com>  Fri, 01 Feb 2019 20:25:06 +0000

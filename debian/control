@@ -33,4 +33,8 @@ Description: Software drum module (graphical user interface)
  possible, and different sensor interfaces include a virtual (on-screen) multi 
  pad and external sensors.
  .
+ Although eXaDrums is usable as a drum module, it is still an experimental 
+ project. As such, some features are not yet implemented, and the error 
+ management is not complete. 
+ .
  This package provides the graphical user interface.
