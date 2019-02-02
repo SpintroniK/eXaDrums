@@ -5,6 +5,7 @@
  *      Author: jeremy
  */
 
+#include "../config.h"
 #include "exadrumsConfig.h"
 #include "Util/Util.h"
 #include "Controllers/MainController.h"
@@ -46,7 +47,7 @@ int main(int argc, char** argv)
 		controller.Create(builder, config.UserDataPath(), config.IsRoot());
 
 		// Get about dialog and set software version
-		GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(Config::ExaDrumsVersion());
+		GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(PACKAGE_VERSION);
 
 		// Get main window
 		builder->get_widget_derived("MainWindow", mainWindow);

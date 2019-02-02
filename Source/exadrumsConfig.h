@@ -8,6 +8,7 @@
 #ifndef SOURCE_EXADRUMSCONFIG_H_
 #define SOURCE_EXADRUMSCONFIG_H_
 
+#include "../config.h"
 #include <libexadrums/Api/eXaDrums.h>
 
 #if __has_include(<filesystem>)
@@ -32,13 +33,9 @@
 
 #include <unistd.h>
 
-
 namespace eXaDrums
 {
 
-	constexpr auto EXADRUMS_MAJOR_VERSION = 0;
-	constexpr auto EXADRUMS_MINOR_VERSION = 3;
-	constexpr auto EXADRUMS_PATCH_VERSION = 0;
 	constexpr char VERSION_SEPARATOR[] = ".";
 
 	class Config
@@ -49,18 +46,12 @@ namespace eXaDrums
 		Config() = default;
 		~Config() = default;
 
-
 		template <typename... T>
 		static constexpr auto VersionToStr(const T&... v)
 		{
 			std::string result = ( (std::to_string(v) + VERSION_SEPARATOR) + ... );
 			result.pop_back();
 			return result;
-		}
-
-		static std::string ExaDrumsVersion()
-		{
-			return VersionToStr(EXADRUMS_MAJOR_VERSION, EXADRUMS_MINOR_VERSION,EXADRUMS_PATCH_VERSION);
 		}
 
 		int CommandLineParser(const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd, Glib::RefPtr<Gtk::Application>& app)
@@ -91,7 +82,7 @@ namespace eXaDrums
 			// Handle results
 			if(versionEntry.second)
 			{
-				std::cout << "eXaDrums version " << ExaDrumsVersion() << "\n\n";
+				std::cout << "eXaDrums version " PACKAGE_VERSION "\n\n";
 				std::cout << "using libeXaDrums version " << LIBEXADRUMS_VERSION << "\n";
 				std::cout << "using gtkmm version " << VersionToStr(GTKMM_MAJOR_VERSION, GTKMM_MINOR_VERSION, GTKMM_MICRO_VERSION) << std::endl;
 				return 0;
