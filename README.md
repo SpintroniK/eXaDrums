@@ -1,9 +1,26 @@
 ![eXaDrums](https://github.com/SpintroniK/eXaDrums/raw/master/Source/eXaDrums_logo_small.png)
  # eXaDrums
- ## Electronic drums for Linux.
+ ## Software drum module.
  
-eXaDrums is a drum module that is compatible with most Linux distributions.
-It was originally created for the Raspberry Pi 2B and its official 7" touchscreen. 
+ ExaDrums is a virtual drum module that allows drummers play with
+ custom-made drum kits.
+ 
+ It is user-friendly and combines high quality stereo sound with low
+ latency.
+ 
+ Each drum kit provides individual sliders in order to control the
+ volume of its drum pads.
+ 
+ A built-in metronome can be combined with a rhythm coach to make
+ practice sessions easier and efficient.
+ 
+ The drum triggers can be adjusted so that their response feels as
+ natural as possible, and different sensor interfaces include a
+ virtual (on-screen) multi pad and external sensors.
+ 
+ Although eXaDrums is usable as a drum module, it is still an
+ experimental project. As such, some features are not yet implemented,
+ and the error management is not complete.
 
   ![eXaDrums GUI](https://cdn.hackaday.io/images/3984431527888931486.png)
   
