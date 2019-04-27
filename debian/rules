@@ -1,8 +1,0 @@
-#!/usr/bin/make -f
-
-# https://manpages.debian.org/dpkg-buildflags
-export DEB_BUILD_MAINT_OPTIONS := hardening=+all
-
-# https://manpages.debian.org/debhelper
-%:
-	dh $@

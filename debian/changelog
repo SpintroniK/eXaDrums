@@ -1,5 +1,0 @@
-exadrums (0.3.0-1) experimental; urgency=medium
-
-  * Initial Debian packaging. Closes: #919328.
-
- -- Jeremy Oden <jerem.oden@gmail.com>  Fri, 01 Feb 2019 20:25:06 +0000
