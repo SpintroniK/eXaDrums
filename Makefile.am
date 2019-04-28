@@ -80,6 +80,7 @@ exadrums_SOURCES = \
   Source/MainWindow/MainWindow.cpp \
   Source/MainWindow/MainWindow.h \
   Source/Util/Util.h \
+  Source/Util/ErrorHandler.h \
   Source/Widgets/Fader.cpp \
   Source/Widgets/Fader.h \
   Source/Widgets/InstrumentSelector.cpp \

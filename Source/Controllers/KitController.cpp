@@ -5,6 +5,7 @@
  *      Author: jeremy
  */
 
+#include "../Util/ErrorHandler.h"
 #include "KitController.h"
 
 #include <gtkmm/entry.h>
@@ -787,7 +788,17 @@ namespace Controllers
 			// Create instrument
 			kitCreator->CreateNewInstrument();
 			kitCreator->SetInstrumentVolume(1.0f);
-			kitCreator->SetInstrumentName(instrumentName.c_str());
+			try
+			{
+				ErrorToException([&]{ return kitCreator->SetInstrumentName(instrumentName.c_str()); });
+			}
+			catch(const Exception& e)
+			{
+				kitCreator->RemoveLastInstrument();
+				Errors::errorDialog(e);
+				return;
+			}
+			
 			kitCreator->SetInstrumentType(instrumentType.c_str());
 
 			// Add instrument sounds
