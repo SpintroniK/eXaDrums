@@ -17,8 +17,10 @@ namespace Errors
                 std::cerr << e.what() << '\n';
             }
 
-            Gtk::MessageDialog d(e.what(), false, Gtk::MessageType(e.type()), Gtk::ButtonsType::BUTTONS_OK);
+            Gtk::MessageType message_type = static_cast<Gtk::MessageType>(e.type());
+            Gtk::MessageDialog d(e.what(), false, message_type, Gtk::ButtonsType::BUTTONS_OK, true);
             d.set_title("Error");
+            d.set_keep_above();
             d.run();
     }
 
