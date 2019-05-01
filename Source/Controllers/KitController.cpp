@@ -241,6 +241,10 @@ namespace Controllers
 			ChangeKit();
 
 		}
+		else
+		{
+			Errors::errorDialog({"Cannot delete drum kit.", errorType::error_type_error});
+		}
 
 		return;
 	}
@@ -281,11 +285,7 @@ namespace Controllers
 
 	void KitController::KitAdded()
 	{
-
-		Gtk::MessageDialog d("A new drum kit has been added.", false, Gtk::MessageType::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK);
-		d.set_title("New kit added");
-		d.run();
-
+		Errors::errorDialog({"A new drum kit has been added.", errorType::error_type_other});
 		return;
 	}
 
@@ -305,6 +305,7 @@ namespace Controllers
 	{
 		std::string fileName = recorderWindow->get_filename();
 
+		//TODO: need to check for errors
 		drumKit->RecorderExport(fileName);
 
 		recorderWindow->hide();
@@ -336,9 +337,7 @@ namespace Controllers
 
 			if(drumKit->IsSensorSpi() && !isRoot)
 			{
-				Gtk::MessageDialog d("Using SPI sensors may require superuser privileges.", false, Gtk::MessageType::MESSAGE_INFO, Gtk::ButtonsType::BUTTONS_OK);
-				d.set_title("Using SPI sensors without privileges");
-				d.run();
+				Errors::errorDialog({"Using SPI sensors may require superuser privileges.", errorType::error_type_other});
 			}
 
 			drumKit->Start();
@@ -359,8 +358,16 @@ namespace Controllers
 		}
 
 
-		// Load new kit
-		drumKit->SelectKit(GetCurrentKitId());
+		// Load new kit or exit if it doesn't exist
+		try
+		{
+			drumKit->SelectKit(GetCurrentKitId());
+		}
+		catch(const Exception& e)
+		{
+			Errors::errorDialog(e);
+			return;
+		}
 
 		// Update faders
 		this->UpdateFaders();
