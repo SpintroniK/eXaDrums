@@ -17,9 +17,40 @@ namespace Errors
                 std::cerr << e.what() << '\n';
             }
 
-            Gtk::MessageType message_type = static_cast<Gtk::MessageType>(e.type());
+            Gtk::MessageType message_type;
+            std::string message;
+
+            switch(e.type())
+            {
+
+                case eXaDrumsApi::errorType::error_type_success: 
+                    message = "Success"; 
+                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_success);
+                    break;
+
+                case eXaDrumsApi::errorType::error_type_warning: 
+                    message = "Warning"; 
+                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_warning);
+                    break;
+
+                case eXaDrumsApi::errorType::error_type_question: 
+                    message = "Question"; 
+                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_question);
+                    break;
+
+                case eXaDrumsApi::errorType::error_type_error: 
+                    message = "Error"; 
+                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_error);
+                    break;
+
+                default: 
+                    message = "Information"; 
+                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_other);
+                    break;
+            }
+
             Gtk::MessageDialog d(e.what(), false, message_type, Gtk::ButtonsType::BUTTONS_OK, true);
-            d.set_title("Error");
+            d.set_title(message);
             d.set_keep_above();
             d.run();
     }
