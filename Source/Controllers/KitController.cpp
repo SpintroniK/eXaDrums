@@ -20,6 +20,7 @@
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
+using namespace Util;
 
 namespace Controllers
 {

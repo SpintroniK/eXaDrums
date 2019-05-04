@@ -1,7 +1,7 @@
 #ifndef SOURCE_UTIL_ERRORHANDLER_H_
 #define SOURCE_UTIL_ERRORHANDLER_H_
 
-#include <libexadrums/Api/ErrorHandling.h>
+#include <libexadrums/Util/ErrorHandling.h>
 
 #include <gtkmm/messagedialog.h>
 
@@ -10,7 +10,7 @@
 namespace Errors
 {
 
-    static void errorDialog(const eXaDrumsApi::Exception& e, bool printError = true)
+    static void errorDialog(const Util::Exception& e, bool printError = true)
     {
             if(printError)
             {
@@ -23,29 +23,29 @@ namespace Errors
             switch(e.type())
             {
 
-                case eXaDrumsApi::errorType::error_type_success: 
+                case Util::errorType::error_type_success: 
                     message = "Success"; 
-                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_success);
+                    message_type = static_cast<Gtk::MessageType>(Util::errorType::error_type_success);
                     break;
 
-                case eXaDrumsApi::errorType::error_type_warning: 
+                case Util::errorType::error_type_warning: 
                     message = "Warning"; 
-                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_warning);
+                    message_type = static_cast<Gtk::MessageType>(Util::errorType::error_type_warning);
                     break;
 
-                case eXaDrumsApi::errorType::error_type_question: 
+                case Util::errorType::error_type_question: 
                     message = "Question"; 
-                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_question);
+                    message_type = static_cast<Gtk::MessageType>(Util::errorType::error_type_question);
                     break;
 
-                case eXaDrumsApi::errorType::error_type_error: 
+                case Util::errorType::error_type_error: 
                     message = "Error"; 
-                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_error);
+                    message_type = static_cast<Gtk::MessageType>(Util::errorType::error_type_error);
                     break;
 
                 default: 
                     message = "Information"; 
-                    message_type = static_cast<Gtk::MessageType>(eXaDrumsApi::errorType::error_type_other);
+                    message_type = static_cast<Gtk::MessageType>(Util::errorType::error_type_other);
                     break;
             }
 
