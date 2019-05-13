@@ -364,8 +364,11 @@ namespace Controllers
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
-		std::copy(types->get_active_text().begin(), types->get_active_text().end(), tp.type);
-		std::copy(responses->get_active_text().begin(), responses->get_active_text().end(), tp.response);
+		const std::string types_str = types->get_active_text();
+		const std::string responses_str = responses->get_active_text();
+
+		tp.type[types_str.copy(tp.type, types_str.size())] = '\0';
+		tp.response[responses_str.copy(tp.response, responses_str.size())] = '\0';
 
 		return tp;
 	}

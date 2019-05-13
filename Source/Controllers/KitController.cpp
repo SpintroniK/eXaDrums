@@ -306,7 +306,7 @@ namespace Controllers
 	{
 		std::string fileName = recorderWindow->get_filename();
 
-		//TODO: need to check for errors
+		//TODO: need to check for errors.
 		drumKit->RecorderExport(fileName);
 
 		recorderWindow->hide();
