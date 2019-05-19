@@ -8,6 +8,7 @@
 #include "../config.h"
 #include "exadrumsConfig.h"
 #include "Util/Util.h"
+#include "Util/ErrorHandler.h"
 #include "Controllers/MainController.h"
 #include "MainWindow/MainWindow.h"
 
@@ -20,6 +21,7 @@
 
 using namespace eXaDrums;
 using namespace Util;
+using namespace Errors;
 
 int main(int argc, char** argv)
 {
@@ -43,8 +45,26 @@ int main(int argc, char** argv)
 	// Create main controller and Gui only if the app has been activated
 	app->signal_activate().connect([&]
 	{
-		auto builder = Gtk::Builder::create_from_file(config.UiPath());
-		controller.Create(builder, config.UserDataPath(), config.IsRoot());
+		
+		Glib::RefPtr<Gtk::Builder> builder;
+		try
+		{
+			builder = Gtk::Builder::create_from_file(config.UiPath());
+		}
+		catch(...)
+		{
+			errorDialog("Could not find UI file (" + config.UiPath().string() + ").", error_type_error);
+            return; // Exit properly if UI file can't be loaded.
+		}
+
+        try
+        {
+		    controller.Create(builder, config.UserDataPath(), config.IsRoot());
+        }
+        catch(...)
+        {
+            return; // Exit properly if controller can't be created.
+        }
 
 		// Get about dialog and set software version
 		GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(PACKAGE_VERSION);

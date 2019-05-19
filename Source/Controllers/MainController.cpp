@@ -7,8 +7,11 @@
 
 #include "MainController.h"
 
+#include "../Util/ErrorHandler.h"
 
 using namespace eXaDrumsApi;
+using namespace Util;
+using namespace Errors;
 
 namespace Controllers
 {
@@ -40,6 +43,16 @@ namespace Controllers
 
 		// Start drum kit
 		drumKit = std::make_shared<eXaDrums>(mainFolder.data());
+
+		try
+		{
+			ErrorToException([&] { return drumKit->GetInitError(); });
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			throw; // Rethrow exception so that it can be dealt with in main().
+		}
 
 		// Set controllers
 		metronomeController = std::make_unique<MetronomeController>(this->builder, this->drumKit);
