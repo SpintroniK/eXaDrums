@@ -670,7 +670,7 @@ namespace Controllers
 		std::vector<std::string> soundsTypes = kitCreator->GetSoundsTypes(instrumentType);
 
 		// Retrieve sounds files
-		std::vector<std::string> soundsFiles = kitCreator->GetSoundsFiles();
+		// std::vector<std::string> soundsFiles = kitCreator->GetSoundsFiles();
 
 		// Create tirggers ids and locations
 		{
