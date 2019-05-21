@@ -21,6 +21,7 @@
 using namespace eXaDrumsApi;
 using namespace Widgets;
 using namespace Util;
+using namespace Errors;
 
 namespace Controllers
 {
@@ -233,7 +234,15 @@ namespace Controllers
 			kitsList->set_active(activeKit);
 
 			// Delete kit
-			drumKit->DeleteKit(id);
+			try
+			{
+				drumKit->DeleteKit(id);
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+				return;
+			}
 
 			// Remove kit from list
 			kitsList->remove_text(id);
@@ -255,7 +264,15 @@ namespace Controllers
 
 		if(drumKit->IsStarted())
 		{
-			PlayDrums();
+			try
+			{
+				PlayDrums();
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+				return;
+			}
 		}
 
 
