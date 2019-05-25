@@ -815,7 +815,7 @@ namespace Controllers
 			kitCreator->SetInstrumentVolume(1.0f);
 			try
 			{
-				ErrorToException([&]{ return kitCreator->SetInstrumentName(instrumentName.c_str()); });
+				kitCreator->SetInstrumentName(instrumentName.c_str());
 			}
 			catch(const Exception& e)
 			{
