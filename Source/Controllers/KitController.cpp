@@ -329,7 +329,7 @@ namespace Controllers
 		recorderWindow->hide();
 	}
 
-	void KitController::PlayDrums()
+	void KitController::PlayDrums() // FIXME: should throw on failure
 	{
 
 		if(drumKit->IsStarted())
@@ -372,7 +372,15 @@ namespace Controllers
 		// Stop module if started
 		if(started)
 		{
-			drumKit->Stop();
+			try
+			{
+				drumKit->Stop();
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+				return;
+			}
 		}
 
 
@@ -397,7 +405,14 @@ namespace Controllers
 		// Restart module if needed
 		if(started)
 		{
-			drumKit->Start();
+			try
+			{
+				drumKit->Start();
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
 		}
 
 		return;
@@ -406,8 +421,16 @@ namespace Controllers
 	void KitController::SetInstrumentVolume(FaderPtr& fader) const
 	{
 
+		try
+		{
+			drumKit->SetInstrumentVolume(fader->GetInstrumentId(), fader->GetValue());
+		}
+		catch(...) // FIXME: use actual exception when available
+		{
+			return;
+		}
+
 		saveFaders->set_sensitive(true);
-		drumKit->SetInstrumentVolume(fader->GetInstrumentId(), fader->GetValue());
 
 		return;
 	}
@@ -416,7 +439,16 @@ namespace Controllers
 	void KitController::SaveFaders() const
 	{
 
-		SaveKitConfig();
+		try
+		{
+			SaveKitConfig();
+		}
+		catch(...) // FIXME: use actual exception when available
+		{
+			errorDialog("Could not save drum kit configuration.", error_type_error);
+			return;
+		}
+		
 
 		// Disable button
 		saveFaders->set_sensitive(false);
@@ -487,7 +519,7 @@ namespace Controllers
 	{
 
 		newKitWindow->show();
-		ShowKeyboard();
+		// ShowKeyboard();
 
 		return;
 	}
@@ -497,6 +529,13 @@ namespace Controllers
 
 		// Get instrument name
 		std::vector<std::string> instrumentsNames = kitCreator->GetInstrumentsNames();
+
+		if(static_cast<std::size_t>(i) >= instrumentsNames.size())
+		{
+			errorDialog("This instrument does not exist.", error_type_error);
+			return;
+		}
+
 		std::string instrumentName = instrumentsNames[i];
 
 		// Get instrument type
@@ -528,11 +567,12 @@ namespace Controllers
 		// Populate instrument config window
 		{
 
-			std::string text = instrumentConfig_Type->get_active_text();
-
-			// Populate only if not already done
-			if(text.empty())
+			if(instrumentConfig_Type->get_active_text() != nullptr)
 			{
+
+				std::string text = instrumentConfig_Type->get_active_text();
+
+				// Populate only if not already done
 
 				for(std::size_t i = 0; i < instrumentTypes.size(); i++)
 				{
@@ -572,20 +612,27 @@ namespace Controllers
 		return;
 	}
 
-	void KitController::RemoveInstrument(int i)
+	void KitController::RemoveInstrument(std::size_t i)
 	{
 
 		if(instrumentsSelectors.size() > 1)
 		{
 
 			// Load current kit into the kit creator for modifications
-			std::string kitLocation = drumKit->GetKitDataFileName();
-			kitCreator->CreateFromModel(kitLocation.c_str());
+			try
+			{
+				std::string kitLocation = drumKit->GetKitDataFileName();
+				kitCreator->CreateFromModel(kitLocation.c_str());
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
 
 			kitCreator->RemoveInstrument(i);
 
 			// Remove instrument from GUI
-			if(i >= 0 && i < (int)instrumentsSelectors.size())
+			if(i < instrumentsSelectors.size())
 			{
 				instrumentsSelectors[i].reset();
 				instrumentsSelectors.erase(instrumentsSelectors.begin() + i);
@@ -621,11 +668,10 @@ namespace Controllers
 			// Populate instrument config window
 			{
 
-				std::string text = instrumentConfig_Type->get_active_text();
-
 				// Populate only if not already done
-				if(text.empty())
+				if(instrumentConfig_Type->get_active_text() != nullptr)
 				{
+					std::string text = instrumentConfig_Type->get_active_text();
 
 					for(std::size_t i = 0; i < instrumentTypes.size(); i++)
 					{
@@ -660,7 +706,7 @@ namespace Controllers
 		}
 		else
 		{
-			// Should never happen => error.
+			errorDialog("Cannot create a new instrument.", error_type_warning);
 		}
 
 		return;
@@ -677,6 +723,11 @@ namespace Controllers
 		builder->get_widget("InstrumentConfig_TriggersBox", instrumentConfig_TriggersBox);
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
 
+		if(instrumentConfig_Type->get_active_text() == nullptr)
+		{
+			errorDialog("Instrument type is undefined.", error_type_warning);
+			return;
+		}
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 
@@ -752,7 +803,7 @@ namespace Controllers
 		builder->get_widget("InstrumentConfig_Type", instrumentConfig_Type);
 
 		// Get instrument name
-		std::string instrumentName = instrumentConfig_Name->get_text();
+		std::string instrumentName = instrumentConfig_Name->get_text(); // TODO: find out if these things can return nullptr
 		// Get instrument type
 		std::string instrumentType = instrumentConfig_Type->get_entry_text();
 
@@ -870,21 +921,13 @@ namespace Controllers
 		auto it = std::find(kitsNames.cbegin(), kitsNames.cend(), kitName);
 		if(it != kitsNames.cend())
 		{
-
-			Gtk::MessageDialog d("A drum kit with the same name already exists.", false, Gtk::MessageType::MESSAGE_ERROR, Gtk::ButtonsType::BUTTONS_CLOSE);
-			d.set_title("Error");
-			d.run();
-
+			errorDialog("A drum kit with the same name already exists.", error_type_error);
 			return;
 		}
 
 		if(kitName.length() < 3)
 		{
-
-			Gtk::MessageDialog d("Kit's name must be at least 3 characters long.", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_CLOSE);
-			d.set_title("Error");
-			d.run();
-
+			errorDialog("Kit's name must be at least 3 characters long.", error_type_error);
 			return;
 		}
 
@@ -893,9 +936,9 @@ namespace Controllers
 		{
 			numInstruments = std::stoi(numInstrumentsEntry->get_text());
 		}
-		catch(std::invalid_argument& e)
+		catch(const std::invalid_argument&)
 		{
-			// Return so that the entry isn't validated
+			// Return to invalidate the entry
 			return;
 		}
 
@@ -907,7 +950,7 @@ namespace Controllers
 
 		// Hide window
 		this->newKitWindow->hide();
-		HideKeyboard();
+		// HideKeyboard();
 
 		ChangeInstrumentType();
 		AddInstrumentToKit();
@@ -928,8 +971,16 @@ namespace Controllers
 		kitNameEntry->set_text(kitsList->get_active_text());
 
 		// Load current kit into the kit creator for modifications
-		std::string kitLocation = drumKit->GetKitDataFileName();
-		kitCreator->CreateFromModel(kitLocation.c_str());
+		try
+		{
+			std::string kitLocation = drumKit->GetKitDataFileName();
+			kitCreator->CreateFromModel(kitLocation.c_str());
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		// Get kit's instruments
 		std::vector<std::string> instrumentsNames = kitCreator->GetInstrumentsNames();
@@ -939,10 +990,16 @@ namespace Controllers
 		instrumentsSelectors.clear();
 
 		// Create new instruments selectors
-		std::transform(instrumentsNames.cbegin(), instrumentsNames.cend(), std::back_inserter(instrumentsSelectors), [](const std::string& name) { return std::make_shared<InstrumentSelector>(name); });
+		std::transform(instrumentsNames.cbegin(), instrumentsNames.cend(), std::back_inserter(instrumentsSelectors), [](const std::string& name) 
+		{ 
+			return std::make_shared<InstrumentSelector>(name); 
+		});
 
 		// Add selectors to window
-		std::for_each(instrumentsSelectors.cbegin(), instrumentsSelectors.cend(), [&instrumentsBox](const InstrumentSelectorPtr& i) { instrumentsBox->add(*i); });
+		for(const auto& i : instrumentsSelectors) 
+		{ 
+			instrumentsBox->add(*i); 
+		}
 
 		// Connect signals
 		for(std::size_t i = 0; i < instrumentsSelectors.size(); i++)
@@ -963,7 +1020,7 @@ namespace Controllers
 		// Get kit name
 		Gtk::Entry* kitName = nullptr;
 		builder->get_widget("ISKitName", kitName);
-		std::string name = kitName->get_text();
+		std::string name = kitName->get_text(); // TODO: make sure this won't return nullptr, or handle it
 
 		// Set kit name
 		kitCreator->SetKitName(name.c_str());
@@ -978,14 +1035,30 @@ namespace Controllers
 			// Stop  module
 			if(isStarted)
 			{
-				PlayDrums();
+				try
+				{
+					PlayDrums();
+				}
+				catch(const Exception& e)
+				{
+					errorDialog(e);
+					return;
+				}
+				
 			}
 
 			// Reload kits
-			drumKit->ReloadKits();
+			try
+			{
+				drumKit->ReloadKits();
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+				return;
+			}
 
-
-			//XXX Doesn't update the active entry when there's only one kit
+			//FIXME: Doesn't update the active entry when there's only one kit
 			if(name != kitsList->get_active_text())
 			{
 				kitsList->get_active()->set_value(0, name);
@@ -1007,7 +1080,15 @@ namespace Controllers
 
 			if(isStarted)
 			{
-				PlayDrums();
+				try
+				{
+					PlayDrums();
+				}
+				catch(const Exception& e)
+				{
+					errorDialog(e);
+					return;
+				}
 			}
 
 		}
