@@ -567,7 +567,7 @@ namespace Controllers
 		// Populate instrument config window
 		{
 
-			if(instrumentConfig_Type->get_active_text() != nullptr)
+			//if(instrumentConfig_Type->get_active_text() != nullptr)
 			{
 
 				std::string text = instrumentConfig_Type->get_active_text();
@@ -669,7 +669,7 @@ namespace Controllers
 			{
 
 				// Populate only if not already done
-				if(instrumentConfig_Type->get_active_text() != nullptr)
+				//if(instrumentConfig_Type->get_active_text() != nullptr)
 				{
 					std::string text = instrumentConfig_Type->get_active_text();
 
@@ -723,11 +723,11 @@ namespace Controllers
 		builder->get_widget("InstrumentConfig_TriggersBox", instrumentConfig_TriggersBox);
 		builder->get_widget("InstrumentConfig_SoundsBox", instrumentConfig_SoundsBox);
 
-		if(instrumentConfig_Type->get_active_text() == nullptr)
+		/*if(instrumentConfig_Type->get_active_text() == nullptr)
 		{
 			errorDialog("Instrument type is undefined.", error_type_warning);
 			return;
-		}
+		}*/
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 
