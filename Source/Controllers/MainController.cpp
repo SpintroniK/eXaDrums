@@ -29,7 +29,14 @@ namespace Controllers
 			// Stop drum kit
 			if(drumKit->IsStarted())
 			{
-				drumKit->Stop();
+				try
+				{
+					drumKit->Stop();
+				}
+				catch(...)
+				{
+					// Ignore error...
+				}
 			}
 		}
 
