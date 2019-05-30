@@ -8,8 +8,8 @@
 #ifndef SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
 #define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
 
-#include <libexadrums/Api/eXaDrums.h>
-#include <libexadrums/Api/Config/Config_api.h>
+#include <libexadrums/Api/eXaDrums.hpp>
+#include <libexadrums/Api/Config/Config_api.hpp>
 
 #include "../Widgets/TriggerSelector.h"
 

@@ -9,7 +9,7 @@
 #define SOURCE_EXADRUMSCONFIG_H_
 
 #include "../config.h"
-#include <libexadrums/Api/eXaDrums.h>
+#include <libexadrums/Api/eXaDrums.hpp>
 
 #if __has_include(<filesystem>)
 	#include <filesystem>

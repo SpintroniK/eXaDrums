@@ -15,8 +15,8 @@
 #include "../Widgets/SoundTypeAndPath.h"
 #include "../Widgets/InstrumentSelector.h"
 
-#include <libexadrums/Api/eXaDrums.h>
-#include <libexadrums/Api/KitCreator/KitCreator_api.h>
+#include <libexadrums/Api/eXaDrums.hpp>
+#include <libexadrums/Api/KitCreator/KitCreator_api.hpp>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>

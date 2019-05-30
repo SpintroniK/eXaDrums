@@ -8,7 +8,7 @@
 #ifndef SOURCE_CONTROLLERS_METRONOMECONTROLLER_H_
 #define SOURCE_CONTROLLERS_METRONOMECONTROLLER_H_
 
-#include <libexadrums/Api/eXaDrums.h>
+#include <libexadrums/Api/eXaDrums.hpp>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
