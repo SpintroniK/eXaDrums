@@ -365,7 +365,15 @@ namespace Controllers
 				Errors::errorDialog({"Using SPI sensors may require superuser privileges.", errorType::error_type_other});
 			}
 
-			drumKit->Start();
+            try
+            {
+			    drumKit->Start();
+            }
+            catch(const Exception& e)
+            {
+			    errorDialog(e);
+			    return;
+            }
 		}
 
 		return;
