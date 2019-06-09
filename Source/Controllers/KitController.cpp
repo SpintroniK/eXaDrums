@@ -323,13 +323,20 @@ namespace Controllers
 	{
 		std::string fileName = recorderWindow->get_filename();
 
-		//TODO: need to check for errors.
-		drumKit->RecorderExport(fileName);
+		try
+		{
+			drumKit->RecorderExport(fileName);
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		recorderWindow->hide();
 	}
 
-	void KitController::PlayDrums() // FIXME: should throw on failure
+	void KitController::PlayDrums()
 	{
 
 		if(drumKit->IsStarted())
@@ -425,8 +432,9 @@ namespace Controllers
 		{
 			drumKit->SetInstrumentVolume(fader->GetInstrumentId(), fader->GetValue());
 		}
-		catch(...) // FIXME: use actual exception when available
+		catch(const Exception& e)
 		{
+			errorDialog(e);
 			return;
 		}
 
@@ -443,9 +451,9 @@ namespace Controllers
 		{
 			SaveKitConfig();
 		}
-		catch(...) // FIXME: use actual exception when available
+		catch(const Exception& e)
 		{
-			errorDialog("Could not save drum kit configuration.", error_type_error);
+			errorDialog(e);
 			return;
 		}
 		

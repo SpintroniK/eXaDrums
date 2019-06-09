@@ -48,7 +48,7 @@ namespace Controllers
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
-		void TriggerConfiguration(int sensorId);
+		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
 

@@ -531,7 +531,7 @@ namespace Controllers
 		}
 	}
 
-	void ConfigController::TriggerConfiguration(int sensorId)
+	void ConfigController::TriggerConfiguration(std::size_t sensorId)
 	{
 
 
@@ -556,7 +556,14 @@ namespace Controllers
 		}
 
 		const std::vector<TriggerParameters>& triggers = config.GetTriggersParameters();
-		const TriggerParameters& trigger = triggers[sensorId]; // TODO: check if sensorId is valid
+
+		if(sensorId >= triggers.size())
+		{
+			errorDialog("The selected trigger does not exist", error_type_warning);
+			return;
+		}
+
+		const TriggerParameters& trigger = triggers[sensorId];
 
 		const std::string type(trigger.type);
 		const std::string response(trigger.response);

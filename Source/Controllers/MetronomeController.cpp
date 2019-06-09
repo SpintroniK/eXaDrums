@@ -107,7 +107,7 @@ namespace Controllers
 
 		bool enable =  enableClickButton->get_active();
 
-		drumKit->EnableMetronome(enable); // TODO: handle exceptions
+		drumKit->EnableMetronome(enable);
 
 		clickVolumeScale->property_sensitive() = enable;
 		clickVolumeScale->set_value(drumKit->GetClickVolume());
