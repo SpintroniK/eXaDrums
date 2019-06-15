@@ -583,10 +583,9 @@ namespace Controllers
 		// Populate instrument config window
 		{
 
-			//if(instrumentConfig_Type->get_active_text() != nullptr)
+			std::string text = instrumentConfig_Type->get_active_text();
+			if(text.empty())
 			{
-
-				std::string text = instrumentConfig_Type->get_active_text();
 
 				// Populate only if not already done
 
@@ -685,10 +684,11 @@ namespace Controllers
 			{
 
 				// Populate only if not already done
-				//if(instrumentConfig_Type->get_active_text() != nullptr)
-				{
-					std::string text = instrumentConfig_Type->get_active_text();
 
+				std::string text = instrumentConfig_Type->get_active_text();
+
+				if(text.empty())
+				{
 					for(std::size_t i = 0; i < instrumentTypes.size(); i++)
 					{
 						instrumentConfig_Type->insert(i, instrumentTypes[i]);
@@ -744,6 +744,22 @@ namespace Controllers
 			errorDialog("Instrument type is undefined.", error_type_warning);
 			return;
 		}*/
+
+		std::string text = instrumentConfig_Type->get_active_text();
+		if(text.empty())
+		{
+
+			const auto instrumentTypes = kitCreator->GetInstrumentsTypes();
+			// Populate only if not already done
+
+			for(std::size_t i = 0; i < instrumentTypes.size(); i++)
+			{
+				instrumentConfig_Type->insert(i, instrumentTypes[i]);
+			}
+
+			// Set default instrument and call ChangeInstrumentType() method
+			instrumentConfig_Type->set_active(0);
+		}
 
 		std::string instrumentType = instrumentConfig_Type->get_active_text();
 
