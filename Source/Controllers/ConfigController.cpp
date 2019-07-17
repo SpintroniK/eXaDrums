@@ -6,6 +6,7 @@
  */
 
 #include "../Util/Util.h"
+#include "../Util/ErrorHandler.h"
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
@@ -17,6 +18,7 @@
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
+using namespace Errors;
 using namespace Util;
 
 namespace Controllers
@@ -223,7 +225,14 @@ namespace Controllers
 		if(drumKit->IsStarted())
 		{
 			playButton->set_property("label", Gtk::StockID("gtk-media-play"));
-			drumKit->Stop();
+			try
+			{
+				drumKit->Stop();
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
 		}
 
 		// Configure mixer window
@@ -278,10 +287,16 @@ namespace Controllers
 
 		std::strcpy(alsaParameters.device, mixerDevices->get_active_text().data());
 
-
-		config.SaveAudioDeviceConfig(alsaParameters);
-		config.ResetAudioDevice();
-
+		try
+		{
+			config.SaveAudioDeviceConfig(alsaParameters);
+			config.ResetAudioDevice();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		mixerConfigWindow->hide();
 
@@ -336,8 +351,16 @@ namespace Controllers
 	void ConfigController::CloseTriggerConfigWindow()
 	{
 
-		config.LoadTriggersConfig();
-		config.SaveTriggersConfig();
+		try
+		{
+			config.LoadTriggersConfig();
+			config.SaveTriggersConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		triggerConfigWindow->hide();
 		triggerSelectWindow->show();
@@ -364,8 +387,11 @@ namespace Controllers
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
-		std::copy(types->get_active_text().begin(), types->get_active_text().end(), tp.type);
-		std::copy(responses->get_active_text().begin(), responses->get_active_text().end(), tp.response);
+		const std::string types_str = types->get_active_text();
+		const std::string responses_str = responses->get_active_text();
+
+		tp.type[types_str.copy(tp.type, types_str.size())] = '\0';
+		tp.response[responses_str.copy(tp.response, responses_str.size())] = '\0';
 
 		return tp;
 	}
@@ -385,7 +411,16 @@ namespace Controllers
 		TriggerParameters tp = GetCurrentTriggerParams();
 
 		// Get triggers parameters
-		config.LoadTriggersConfig();
+		try
+		{
+			config.LoadTriggersConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+
 		std::vector<TriggerParameters> triggersParameters = config.GetTriggersParameters();
 
 		// Find the trigger we want to modify
@@ -394,8 +429,8 @@ namespace Controllers
 		if(triggerIt == triggersParameters.end())
 		{
 			// Error: trigger doesn't exist.
-			std::cerr << "Error: trigger " << tp.sensorId << " doesn't exist." << std::endl;
-			throw -1;
+			errorDialog("Error: trigger " + std::to_string(tp.sensorId) + " doesn't exist.", errorType::error_type_error);
+			return;
 		}
 
 		// Update parameters
@@ -404,7 +439,14 @@ namespace Controllers
 		config.SetTriggersParameters(triggersParameters);
 
 		// Save
-		config.SaveTriggersConfig();
+		try
+		{
+			config.SaveTriggersConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+		}
 
 		triggerConfigWindow->hide();
 		triggerSelectWindow->show();
@@ -453,7 +495,16 @@ namespace Controllers
 		config.SetSensorsType(type);
 		config.SetSensorsDataFolder(dataFolder);
 
-		config.SaveSensorsConfig();
+		try
+		{
+			config.SaveSensorsConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+		
 
 		sensorsConfigWindow->hide();
 
@@ -466,14 +517,21 @@ namespace Controllers
 		if(config.GetNbTriggers() > 1)
 		{
 			// Delete trigger
-			config.DeleteTrigger(sensorId);
+			try
+			{
+				config.DeleteTrigger(sensorId);
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
 
 			// Update triggers config window
 			ShowTriggersConfigWindow();
 		}
 	}
 
-	void ConfigController::TriggerConfiguration(int sensorId)
+	void ConfigController::TriggerConfiguration(std::size_t sensorId)
 	{
 
 
@@ -498,6 +556,13 @@ namespace Controllers
 		}
 
 		const std::vector<TriggerParameters>& triggers = config.GetTriggersParameters();
+
+		if(sensorId >= triggers.size())
+		{
+			errorDialog("The selected trigger does not exist", error_type_warning);
+			return;
+		}
+
 		const TriggerParameters& trigger = triggers[sensorId];
 
 		const std::string type(trigger.type);
@@ -535,7 +600,15 @@ namespace Controllers
 		std::copy(type.begin(), type.end(), trigger.type);
 		std::copy(response.begin(), response.end(), trigger.response);
 
-		config.AddTrigger(trigger);
+		try
+		{
+			config.AddTrigger(trigger);
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		triggerAddWindow->hide();
 		ShowTriggersConfigWindow();

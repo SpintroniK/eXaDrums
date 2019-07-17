@@ -15,8 +15,8 @@
 #include "../Widgets/SoundTypeAndPath.h"
 #include "../Widgets/InstrumentSelector.h"
 
-#include <libexadrums/Api/eXaDrums.h>
-#include <libexadrums/Api/KitCreator/KitCreator_api.h>
+#include <libexadrums/Api/eXaDrums.hpp>
+#include <libexadrums/Api/KitCreator/KitCreator_api.hpp>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>
@@ -57,7 +57,7 @@ namespace Controllers
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
 		void AddInstrumentToKit();
 		void ModifyInstrument(int i);
-		void RemoveInstrument(int i);
+		void RemoveInstrument(std::size_t i);
 
 		// Signals
 		void ChangeKit();

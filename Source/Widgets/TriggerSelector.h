@@ -27,7 +27,7 @@ namespace Widgets
 		virtual ~TriggerSelector() = default;
 
 
-		int GetSensorId() const { return sensorId; }
+		int GetSensorId() const noexcept { return sensorId; }
 		Gtk::Button& GetPreferencesButton() { return preferencesButton; }
 		Gtk::Button& GetDeleteButton() { return deleteButton; }
 

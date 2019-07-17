@@ -1,7 +1,9 @@
-![eXaDrums](https://github.com/SpintroniK/eXaDrums/raw/master/Source/eXaDrums_logo_small.png)
  # eXaDrums
- ## Software drum module.
  
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/4a7bcd60718d460ab1597bcc7feb3b9b)](https://www.codacy.com/app/SpintroniK/eXaDrums?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=SpintroniK/eXaDrums&amp;utm_campaign=Badge_Grade)
+
+ ## Software drum module.
+
  ExaDrums is a virtual drum module that allows drummers play with
  custom-made drum kits.
  

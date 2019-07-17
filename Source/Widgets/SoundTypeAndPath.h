@@ -38,7 +38,7 @@ namespace Widgets
 
 		std::string GetSoundType() const { return typesList.get_entry_text(); }
 		std::string GetSound() const { return soundName.get_text(); }
-		bool GetChangingSound() const { return changingSound; }
+		bool GetChangingSound() const noexcept { return changingSound; }
 
 	private:
 

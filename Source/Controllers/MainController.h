@@ -14,7 +14,7 @@
 #include "ConfigController.h"
 #include "CoachController.h"
 
-#include <libexadrums/Api/eXaDrums.h>
+#include <libexadrums/Api/eXaDrums.hpp>
 
 #include <gtkmm/builder.h>
 #include <gtkmm/button.h>

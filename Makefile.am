@@ -79,6 +79,7 @@ exadrums_SOURCES = \
   Source/Controllers/MetronomeController.h \
   Source/MainWindow/MainWindow.cpp \
   Source/MainWindow/MainWindow.h \
+  Source/Util/ErrorHandler.h \
   Source/Util/Util.h \
   Source/Widgets/Fader.cpp \
   Source/Widgets/Fader.h \

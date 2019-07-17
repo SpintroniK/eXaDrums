@@ -61,7 +61,7 @@ namespace Controllers
 		this->rhythms = drumKit->GetRhythms();
 		{
 			// Append rhythms to list
-			std::for_each(rhythms.cbegin(), rhythms.cend(), [this](const int& x) { rhythmList->append(std::to_string(x)); });
+			std::for_each(rhythms.cbegin(), rhythms.cend(), [this](int x) { rhythmList->append(std::to_string(x)); });
 
 			// Get current rhythm index in vector
 			auto it = std::find(rhythms.cbegin(), rhythms.cend(), this->drumKit->GetRhythm());
@@ -75,7 +75,7 @@ namespace Controllers
 		this->bpmeasValues = drumKit->GetBpms();
 		{
 			// Append values to list
-			std::for_each(bpmeasValues.cbegin(), bpmeasValues.cend(), [this](const int& x) { bpmeasList->append(std::to_string(x));});
+			std::for_each(bpmeasValues.cbegin(), bpmeasValues.cend(), [this](int x) { bpmeasList->append(std::to_string(x));});
 
 			// Get current nb of beats per measure's index in vector
 			auto it = std::find(bpmeasValues.cbegin(), bpmeasValues.cend(), this->drumKit->GetBpmeas());
@@ -151,7 +151,6 @@ namespace Controllers
 		drumKit->SetBpmeas(bpmeasValues[bpmeasList->get_active_row_number()]);
 
 		drumKit->RestartMetronome();
-
 		drumKit->SaveMetronomeConfig();
 
 		metronomeWindow->hide();
