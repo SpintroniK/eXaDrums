@@ -10,6 +10,7 @@
 
 #include "../config.h"
 #include <libexadrums/Api/eXaDrums.hpp>
+#include <libexadrums/Api/Config/Config_api.hpp>
 
 #if __has_include(<filesystem>)
 	#include <filesystem>
@@ -47,7 +48,7 @@ namespace eXaDrums
 		~Config() = default;
 
 		template <typename... T>
-		static constexpr auto VersionToStr(const T&... v)
+		static auto VersionToStr(const T&... v)
 		{
 			std::string result = ( (std::to_string(v) + VERSION_SEPARATOR) + ... );
 			result.pop_back();
@@ -66,9 +67,13 @@ namespace eXaDrums
 			auto versionEntry = MakeOption<bool>("version", 'v', "Show version information and exit");
 			optionGroup.add_entry(versionEntry.first, versionEntry.second);
 
-			// Add config folder entry
-			auto configEntry = MakeOption<Glib::ustring>("config", 'c', "Change configuration directory");
-			optionGroup.add_entry(configEntry.first, configEntry.second);
+			// Import config from backup file
+			auto importConfigEntry = MakeOption<Glib::ustring>("import-config", 'i', "Import configuration from file");
+			optionGroup.add_entry(importConfigEntry.first, importConfigEntry.second);
+
+			// Export config to folder
+			auto exportConfigEntry = MakeOption<Glib::ustring>("export-config", 'e', "Export configuration to directory");
+			optionGroup.add_entry(exportConfigEntry.first, exportConfigEntry.second);
 
 			// Add reset config entry
 			auto resetConfigEntry = MakeOption<bool>("reset-config", 'r', "Reset to default configuration");
@@ -90,33 +95,59 @@ namespace eXaDrums
 
 			if(resetConfigEntry.second)
 			{
-				std::cout << "This will reset the configuration to defaults. \n Current settings will be lost.\n";
-				std::cout << "Do you want to continue? [Y/n] ";
 
-				std::string input;
-				std::cin >> input;
-
-				if(std::tolower(input.front()) == 'y')
+				if(AnswerQuestion("This will reset the configuration to defaults. \n Current settings will be lost.\n"
+				                  "Do you want to continue? [Y/n] ", "y"))
 				{
 					ResetConfig();
 					std::cout << "The configuration has been reset." << std::endl;
 				}
 
-				std::cout << "Do you want to start eXaDrums? [Y/n] ";
-				std::cin >> input;
-
-				if(std::tolower(input.front()) != 'y')
+				if(!AnswerQuestion("Do you want to start eXaDrums? [Y/n] ", "y"))
 				{
 					return 0;
 				}
 
 			}
 
-			if(!configEntry.second.empty())
+			if(!importConfigEntry.second.empty())
 			{
-				std::cout << "Loading configuration from folder " << configEntry.second << std::endl;
-				this->userPath = fs::path{configEntry.second};
+
+				std::cout << "Imported configuration from file " << importConfigEntry.second << std::endl;
+               
+                try
+                {
+                    eXaDrumsApi::Config::ImportConfig(importConfigEntry.second, userPath.string());
+                }
+                catch(const std::exception& e)
+                {
+                    std::cerr << e.what() << '\n';
+                }
+
+				if(!AnswerQuestion("Do you want to start eXaDrums? [Y/n] ", "y"))
+				{
+					return 0;
+				}
+
 			}
+
+            if(!exportConfigEntry.second.empty())
+            {   
+				try
+				{
+					eXaDrumsApi::Config::ExportConfig(userPath.string(), exportConfigEntry.second);
+					std::cout << "Configuration exported to " << exportConfigEntry.second << std::endl;
+				}
+				catch(const std::exception& e)
+				{
+					std::cerr << e.what() << '\n';
+				}
+
+				if(!AnswerQuestion("Do you want to start eXaDrums? [Y/n] ", "y"))
+				{
+					return 0;
+				}
+            }
 
 			// Activate the app
 			app->activate();
@@ -227,7 +258,37 @@ namespace eXaDrums
 			return std::make_pair(optionEntry, T{});
 		}
 
-		fs::path userPath = fs::path{std::getenv("HOME")}/".eXaDrums";
+		/**
+		 * @brief Ask the user a question, and return true if the answer is good (equals expectedAnswer).
+		 * 
+		 * @param question Question to be submitted to the user.
+		 * @param expectedAnswer Expected answer.
+		 * @param isCaseSensitive Whether the answer is case sensitive or not.
+		 * @return true If the answer is the same as expectedAnswer.
+		 * @return false If the answer is not the same as expectedAnswer.
+		 */
+		bool AnswerQuestion(const std::string& question, const std::string& expectedAnswer, bool isCaseSensitive = false)
+		{
+
+			std::cout << question;
+
+			std::string input;
+			std::cin >> input;
+
+			if(!isCaseSensitive)
+			{
+				std::transform(begin(input), end(input), begin(input), [](const auto c){ return std::tolower(c); });
+			}
+
+			if(input == expectedAnswer)
+			{
+				return true;
+			}
+
+			return false;
+		}
+
+		const fs::path userPath = fs::path{std::getenv("HOME")}/".eXaDrums";
 		const fs::path rootPath{"/usr/share/exadrums"};
 		const bool isRoot = getuid() == 0 && geteuid() == 0;
 
