@@ -12,7 +12,7 @@ This document outlines the development plan from a high level and will be update
 
 ## Future versions
 
-### 0.4.2
+### 0.4.1
 
 - [ ] &#9997; Build successfully with clang++-7.
 
