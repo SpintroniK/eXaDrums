@@ -15,6 +15,8 @@ This document outlines the development plan from a high level and will be update
 ### 0.4.1
 
 - [ ] &#9997; Build successfully with clang++-7.
+- [ ] Update Readme (installation instructions).
+- [ ] Fix Readme (installation procedure -- checkout debian branch first).
 
 ### 0.5.0
 
@@ -24,6 +26,7 @@ This document outlines the development plan from a high level and will be update
 - [ ] Add an "add instrument" button in the kit preferences window.
 - [ ] Add score to rhythm coach.
 - [ ] Add toggle fullscreen button.
+- [ ] Faders in a scrollable container.
 
 ### 0.6.0
 
