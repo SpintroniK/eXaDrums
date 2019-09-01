@@ -26,7 +26,7 @@ namespace Widgets
 		Fader(const std::string& name, int instrumentId, int vol);
 		virtual ~Fader() = default;
 
-		Gtk::Scale& GetScale() { return volScale; };
+		Gtk::Scale& GetScale() { return volScale; }; //FIXME: check if this is fixable on Raspbian Buster
 
 		int GetInstrumentId() const { return instrument; }
 		int GetValue() const { return (int)volScale.get_value(); }
