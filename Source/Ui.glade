@@ -1044,6 +1044,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -1329,6 +1330,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -1602,6 +1604,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -1798,6 +1801,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -1969,6 +1973,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -2188,6 +2193,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -2416,6 +2422,7 @@ Author: Jérémy Oden
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
+    <property name="type_hint">dialog</property>
     <property name="gravity">center</property>
     <property name="transient_for">MainWindow</property>
     <child type="titlebar">
@@ -2738,8 +2745,12 @@ Author: Jérémy Oden
     <property name="title" translatable="yes">Virtual Pad</property>
     <property name="default_width">240</property>
     <property name="default_height">300</property>
+    <property name="type_hint">dialog</property>
     <property name="transient_for">MainWindow</property>
     <property name="has_resize_grip">True</property>
+    <child>
+      <placeholder/>
+    </child>
     <child>
       <object class="GtkGrid">
         <property name="visible">True</property>
