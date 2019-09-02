@@ -47,7 +47,7 @@ namespace eXaDrums
 		~Config() = default;
 
 		template <typename... T>
-		static constexpr auto VersionToStr(const T&... v)
+		static auto VersionToStr(const T&... v)
 		{
 			std::string result = ( (std::to_string(v) + VERSION_SEPARATOR) + ... );
 			result.pop_back();
