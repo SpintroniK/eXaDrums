@@ -14,7 +14,7 @@ This document outlines the development plan from a high level and will be update
 
 ### 0.4.1
 
-- [x] &#9997; Build successfully with clang++-7.
+- [x] Build successfully with clang++-7.
 - [x] Update Readme (installation instructions).
 - [x] Fix Readme (installation procedure -- checkout debian branch first).
 - [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
