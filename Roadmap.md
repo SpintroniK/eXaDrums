@@ -14,9 +14,14 @@ This document outlines the development plan from a high level and will be update
 
 ### 0.4.1
 
-- [ ] &#9997; Build successfully with clang++-7.
-- [ ] Update Readme (installation instructions).
-- [ ] Fix Readme (installation procedure -- checkout debian branch first).
+- [x] &#9997; Build successfully with clang++-7.
+- [x] Update Readme (installation instructions).
+- [x] Fix Readme (installation procedure -- checkout debian branch first).
+- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
+
+### 0.4.2
+
+- [ ] Detect return keypress in sound chooser and record saver.
 
 ### 0.5.0
 
@@ -26,16 +31,16 @@ This document outlines the development plan from a high level and will be update
 - [ ] Add an "add instrument" button in the kit preferences window.
 - [ ] Add score to rhythm coach.
 - [ ] Add toggle fullscreen button.
-- [ ] Faders in a scrollable container.
+- [ ] Update Faders: to be in a scrollable container.
 
 ### 0.6.0
 
 - [ ] Add recorder's sound export feature.
-- [ ] Calibration tools.
+- [ ] Add calibration tools.
 
 ### 0.7.0
 
-- [ ] Sound effects.
+- [ ] Add sound effects.
 
 ### 0.8.0
 

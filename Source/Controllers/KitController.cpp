@@ -148,6 +148,12 @@ namespace Controllers
 				return false;
 			}, false);
 
+			/*recorderWindow->signal_key_press_event().connect([&](GdkEventKey* e)
+			{
+				std::cout << static_cast<int>(e->keyval) << std::endl;
+				return false;
+			}, false);
+			*/
 		}
 
 		return;
