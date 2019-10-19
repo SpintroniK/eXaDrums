@@ -10,21 +10,12 @@ This document outlines the development plan from a high level and will be update
 | check mark | work completed                  |
 | &#9997;    | on-going work                   |
 
-## Future versions
-
-### 0.4.1
-
-- [x] &#9997; Build successfully with clang++-7.
-- [x] Update Readme (installation instructions).
-- [x] Fix Readme (installation procedure -- checkout debian branch first).
-- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
-
-### 0.4.2
-
-- [ ] Detect return keypress in sound chooser and record saver.
+## Current version
 
 ### 0.5.0
 
+- [ ] &#9997; Check libexadrums: installed and linked versions.
+- [ ] &#9997; Detect return keypress in sound chooser and record saver.
 - [ ] Add export configuration window.
 - [ ] Add import configuration window.
 - [ ] Add trigger sensitivity combo box.
@@ -32,6 +23,8 @@ This document outlines the development plan from a high level and will be update
 - [ ] Add score to rhythm coach.
 - [ ] Add toggle fullscreen button.
 - [ ] Update Faders: to be in a scrollable container.
+
+## Future versions
 
 ### 0.6.0
 
@@ -51,3 +44,12 @@ This document outlines the development plan from a high level and will be update
 ## Documentation
 
 - [ ] Doxygen: document code.
+
+## Past versions
+
+### 0.4.1
+
+- [x] Build successfully with clang++-7.
+- [x] Update Readme (installation instructions).
+- [x] Fix Readme (installation procedure -- checkout debian branch first).
+- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).

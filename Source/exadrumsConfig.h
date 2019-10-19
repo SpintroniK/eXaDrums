@@ -88,7 +88,7 @@ namespace eXaDrums
 			if(versionEntry.second)
 			{
 				std::cout << "eXaDrums version " PACKAGE_VERSION "\n\n";
-				std::cout << "using libeXaDrums version " << LIBEXADRUMS_VERSION << "\n";
+				std::cout << "using libeXaDrums version " << eXaDrumsApi::eXaDrums::GetVersion() << " (compiled against version " << LIBEXADRUMS_VERSION << ")\n";
 				std::cout << "using gtkmm version " << VersionToStr(GTKMM_MAJOR_VERSION, GTKMM_MINOR_VERSION, GTKMM_MICRO_VERSION) << std::endl;
 				return 0;
 			}
