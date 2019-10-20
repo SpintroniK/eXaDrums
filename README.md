@@ -24,17 +24,26 @@ To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/
 
 ## Table of content
 
-- [Installation and Configuration](#installation)
+- [Installation and configuration](#installation-and-configuration)
   - [Dependencies](#dependencies)
-  - [Install](#install)
+  - [Building eXaDrums](#building-exadrums)
+  - [Installation](#installation)
   - [Configuration](#configuration)
 - [Usage](#usage)
 
-## Installation
+## Installation and configuration
+
+Both libexadrums and exadrums are available in the Debian unstable and testing distributions, as well as Ubuntu >=19.10.
+If you wish to use the latest versions, you can build the packages from the Github repositories.
 
 ### Dependencies
 
-Exadrums depends on [libexadrums](https://github.com/SpintroniK/libeXaDrums), so make sure you have it installed first. Note that both libexadrums and exadrums are available in the unstable and testing Debian repositories.
+Exadrums depends on [libexadrums](https://github.com/SpintroniK/libeXaDrums), so make sure you have it installed first.
+Both libexadrums0 and libexadrums-dev packages need to be installed, as well as their dependencies:
+
+```shell
+sudo apt install libasound2-dev libtinyxml2-dev libminizip-dev
+```
 
 In order to build eXadrums, you will need build-essential, autotools and pkg-config:
 
@@ -76,13 +85,13 @@ dpkg-buildpackage -b -uc -us
 If you have multiple cores/threads, you can speed up the build process by appending the option -jn to dpkg-buildpackage, where n is the number of threads that you want to use for the compilation.
 Example, for four threads type: `dpkg-buildpackage -b -uc -us -j4`.
 
-### Install
+### Installation
 
 The Debian packages are built in the parent directory, so you should be able to install them by using dpkg (don't forget to install them as root):
 
 ```shell
 cd ..
-sudo dpkg -i exadrums_[...].deb
+sudo apt install ./exadrums_[...].deb
 ```
 
 ### Configuration
