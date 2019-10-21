@@ -14,6 +14,7 @@ This document outlines the development plan from a high level and will be update
 
 ### 0.5.0
 
+- [x] Fix sound chooser window size.
 - [ ] &#9997; Check libexadrums: installed and linked versions.
 - [ ] &#9997; Detect return keypress in sound chooser and record saver.
 - [ ] Add export configuration window.

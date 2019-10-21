@@ -1257,13 +1257,10 @@ Author: Jérémy Oden
     </child>
   </object>
   <object class="GtkFileChooserDialog" id="SoundChooser">
-    <property name="width_request">640</property>
     <property name="can_focus">False</property>
-    <property name="halign">center</property>
     <property name="title" translatable="yes">Select a sound file and click OK</property>
     <property name="modal">True</property>
     <property name="window_position">center</property>
-    <property name="default_width">640</property>
     <property name="icon_name">applications-multimedia</property>
     <property name="type_hint">utility</property>
     <property name="transient_for">InstrumentConfigWindow</property>
