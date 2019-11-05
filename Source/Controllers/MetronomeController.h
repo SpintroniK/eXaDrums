@@ -37,7 +37,7 @@ namespace Controllers
 		// Signals
 		void EnableClick() const;
 		void ChangeTempo() const;
-		void ChangeVolume() const;
+		void ChangeClickVolume() const;
 		void SaveMetronomeConfig();
 
 
