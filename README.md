@@ -39,10 +39,10 @@ If you wish to use the latest versions, you can build the packages from the Gith
 ### Dependencies
 
 Exadrums depends on [libexadrums](https://github.com/SpintroniK/libeXaDrums), so make sure you have it installed first.
-Both libexadrums0 and libexadrums-dev packages need to be installed, as well as their dependencies:
+Both `libexadrums0` and `libexadrums-dev` packages need to be installed, as well as their dependencies:
 
 ```shell
-sudo apt install libasound2-dev libtinyxml2-dev libminizip-dev
+sudo apt install libasound2-dev libtinyxml2-dev libminizip-dev libgtkmm-3.0-dev
 ```
 
 In order to build eXadrums, you will need build-essential, autotools and pkg-config:
