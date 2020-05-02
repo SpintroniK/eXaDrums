@@ -16,12 +16,15 @@
 #include <algorithm>
 #include <string>
 #include <stdexcept>
+#include <filesystem>
 #include <iostream>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
 using namespace Util;
 using namespace Errors;
+
+namespace fs = std::filesystem;
 
 namespace Controllers
 {
@@ -148,12 +151,19 @@ namespace Controllers
 				return false;
 			}, false);
 
-			/*recorderWindow->signal_key_press_event().connect([&](GdkEventKey* e)
+			recorderWindow->signal_key_press_event().connect([&](GdkEventKey* e)
 			{
-				std::cout << static_cast<int>(e->keyval) << std::endl;
+				if(e->keyval == GDK_KEY_Return || e->keyval == GDK_KEY_KP_Enter)
+				{
+					RecorderExport();
+				}
+				else if(e->keyval == GDK_KEY_Escape)
+				{
+					recorderWindow->hide();
+				}
 				return false;
 			}, false);
-			*/
+
 		}
 
 		return;
@@ -331,6 +341,11 @@ namespace Controllers
 
 		try
 		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
 			drumKit->RecorderExport(fileName);
 		}
 		catch(const Exception& e)
