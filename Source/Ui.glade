@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.22.1 
+<!-- Generated with glade 3.22.2 
 
 Copyright (c) Jérémy Oden
 All rights reserved.
@@ -71,9 +71,7 @@ Author: Jérémy Oden
     <property name="page_increment">10</property>
   </object>
   <object class="GtkWindow" id="MainWindow">
-    <property name="width_request">800</property>
     <property name="can_focus">False</property>
-    <property name="halign">center</property>
     <property name="window_position">center</property>
     <property name="hide_titlebar_when_maximized">True</property>
     <property name="decorated">False</property>
@@ -86,8 +84,8 @@ Author: Jérémy Oden
       <object class="GtkGrid" id="MainGrid">
         <property name="visible">True</property>
         <property name="can_focus">False</property>
-        <property name="halign">center</property>
         <property name="margin_left">4</property>
+        <property name="margin_right">4</property>
         <child>
           <object class="GtkGrid" id="TopGrid">
             <property name="visible">True</property>
@@ -96,47 +94,16 @@ Author: Jérémy Oden
             <property name="row_homogeneous">True</property>
             <property name="column_homogeneous">True</property>
             <child>
-              <object class="GtkGrid" id="TopButtonsGrid">
+              <object class="GtkButton" id="FullScreenButton">
+                <property name="label">gtk-fullscreen</property>
                 <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="row_homogeneous">True</property>
-                <property name="column_homogeneous">True</property>
-                <child>
-                  <object class="GtkButton" id="AboutButton">
-                    <property name="label">gtk-about</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="halign">end</property>
-                    <property name="valign">end</property>
-                    <property name="use_stock">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">1</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkButton" id="QuitButton">
-                    <property name="label">gtk-quit</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="halign">end</property>
-                    <property name="use_stock">True</property>
-                  </object>
-                  <packing>
-                    <property name="left_attach">2</property>
-                    <property name="top_attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <placeholder/>
-                </child>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="halign">start</property>
+                <property name="use_stock">True</property>
               </object>
               <packing>
-                <property name="left_attach">1</property>
+                <property name="left_attach">0</property>
                 <property name="top_attach">0</property>
               </packing>
             </child>
@@ -149,9 +116,48 @@ Author: Jérémy Oden
                 <property name="use_markup">True</property>
               </object>
               <packing>
-                <property name="left_attach">0</property>
+                <property name="left_attach">1</property>
                 <property name="top_attach">0</property>
-                <property name="width">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <child>
+                  <object class="GtkButton" id="QuitButton">
+                    <property name="label">gtk-quit</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="halign">end</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">1</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkButton" id="AboutButton">
+                    <property name="label">gtk-about</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="halign">end</property>
+                    <property name="valign">end</property>
+                    <property name="use_stock">True</property>
+                  </object>
+                  <packing>
+                    <property name="left_attach">0</property>
+                    <property name="top_attach">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left_attach">2</property>
+                <property name="top_attach">0</property>
               </packing>
             </child>
           </object>
@@ -252,7 +258,6 @@ Author: Jérémy Oden
                     <property name="column_homogeneous">True</property>
                     <child>
                       <object class="GtkFrame" id="RhythmCoachFrame">
-                        <property name="width_request">220</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">10</property>
@@ -435,7 +440,6 @@ Author: Jérémy Oden
                     </child>
                     <child>
                       <object class="GtkFrame" id="AdvancedFrame">
-                        <property name="width_request">390</property>
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">10</property>
@@ -1911,7 +1915,7 @@ Author: Jérémy Oden
     <property name="local_only">False</property>
     <property name="preview_widget_active">False</property>
     <property name="use_preview_label">False</property>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child internal-child="vbox">
@@ -2745,7 +2749,7 @@ Author: Jérémy Oden
     <property name="type_hint">dialog</property>
     <property name="transient_for">MainWindow</property>
     <property name="has_resize_grip">True</property>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child>
@@ -2805,7 +2809,7 @@ Author: Jérémy Oden
     <property name="authors">Jérémy Oden</property>
     <property name="logo">eXaDrums_logo_small.png</property>
     <property name="license_type">bsd</property>
-    <child>
+    <child type="titlebar">
       <placeholder/>
     </child>
     <child internal-child="vbox">

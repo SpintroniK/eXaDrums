@@ -42,6 +42,23 @@ int main(int argc, char** argv)
     Gui::MainWindow* mainWindow = nullptr;
     auto quit = [&] { mainWindow->hide(); };
 
+    bool is_fullscreen = false;
+    auto toggle_fullscreen = [&](Gtk::Button* fs_button)
+    {
+        if(!is_fullscreen)
+        {
+            mainWindow->fullscreen();
+            fs_button->set_property("label", Gtk::StockID("gtk-leave-fullscreen"));
+            is_fullscreen = true;
+        }
+        else
+        {
+            mainWindow->unfullscreen();
+            fs_button->set_property("label", Gtk::StockID("gtk-fullscreen"));
+            is_fullscreen = false;
+        }
+    };
+
     // Create main controller and Gui only if the app has been activated
     app->signal_activate().connect([&]
     {
@@ -74,6 +91,8 @@ int main(int argc, char** argv)
 
         // Handle quit button signal
         GetWidget<Gtk::Button>(builder, "QuitButton")->signal_clicked().connect(quit);
+        const auto fsButton = GetWidget<Gtk::Button>(builder, "FullScreenButton");
+        fsButton->signal_clicked().connect([&, fsButton]{ toggle_fullscreen(fsButton); });
 
         app->add_window(*mainWindow);
         mainWindow->show();

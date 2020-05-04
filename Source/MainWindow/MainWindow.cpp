@@ -14,15 +14,6 @@ namespace Gui
 	: Gtk::Window(baseObject)
 	{
 
-		if(!setFullscreen) // TODO: Add fullscreen button to GUI, as well as CLI.
-		{
-			set_size_request(800, 480);
-		}
-		else
-		{
-			fullscreen();
-		}
-
 
 		return;
 	}
