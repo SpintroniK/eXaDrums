@@ -10,7 +10,7 @@ Build-Depends:
  pkg-config,
 Standards-Version: 4.4.0
 Rules-Requires-Root: no
-Homepage: http://www.freewebmaster.fr
+Homepage: https://www.freewebmaster.fr
 Vcs-Browser: https://github.com/SpintroniK/eXaDrums
 Vcs-Git: https://github.com/SpintroniK/eXaDrums.git -b debian
 
