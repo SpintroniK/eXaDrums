@@ -201,9 +201,9 @@ Author: Jérémy Oden
                             <property name="margin_top">10</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkBox" id="FadersList">
-                                <property name="width_request">100</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="orientation">vertical</property>
@@ -267,7 +267,6 @@ Author: Jérémy Oden
                           <object class="GtkAlignment" id="alignment3">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">center</property>
                             <property name="left_padding">12</property>
                             <child>
                               <object class="GtkGrid" id="RhythmCoachMainGrid">
@@ -449,7 +448,6 @@ Author: Jérémy Oden
                           <object class="GtkAlignment" id="alignment4">
                             <property name="visible">True</property>
                             <property name="can_focus">False</property>
-                            <property name="halign">center</property>
                             <property name="left_padding">12</property>
                             <child>
                               <object class="GtkGrid" id="AdvancedGrid">
@@ -628,7 +626,6 @@ Author: Jérémy Oden
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="can_default">True</property>
-                                <property name="halign">center</property>
                                 <property name="has_entry">True</property>
                                 <child internal-child="entry">
                                   <object class="GtkEntry">

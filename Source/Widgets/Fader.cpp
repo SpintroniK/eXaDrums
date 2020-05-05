@@ -14,22 +14,25 @@ namespace Widgets
 	: instrument(instrumentId), volume(vol), label(name+" "), volScale(Gtk::Orientation::ORIENTATION_HORIZONTAL)
 	{
 
-		this->set_halign(Gtk::Align::ALIGN_START);
-		this->set_column_homogeneous(true);
+		this->set_halign(Gtk::Align::ALIGN_FILL);
+		this->set_hexpand();
 
 		// Set title
 		label.set_halign(Gtk::Align::ALIGN_START);
+		label.set_justify(Gtk::Justification::JUSTIFY_LEFT);
+		label.set_size_request(72, -1);
 		label.show();
 		this->attach(label, 0, 0, 1, 1);
 
 		// Set scale parameters
 		volScale.set_range(0, 100);
 		volScale.set_digits(0);
-		volScale.set_value_pos(Gtk::PositionType::POS_LEFT);
-		volScale.set_halign(Gtk::Align::ALIGN_CENTER);
+		volScale.set_value_pos(Gtk::PositionType::POS_RIGHT);
+		volScale.set_halign(Gtk::Align::ALIGN_FILL);
+		volScale.set_hexpand();
+		volScale.set_size_request(-1, 16);
 
 		volScale.set_value(vol);
-		volScale.set_size_request(148, 10);
 
 		volScale.show();
 		this->attach_next_to(volScale, label, Gtk::PositionType::POS_RIGHT, 1, 1);
