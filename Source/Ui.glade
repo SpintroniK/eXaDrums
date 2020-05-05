@@ -74,9 +74,8 @@ Author: Jérémy Oden
     <property name="can_focus">False</property>
     <property name="window_position">center</property>
     <property name="hide_titlebar_when_maximized">True</property>
-    <property name="decorated">False</property>
-    <property name="deletable">False</property>
     <property name="gravity">center</property>
+    <property name="has_resize_grip">True</property>
     <child type="titlebar">
       <placeholder/>
     </child>
@@ -184,7 +183,7 @@ Author: Jérémy Oden
                     <property name="can_focus">False</property>
                     <property name="margin_right">10</property>
                     <property name="margin_top">10</property>
-                    <property name="margin_bottom">10</property>
+                    <property name="margin_bottom">4</property>
                     <property name="hexpand">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">out</property>
@@ -443,7 +442,7 @@ Author: Jérémy Oden
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="margin_top">10</property>
-                        <property name="margin_bottom">10</property>
+                        <property name="margin_bottom">4</property>
                         <property name="label_xalign">0</property>
                         <property name="shadow_type">out</property>
                         <child>
