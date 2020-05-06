@@ -16,14 +16,14 @@ This document outlines the development plan from a high level and will be update
 
 - [x] Fix sound chooser window size.
 - [ ] &#9997; Check libexadrums: installed and linked versions.
-- [ ] &#9997; Detect return keypress in sound chooser and record saver.
+- [ ] &#9997; Detect return and escape keypress in sound chooser and record saver.
 - [ ] Add export configuration window.
 - [ ] Add import configuration window.
-- [ ] Add trigger sensitivity combo box.
+- [ ] Add trigger gain combo box.
 - [ ] Add an "add instrument" button in the kit preferences window.
 - [ ] Add score to rhythm coach.
 - [ ] Add toggle fullscreen button.
-- [ ] Update Faders: to be in a scrollable container.
+- [x] Update Faders: to be in a scrollable container.
 
 ## Future versions
 
