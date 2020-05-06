@@ -99,6 +99,7 @@ Author: Jérémy Oden
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="halign">start</property>
+                <property name="valign">start</property>
                 <property name="use_stock">True</property>
               </object>
               <packing>
@@ -131,6 +132,8 @@ Author: Jérémy Oden
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="halign">end</property>
+                    <property name="valign">start</property>
+                    <property name="vexpand">False</property>
                     <property name="use_stock">True</property>
                   </object>
                   <packing>
@@ -145,7 +148,7 @@ Author: Jérémy Oden
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
                     <property name="halign">end</property>
-                    <property name="valign">end</property>
+                    <property name="valign">start</property>
                     <property name="use_stock">True</property>
                   </object>
                   <packing>
@@ -177,6 +180,7 @@ Author: Jérémy Oden
                 <property name="can_focus">False</property>
                 <property name="vexpand">True</property>
                 <property name="row_homogeneous">True</property>
+                <property name="column_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="FadersFrame">
                     <property name="visible">True</property>
@@ -222,8 +226,6 @@ Author: Jérémy Oden
                                 <property name="visible">True</property>
                                 <property name="can_focus">True</property>
                                 <property name="receives_default">True</property>
-                                <property name="halign">end</property>
-                                <property name="valign">end</property>
                                 <property name="use_stock">True</property>
                               </object>
                               <packing>
@@ -556,9 +558,9 @@ Author: Jérémy Oden
             </child>
             <child>
               <object class="GtkGrid" id="BottomGrid1">
-                <property name="height_request">100</property>
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
+                <property name="vexpand">True</property>
                 <property name="row_homogeneous">True</property>
                 <child>
                   <object class="GtkFrame" id="DrumKitFrame">
@@ -566,6 +568,7 @@ Author: Jérémy Oden
                     <property name="can_focus">False</property>
                     <property name="margin_top">3</property>
                     <property name="margin_bottom">10</property>
+                    <property name="vexpand">True</property>
                     <property name="label_xalign">0</property>
                     <property name="shadow_type">out</property>
                     <child>
@@ -573,6 +576,7 @@ Author: Jérémy Oden
                         <property name="visible">True</property>
                         <property name="can_focus">False</property>
                         <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
                         <property name="left_padding">12</property>
                         <child>
                           <object class="GtkGrid" id="DrumKitGrid">
@@ -580,12 +584,14 @@ Author: Jérémy Oden
                             <property name="can_focus">False</property>
                             <property name="margin_bottom">10</property>
                             <property name="hexpand">True</property>
+                            <property name="vexpand">True</property>
                             <property name="column_spacing">10</property>
                             <property name="column_homogeneous">True</property>
                             <child>
                               <object class="GtkGrid" id="DrumKitFuncGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="vexpand">True</property>
                                 <property name="column_spacing">10</property>
                                 <property name="column_homogeneous">True</property>
                                 <child>
@@ -594,6 +600,7 @@ Author: Jérémy Oden
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="vexpand">True</property>
                                     <property name="use_stock">True</property>
                                   </object>
                                   <packing>
@@ -608,6 +615,7 @@ Author: Jérémy Oden
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="margin_right">10</property>
+                                    <property name="vexpand">True</property>
                                     <property name="use_stock">True</property>
                                   </object>
                                   <packing>
@@ -626,6 +634,7 @@ Author: Jérémy Oden
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="can_default">True</property>
+                                <property name="vexpand">True</property>
                                 <property name="has_entry">True</property>
                                 <child internal-child="entry">
                                   <object class="GtkEntry">
@@ -643,6 +652,7 @@ Author: Jérémy Oden
                               <object class="GtkGrid" id="ManageDrumKitGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="vexpand">True</property>
                                 <property name="row_homogeneous">True</property>
                                 <property name="column_homogeneous">True</property>
                                 <child>
@@ -718,6 +728,7 @@ Author: Jérémy Oden
                               <object class="GtkGrid">
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
+                                <property name="vexpand">True</property>
                                 <property name="column_spacing">10</property>
                                 <property name="column_homogeneous">True</property>
                                 <child>
@@ -728,6 +739,7 @@ Author: Jérémy Oden
                                     <property name="receives_default">True</property>
                                     <property name="margin_right">10</property>
                                     <property name="margin_bottom">2</property>
+                                    <property name="vexpand">True</property>
                                     <property name="use_stock">True</property>
                                   </object>
                                   <packing>

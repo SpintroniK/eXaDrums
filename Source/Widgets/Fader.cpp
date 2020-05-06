@@ -21,7 +21,7 @@ namespace Widgets
 		label.set_halign(Gtk::Align::ALIGN_START);
 		label.set_justify(Gtk::Justification::JUSTIFY_LEFT);
 		label.set_xalign(0.f);
-		label.set_size_request(72, -1);
+		label.set_size_request(100, -1);
 		label.show();
 		this->attach(label, 0, 0, 1, 1);
 
