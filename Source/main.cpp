@@ -10,8 +10,8 @@
 #include "Util/Util.h"
 #include "Util/ErrorHandler.h"
 #include "Controllers/MainController.h"
-#include "MainWindow/MainWindow.h"
 
+#include <gtkmm/window.h>
 #include <gtkmm/application.h>
 #include <gtkmm/builder.h>
 #include <gtkmm/aboutdialog.h>
@@ -39,7 +39,7 @@ int main(int argc, char** argv)
     auto app = Gtk::Application::create(argc, argv, "org.eXaDrums", Gio::APPLICATION_HANDLES_COMMAND_LINE);
     app->signal_command_line().connect([&](const Glib::RefPtr<Gio::ApplicationCommandLine>& cmd){ return config.CommandLineParser(cmd, app); }, false);
 
-    Gui::MainWindow* mainWindow = nullptr;
+    Gtk::Window* mainWindow = nullptr;
     auto quit = [&] { mainWindow->hide(); };
 
     bool is_fullscreen = false;
@@ -87,7 +87,7 @@ int main(int argc, char** argv)
         GetWidget<Gtk::AboutDialog>(builder, "eXaDrumsAboutDialog")->set_version(PACKAGE_VERSION);
 
         // Get main window
-        builder->get_widget_derived("MainWindow", mainWindow);
+        builder->get_widget("MainWindow", mainWindow);
 
         // Handle quit button signal
         GetWidget<Gtk::Button>(builder, "QuitButton")->signal_clicked().connect(quit);
