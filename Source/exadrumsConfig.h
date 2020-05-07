@@ -38,6 +38,7 @@ namespace eXaDrums
 {
 
 	constexpr char VERSION_SEPARATOR[] = ".";
+	bool is_fullscreen = false;
 
 	class Config
 	{
@@ -67,6 +68,10 @@ namespace eXaDrums
 			auto versionEntry = MakeOption<bool>("version", 'v', "Show version information and exit");
 			optionGroup.add_entry(versionEntry.first, versionEntry.second);
 
+			// Add fullscreen entry
+			auto fullscreenEntry = MakeOption<bool>("fullscreen", 'f', "Start in fullscreen mode");
+			optionGroup.add_entry(fullscreenEntry.first, fullscreenEntry.second);
+
 			// Import config from backup file
 			auto importConfigEntry = MakeOption<Glib::ustring>("import-config", 'i', "Import configuration from file");
 			optionGroup.add_entry(importConfigEntry.first, importConfigEntry.second);
@@ -91,6 +96,11 @@ namespace eXaDrums
 				std::cout << "using libeXaDrums version " << eXaDrumsApi::eXaDrums::GetVersion() << " (compiled against version " << LIBEXADRUMS_VERSION << ")\n";
 				std::cout << "using gtkmm version " << VersionToStr(GTKMM_MAJOR_VERSION, GTKMM_MINOR_VERSION, GTKMM_MICRO_VERSION) << std::endl;
 				return 0;
+			}
+
+			if(fullscreenEntry.second)
+			{
+				is_fullscreen = true;
 			}
 
 			if(resetConfigEntry.second)

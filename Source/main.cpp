@@ -42,7 +42,6 @@ int main(int argc, char** argv)
     Gtk::Window* mainWindow = nullptr;
     auto quit = [&] { mainWindow->hide(); };
 
-    bool is_fullscreen = false;
     auto toggle_fullscreen = [&](Gtk::Button* fs_button)
     {
         if(!is_fullscreen)
@@ -93,6 +92,12 @@ int main(int argc, char** argv)
         GetWidget<Gtk::Button>(builder, "QuitButton")->signal_clicked().connect(quit);
         const auto fsButton = GetWidget<Gtk::Button>(builder, "FullScreenButton");
         fsButton->signal_clicked().connect([&, fsButton]{ toggle_fullscreen(fsButton); });
+
+        if(is_fullscreen)
+        {
+            is_fullscreen = false;
+            toggle_fullscreen(fsButton);
+        }
 
         app->add_window(*mainWindow);
         mainWindow->show();
