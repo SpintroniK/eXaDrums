@@ -31,7 +31,7 @@ namespace Widgets
 		volScale.set_value_pos(Gtk::PositionType::POS_RIGHT);
 		volScale.set_halign(Gtk::Align::ALIGN_FILL);
 		volScale.set_hexpand();
-		volScale.set_size_request(-1, 16);
+		volScale.set_size_request(-1, 24);
 
 		volScale.set_value(vol);
 

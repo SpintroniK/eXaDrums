@@ -22,7 +22,7 @@ This document outlines the development plan from a high level and will be update
 - [ ] Add trigger gain combo box.
 - [ ] Add an "add instrument" button in the kit preferences window.
 - [ ] Add score to rhythm coach.
-- [ ] Add toggle fullscreen button.
+- [x] Add toggle fullscreen button.
 - [x] Update Faders: to be in a scrollable container.
 
 ## Future versions
