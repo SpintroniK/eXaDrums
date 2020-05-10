@@ -31,6 +31,7 @@ To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/
   - [Installation](#installation)
   - [Configuration](#configuration)
 - [Usage](#usage)
+In order to install the latest official release on your system
 
 ## Simplified Installation
 
