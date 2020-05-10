@@ -31,13 +31,18 @@ To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/
   - [Installation](#installation)
   - [Configuration](#configuration)
 - [Usage](#usage)
+In order to install the latest official release on your system
 
 ## Simplified Installation
 
-There are easy ways to install official releases of eXaDrums.
-The drawback is that you won't get the latest version of eXaDrums, but you will have a working stable release.
+If you are using Debian Bullseye or newer, or Ubuntu >=19.10, you can install exadrums using apt:
 
-In order to install the latest official release, copy and paste the following lines in a terminal:
+```shell
+sudo apt install exadrums
+```
+
+If that does not work, there is another way to install official releases.
+Simply copy and paste the following lines in a terminal:
 
 ```shell
 wget https://github.com/SpintroniK/eXaDrums/releases/download/debian%2F0.4.1-1/libexadrums0_0.4.2-1_armhf.deb
