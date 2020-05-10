@@ -24,8 +24,8 @@ To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/
 
 ## Table of content
 
+- [Simplified Installation](#simplified-installation)
 - [Installation and configuration](#installation-and-configuration)
-  - [Simplified Installation](#simplified-installation)
   - [Dependencies](#dependencies)
   - [Building eXaDrums](#building-exadrums)
   - [Installation](#installation)
