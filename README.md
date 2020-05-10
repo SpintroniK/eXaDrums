@@ -15,7 +15,7 @@ The drum triggers can be adjusted so that their response feels as natural as pos
 
 Although eXaDrums is usable as a drum module, it is still an experimental project and some features are not yet implemented.
 
-  ![eXaDrums GUI](https://cdn.hackaday.io/images/3984431527888931486.png)
+  ![eXaDrums GUI](https://cdn.hackaday.io/images/5750291588968677437.png)
   
 *A screenshot of eXaDrums' user interface running on a Raspberry Pi.*
 
