@@ -25,11 +25,35 @@ To use it, you will have to install [libeXaDrums](https://github.com/SpintroniK/
 ## Table of content
 
 - [Installation and configuration](#installation-and-configuration)
+  - [Simplified Installation](#simplified-installation)
   - [Dependencies](#dependencies)
   - [Building eXaDrums](#building-exadrums)
   - [Installation](#installation)
   - [Configuration](#configuration)
 - [Usage](#usage)
+
+## Simplified Installation
+
+There are easy ways to install official releases of eXaDrums.
+The drawback is that you won't get the latest version of eXaDrums, but you will have a working stable release.
+
+In order to install the latest official release, copy and paste the following lines in a terminal:
+
+```shell
+wget https://github.com/SpintroniK/eXaDrums/releases/download/debian%2F0.4.1-1/libexadrums0_0.4.2-1_armhf.deb
+wget https://github.com/SpintroniK/eXaDrums/releases/download/debian%2F0.4.1-1/exadrums_0.4.1-1_armhf.deb
+```
+
+These lines will download the packages for libexadrums and exadrums.
+You can install them by running the following two commands:
+
+```shell
+sudo apt install ./libexadrums0_0.4.2-1_armhf.deb
+sudo apt install ./exadrums_0.4.1-1_armhf.deb
+```
+
+That is all. After the installation completes, you will have a working version of exadrums.
+You can check that everything is installed and running properly by typing `exadrums` in your terminal.
 
 ## Installation and configuration
 
