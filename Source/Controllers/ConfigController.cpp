@@ -542,6 +542,7 @@ namespace Controllers
 		Gtk::Entry* threshold = nullptr;
 		Gtk::Entry* scanTime = nullptr;
 		Gtk::Entry* maskTime = nullptr;
+		Gtk::Entry* gain = nullptr;
 		Gtk::ComboBoxText* types = nullptr;
 		Gtk::ComboBoxText* responses = nullptr;
 
@@ -549,6 +550,7 @@ namespace Controllers
 		{
 			builder->get_widget("TCSensorNb", sensorNb);
 			builder->get_widget("TCThreshold", threshold);
+			builder->get_widget("TCGain", gain);
 			builder->get_widget("TCScanTime", scanTime);
 			builder->get_widget("TCMaskTime", maskTime);
 			builder->get_widget("TCTypes", types);
@@ -571,6 +573,7 @@ namespace Controllers
 		// Set fields values
 		{
 			sensorNb->set_text(std::to_string(trigger.sensorId));
+			gain->set_text(std::to_string(trigger.gain));
 			threshold->set_text(std::to_string(trigger.threshold));
 			scanTime->set_text(std::to_string(trigger.scanTime));
 			maskTime->set_text(std::to_string(trigger.maskTime));

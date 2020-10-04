@@ -2641,7 +2641,14 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <placeholder/>
+              <object class="GtkEntry" id="TCGain">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+              </object>
+              <packing>
+                <property name="left_attach">1</property>
+                <property name="top_attach">2</property>
+              </packing>
             </child>
           </object>
           <packing>
