@@ -2512,7 +2512,7 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
             <child>
@@ -2525,19 +2525,6 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">0</property>
-                <property name="top_attach">3</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can_focus">False</property>
-                <property name="halign">end</property>
-                <property name="label" translatable="yes">Mask Time: </property>
-                <property name="justify">right</property>
-              </object>
-              <packing>
-                <property name="left_attach">0</property>
                 <property name="top_attach">4</property>
               </packing>
             </child>
@@ -2546,7 +2533,7 @@ Author: Jérémy Oden
                 <property name="visible">True</property>
                 <property name="can_focus">False</property>
                 <property name="halign">end</property>
-                <property name="label" translatable="yes">Response: </property>
+                <property name="label" translatable="yes">Mask Time: </property>
                 <property name="justify">right</property>
               </object>
               <packing>
@@ -2574,7 +2561,7 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">2</property>
+                <property name="top_attach">3</property>
               </packing>
             </child>
             <child>
@@ -2584,7 +2571,7 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">3</property>
+                <property name="top_attach">4</property>
               </packing>
             </child>
             <child>
@@ -2594,7 +2581,7 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">4</property>
+                <property name="top_attach">5</property>
               </packing>
             </child>
             <child>
@@ -2626,8 +2613,35 @@ Author: Jérémy Oden
               </object>
               <packing>
                 <property name="left_attach">1</property>
-                <property name="top_attach">5</property>
+                <property name="top_attach">6</property>
               </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Response: </property>
+                <property name="justify">right</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">6</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can_focus">False</property>
+                <property name="label" translatable="yes">Gain</property>
+              </object>
+              <packing>
+                <property name="left_attach">0</property>
+                <property name="top_attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
             </child>
           </object>
           <packing>

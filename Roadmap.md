@@ -16,7 +16,7 @@ This document outlines the development plan from a high level and will be update
 
 - [x] Fix sound chooser window size.
 - [ ] &#9997; Check libexadrums: installed and linked versions.
-- [ ] &#9997; Detect return and escape keypress in sound chooser and record saver.
+- [x] Detect return and escape keypress in sound chooser and record saver.
 - [ ] Add export configuration window.
 - [ ] Add import configuration window.
 - [ ] Add trigger gain combo box.
