@@ -373,7 +373,8 @@ namespace Controllers
 
 		// Get widgets
 		auto sensorNb = GetWidget<Gtk::Entry>(builder, "TCSensorNb");
-		auto threshold = GetWidget<Gtk::Entry>(builder, "TCThreshold");;
+		auto threshold = GetWidget<Gtk::Entry>(builder, "TCThreshold");
+		auto gain = GetWidget<Gtk::Entry>(builder, "TCGain");
 		auto scanTime = GetWidget<Gtk::Entry>(builder, "TCScanTime");
 		auto maskTime = GetWidget<Gtk::Entry>(builder, "TCMaskTime");;
 		auto types = GetWidget<Gtk::ComboBoxText>(builder, "TCTypes");
@@ -384,6 +385,7 @@ namespace Controllers
 
 		tp.sensorId = std::stoi(sensorNb->get_text());
 		tp.threshold = std::stoi(threshold->get_text());
+		tp.gain = std::stod(gain->get_text());
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
@@ -590,6 +592,7 @@ namespace Controllers
 	{
 		const auto sensorId = GetWidget<Gtk::Entry>(builder, "TASensorNb")->get_text();
 		const auto threshold = GetWidget<Gtk::Entry>(builder, "TAThreshold")->get_text();
+		const auto gain = GetWidget<Gtk::Entry>(builder, "TAGain")->get_text();
 		const auto scanTime = GetWidget<Gtk::Entry>(builder, "TAScanTime")->get_text();
 		const auto maskTime = GetWidget<Gtk::Entry>(builder, "TAMaskTime")->get_text();
 		const auto type = GetWidget<Gtk::ComboBoxText>(builder, "TATypes")->get_active_text();
@@ -598,6 +601,7 @@ namespace Controllers
 		TriggerParameters trigger;
 		trigger.sensorId = std::stoi(sensorId.raw());
 		trigger.threshold = std::stoi(threshold.raw());
+		trigger.gain = std::stod(gain.raw());
 		trigger.scanTime = std::stoi(scanTime.raw());
 		trigger.maskTime = std::stoi(maskTime.raw());
 		std::copy(type.begin(), type.end(), trigger.type);
