@@ -19,8 +19,8 @@ This document outlines the development plan from a high level and will be update
 - [x] Detect return and escape keypress in sound chooser and record saver.
 - [ ] Add export configuration window.
 - [ ] Add import configuration window.
-- [ ] Add trigger gain combo box.
-- [ ] Add an "add instrument" button in the kit preferences window.
+- [ ] &#9997; Add trigger gain combo box.
+- [ ] &#9997; Add an "add instrument" button in the kit preferences window.
 - [ ] Add score to rhythm coach.
 - [x] Add toggle fullscreen button.
 - [x] Update Faders: to be in a scrollable container.

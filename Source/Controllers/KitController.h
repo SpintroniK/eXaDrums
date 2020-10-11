@@ -55,6 +55,7 @@ namespace Controllers
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
+		void AddInstrumentToSelectedKit();
 		void AddInstrumentToKit();
 		void ModifyInstrument(int i);
 		void RemoveInstrument(std::size_t i);
@@ -127,6 +128,7 @@ namespace Controllers
 		Gtk::FileChooserDialog* recorderWindow;
 
 		// Class variables
+		bool isModifyingKit = false;
 		int numInstrumentsToCreate;
 		int instrumentToModify;
 

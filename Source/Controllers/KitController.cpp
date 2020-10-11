@@ -45,6 +45,7 @@ namespace Controllers
 		Gtk::Button* instrumentConfigCancel = nullptr;
 		Gtk::Button* instrumentSelectSave = nullptr;
 		Gtk::Button* instrumentSelectCancel = nullptr;
+		Gtk::Button* addInstrument = nullptr;
 		Gtk::Button* kitNameCancel = nullptr;
 		Gtk::Button* KitNameOk = nullptr;
 		Gtk::Button* soundChooserCancel = nullptr;
@@ -67,6 +68,7 @@ namespace Controllers
 			builder->get_widget("KitPreferencesButton", kitPreferencesButton);
 			builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
 			builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
+			builder->get_widget("ISAdd", addInstrument);
 			builder->get_widget("ISSave", instrumentSelectSave);
 			builder->get_widget("ISCancel", instrumentSelectCancel);
 			builder->get_widget("KitNameCancel", kitNameCancel);
@@ -127,6 +129,7 @@ namespace Controllers
 			instrumentConfigCancel->signal_clicked().connect([&] { CancelInstrumentModif(); });
 			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); });
 			instrumentSelectCancel->signal_clicked().connect([&] { instrumentSeclectWindow->hide(); });
+			addInstrument->signal_clicked().connect([&] { AddInstrumentToSelectedKit(); });
 			kitNameCancel->signal_clicked().connect([&] { newKitWindow->hide(); });
 			KitNameOk->signal_clicked().connect([&] { ValidateKitData(); });
 			soundChooserCancel->signal_clicked().connect([=] { soundChooser->hide(); });
@@ -303,13 +306,17 @@ namespace Controllers
 
 		auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
 
-		// Get new kit's name and position in the list
-		std::string newKitName = *(newOldKit.second);
-		int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
+		if(newOldKit.first != oldKitsNames.end())
+		{
 
-		// Insert new kit into list, and activate it
-		kitsList->insert(pos, newKitName);
-		kitsList->set_active(pos);
+			// Get new kit's name and position in the list
+			std::string newKitName = *(newOldKit.second);
+			int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
+
+			// Insert new kit into list, and activate it
+			kitsList->insert(pos, newKitName);
+			kitsList->set_active(pos);
+		}
 
 		// Set new kit
 		ChangeKit();
@@ -678,6 +685,24 @@ namespace Controllers
 		return;
 	}
 
+
+	void KitController::AddInstrumentToSelectedKit()
+	{
+
+		this->isModifyingKit = true;
+		kitCreator->SaveKit();
+		kitCreator->CreateNewKit();
+
+		std::string kitLocation = drumKit->GetKitDataFileName();
+		kitCreator->CreateFromModel(kitLocation.c_str());
+
+		int numInstruments = kitCreator->GetNumInstruments();
+		this->numInstrumentsToCreate = numInstruments + 1;
+
+		AddInstrumentToKit();
+	}
+
+
 	void KitController::AddInstrumentToKit()
 	{
 
@@ -735,10 +760,21 @@ namespace Controllers
 			instrumentConfigWindow->hide();
 
 			AddNewKit();
-			KitAdded();
 
-			kitCreator->CreateNewKit();
-			this->numInstrumentsToCreate = 0;
+			if(!this->isModifyingKit)
+			{
+				KitAdded();
+				kitCreator->CreateNewKit();
+				this->numInstrumentsToCreate = 0;
+			}
+			else
+			{
+				ShowInstrumentSelectWindow();
+			}
+			
+
+			if(this->isModifyingKit)
+				this->isModifyingKit = false;
 
 		}
 		else
