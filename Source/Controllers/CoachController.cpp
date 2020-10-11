@@ -30,6 +30,7 @@ namespace Controllers
 			this->builder->get_widget("ClickMeter", clickMeter);
 			this->builder->get_widget("CoachJitterMeter", jitterMeter);
 			this->builder->get_widget("HitMeterBar", hitMeterBar);
+			this->builder->get_widget("CoachScore", scoreLabel);
 		}
 
 		// Connect all signals
@@ -38,6 +39,7 @@ namespace Controllers
 			coachCloseButton->signal_clicked().connect([&]{ CloseRhythmCoach(); });
 		}
 
+		scores.resize(8);
 
 		return;
 	}
@@ -101,7 +103,7 @@ namespace Controllers
 				greenLed->set_visible(false);
 			}
 
-			if(clickFraction < th/double(bpm))
+			if(clickFraction < th / double(bpm))
 			{
 				redLed->set_visible(true);
 			}
@@ -150,6 +152,11 @@ namespace Controllers
 
 			int maxError = int(measureDuration / bpm);
 			int jitterValue = -(100 * bestHitError) / maxError + 50;
+			jitterValue = std::clamp(jitterValue, 0, 100);
+
+			int relScore = 2 * (50 - std::abs(jitterValue - 50.));
+
+			scoreLabel->set_text(std::to_string(relScore) + "/100");
 
 			jitterMeter->set_value(jitterValue);
 
