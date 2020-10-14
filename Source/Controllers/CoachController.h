@@ -52,6 +52,7 @@ namespace Controllers
 
 		std::vector<int> scores;
 		size_t scoreIndex = 0;
+		long long prevLastTrigTime = 0;
 
 	};
 
