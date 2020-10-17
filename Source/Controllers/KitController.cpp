@@ -693,8 +693,17 @@ namespace Controllers
 		kitCreator->SaveKit();
 		kitCreator->CreateNewKit();
 
-		std::string kitLocation = drumKit->GetKitDataFileName();
-		kitCreator->CreateFromModel(kitLocation.c_str());
+		// Load current kit into the kit creator for modifications
+		try
+		{
+			std::string kitLocation = drumKit->GetKitDataFileName();
+			kitCreator->CreateFromModel(kitLocation.c_str());
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		int numInstruments = kitCreator->GetNumInstruments();
 		this->numInstrumentsToCreate = numInstruments + 1;
