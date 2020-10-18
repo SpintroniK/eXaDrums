@@ -16,6 +16,8 @@
 
 #include <iostream>
 
+#include <unistd.h>
+
 using namespace eXaDrumsApi;
 using namespace Widgets;
 using namespace Errors;
@@ -33,6 +35,11 @@ namespace Controllers
 		Gtk::Button* mixerConfigButton = nullptr;
 		Gtk::Button* soundLibraryButton = nullptr;
 		Gtk::Button* importExportConfigButton = nullptr;
+
+		// Config management
+		Gtk::Button* exportConfigButton = nullptr;
+		Gtk::Button* exportConfigSaveButton = nullptr;
+
 
 		// Triggers
 		Gtk::Button* triggersConfigButton = nullptr;
@@ -62,6 +69,10 @@ namespace Controllers
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
 			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
+
+			// Config
+			builder->get_widget("ExportConfigButton", exportConfigButton);
+			builder->get_widget("ExportConfigSaveButton", exportConfigSaveButton);
 
 			// Triggers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
@@ -95,6 +106,7 @@ namespace Controllers
 			builder->get_widget("TriggerAddWindow", triggerAddWindow);
 			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
 			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
+			builder->get_widget("ExportConfigWindow", exportConfigWindow);
 
 		}
 
@@ -106,6 +118,10 @@ namespace Controllers
 			soundEffectsButton->signal_clicked().connect([&] { ShowSoundEffectsWindow(); });
 			sensorsConfigCancelButton->signal_clicked().connect([&] { sensorsConfigWindow->hide(); });
 			importExportConfigButton->signal_clicked().connect([&] { importExportConfigWindow->show(); });
+
+			// Config
+			exportConfigButton->signal_clicked().connect([&] { exportConfigWindow->show(); });
+			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
@@ -307,6 +323,32 @@ namespace Controllers
 		mixerConfigWindow->hide();
 
 		return;
+	}
+
+	void ConfigController::ExportConfiguration()
+	{
+		const std::string fileName = exportConfigWindow->get_filename();
+
+		try
+		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
+
+			// Export configuration
+			const std::string pathStr = std::getenv("HOME") + std::string{"/.eXaDrums"};
+			Config::ExportConfig(pathStr, fileName);
+
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+
+		exportConfigWindow->hide();
 	}
 
 	void ConfigController::ShowSoundLibConfigWindow()

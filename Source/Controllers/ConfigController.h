@@ -16,6 +16,7 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/filechooserdialog.h>
 
 #include <functional>
 
@@ -47,6 +48,9 @@ namespace Controllers
 		// Mixer
 		void SaveMixerConfig();
 
+		// Config
+		void ExportConfiguration();
+
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
@@ -72,6 +76,7 @@ namespace Controllers
 		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
 		Gtk::Window* importExportConfigWindow;
+		Gtk::FileChooserDialog* exportConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;

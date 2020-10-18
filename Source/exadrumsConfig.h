@@ -9,6 +9,7 @@
 #define SOURCE_EXADRUMSCONFIG_H_
 
 #include "../config.h"
+#include "Util/ErrorHandler.h"
 #include <libexadrums/Api/eXaDrums.hpp>
 #include <libexadrums/Api/Config/Config_api.hpp>
 
@@ -77,7 +78,7 @@ namespace eXaDrums
 			optionGroup.add_entry(importConfigEntry.first, importConfigEntry.second);
 
 			// Export config to folder
-			auto exportConfigEntry = MakeOption<Glib::ustring>("export-config", 'e', "Export configuration to directory");
+			auto exportConfigEntry = MakeOption<Glib::ustring>("export-config", 'e', "Export configuration to file");
 			optionGroup.add_entry(exportConfigEntry.first, exportConfigEntry.second);
 
 			// Add reset config entry

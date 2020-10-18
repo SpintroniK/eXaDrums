@@ -1265,6 +1265,7 @@ Author: Jérémy Oden
     <property name="type_hint">dialog</property>
     <property name="transient_for">MainWindow</property>
     <property name="action">save</property>
+    <property name="do_overwrite_confirmation">True</property>
     <child type="titlebar">
       <placeholder/>
     </child>
@@ -1278,11 +1279,12 @@ Author: Jérémy Oden
             <property name="can_focus">False</property>
             <property name="layout_style">end</property>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkButton" id="ExportConfigCancelButton">
+                <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
@@ -1291,11 +1293,12 @@ Author: Jérémy Oden
               </packing>
             </child>
             <child>
-              <object class="GtkButton">
-                <property name="label" translatable="yes">button</property>
+              <object class="GtkButton" id="ExportConfigSaveButton">
+                <property name="label">gtk-save</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
               </object>
               <packing>
                 <property name="expand">True</property>
