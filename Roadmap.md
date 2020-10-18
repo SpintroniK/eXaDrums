@@ -21,7 +21,7 @@ This document outlines the development plan from a high level and will be update
 - [ ] Add import configuration window.
 - [ ] &#9997; Add trigger gain combo box.
 - [ ] &#9997; Add an "add instrument" button in the kit preferences window.
-- [ ] &#9997; Add score to rhythm coach.
+- [x] Add score to rhythm coach.
 - [x] Add toggle fullscreen button.
 - [x] Update Faders: to be in a scrollable container.
 

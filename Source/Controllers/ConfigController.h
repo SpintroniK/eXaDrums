@@ -17,6 +17,8 @@
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
 
+#include <functional>
+
 namespace Controllers
 {
 
@@ -25,7 +27,7 @@ namespace Controllers
 
 	public:
 
-		ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit);
+		ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit, const std::function<void()>& quit);
 		virtual ~ConfigController();
 
 	private:
@@ -55,6 +57,8 @@ namespace Controllers
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 
+		std::function<void()> quitCallback;
+
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
 
@@ -67,6 +71,7 @@ namespace Controllers
 		Gtk::Window* triggerConfigWindow;
 		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
+		Gtk::Window* importExportConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;

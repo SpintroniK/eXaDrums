@@ -43,7 +43,8 @@ namespace Controllers
 		return;
 	}
 
-	void MainController::Create(Glib::RefPtr<Gtk::Builder>& bd, const std::string& mainFolder, bool isRoot)
+
+	void MainController::Create(Glib::RefPtr<Gtk::Builder>& bd, const std::string& mainFolder, const std::function<void()>& quit, bool isRoot)
 	{
 
 		this->builder = bd;
@@ -65,7 +66,7 @@ namespace Controllers
 		metronomeController = std::make_unique<MetronomeController>(this->builder, this->drumKit);
 		coachController = std::make_unique<CoachController>(this->builder, this->drumKit);
 		kitController = std::make_unique<KitController>(this->builder, this->drumKit, isRoot);
-		configController = std::make_unique<ConfigController>(this->builder, this->drumKit);
+		configController = std::make_unique<ConfigController>(this->builder, this->drumKit, quit);
 
 
 		// Get all widgets

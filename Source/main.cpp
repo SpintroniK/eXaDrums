@@ -75,7 +75,7 @@ int main(int argc, char** argv)
 
         try
         {
-            controller.Create(builder, config.UserDataPath(), config.IsRoot());
+            controller.Create(builder, config.UserDataPath(), quit, config.IsRoot());
         }
         catch(...)
         {

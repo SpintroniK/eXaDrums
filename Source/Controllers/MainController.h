@@ -24,6 +24,7 @@
 
 #include <string>
 #include <memory>
+#include <functional>
 
 #include <cstdlib>
 
@@ -39,7 +40,7 @@ namespace Controllers
 		MainController();
 		virtual ~MainController();
 
-		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf, bool isRoot);
+		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf, const std::function<void()>& quit, bool isRoot);
 
 	private:
 

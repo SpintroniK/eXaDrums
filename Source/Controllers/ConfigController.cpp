@@ -24,12 +24,15 @@ using namespace Util;
 namespace Controllers
 {
 
-	ConfigController::ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)
+	ConfigController::ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit, const std::function<void()>& quit)
 	: builder(builder), drumKit(drumKit), config(*drumKit.get())
 	{
 
+		this->quitCallback = quit;
+
 		Gtk::Button* mixerConfigButton = nullptr;
 		Gtk::Button* soundLibraryButton = nullptr;
+		Gtk::Button* importExportConfigButton = nullptr;
 
 		// Triggers
 		Gtk::Button* triggersConfigButton = nullptr;
@@ -58,6 +61,7 @@ namespace Controllers
 			// Buttons
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
+			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
 
 			// Triggers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
@@ -90,6 +94,7 @@ namespace Controllers
 			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
 			builder->get_widget("TriggerAddWindow", triggerAddWindow);
 			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
+			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
 
 		}
 
@@ -100,6 +105,7 @@ namespace Controllers
 			soundLibraryButton->signal_clicked().connect([&] { ShowSoundLibConfigWindow(); });
 			soundEffectsButton->signal_clicked().connect([&] { ShowSoundEffectsWindow(); });
 			sensorsConfigCancelButton->signal_clicked().connect([&] { sensorsConfigWindow->hide(); });
+			importExportConfigButton->signal_clicked().connect([&] { importExportConfigWindow->show(); });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
