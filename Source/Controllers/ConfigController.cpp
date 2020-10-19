@@ -5,6 +5,7 @@
  *      Author: jeremy
  */
 
+#include "../system.h"
 #include "../Util/Util.h"
 #include "../Util/ErrorHandler.h"
 #include "ConfigController.h"
@@ -15,8 +16,6 @@
 #include <gtkmm/box.h>
 
 #include <iostream>
-
-#include <unistd.h>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
@@ -338,8 +337,7 @@ namespace Controllers
 			}
 
 			// Export configuration
-			const std::string pathStr = std::getenv("HOME") + std::string{"/.eXaDrums"};
-			Config::ExportConfig(pathStr, fileName);
+			Config::ExportConfig(systemUserPath, fileName);
 
 		}
 		catch(const Exception& e)

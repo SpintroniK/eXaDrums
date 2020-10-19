@@ -9,6 +9,7 @@
 #define SOURCE_EXADRUMSCONFIG_H_
 
 #include "../config.h"
+#include "system.h"
 #include "Util/ErrorHandler.h"
 #include <libexadrums/Api/eXaDrums.hpp>
 #include <libexadrums/Api/Config/Config_api.hpp>
@@ -299,9 +300,9 @@ namespace eXaDrums
 			return false;
 		}
 
-		const fs::path userPath = fs::path{std::getenv("HOME")}/".eXaDrums";
-		const fs::path rootPath{"/usr/share/exadrums"};
-		const bool isRoot = getuid() == 0 && geteuid() == 0;
+		const fs::path userPath = systemUserPath;
+		const fs::path rootPath{systemRootPath};
+		const bool isRoot = systemIsRoot;
 
 	};
 
