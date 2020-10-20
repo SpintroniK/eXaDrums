@@ -34,6 +34,9 @@ namespace Controllers
 		Gtk::Button* mixerConfigButton = nullptr;
 		Gtk::Button* soundLibraryButton = nullptr;
 		Gtk::Button* importExportConfigButton = nullptr;
+		Gtk::Button* importConfigButton = nullptr;
+		Gtk::Button* exportConfigCancelButton = nullptr;
+		Gtk::Button* importConfigCancelButton = nullptr;
 
 		// Config management
 		Gtk::Button* exportConfigButton = nullptr;
@@ -68,6 +71,9 @@ namespace Controllers
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
 			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
+			builder->get_widget("ExportConfigCancelButton", exportConfigCancelButton);
+			builder->get_widget("ImportConfigCancelButton", importConfigCancelButton);
+			builder->get_widget("ImportConfigButton", importConfigButton);
 
 			// Config
 			builder->get_widget("ExportConfigButton", exportConfigButton);
@@ -106,6 +112,7 @@ namespace Controllers
 			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
 			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
 			builder->get_widget("ExportConfigWindow", exportConfigWindow);
+			builder->get_widget("ImportConfigWindow", importConfigWindow);
 
 		}
 
@@ -116,11 +123,14 @@ namespace Controllers
 			soundLibraryButton->signal_clicked().connect([&] { ShowSoundLibConfigWindow(); });
 			soundEffectsButton->signal_clicked().connect([&] { ShowSoundEffectsWindow(); });
 			sensorsConfigCancelButton->signal_clicked().connect([&] { sensorsConfigWindow->hide(); });
+			exportConfigCancelButton->signal_clicked().connect([&] { exportConfigWindow->hide(); });
+			importConfigCancelButton->signal_clicked().connect([&] { importConfigWindow->hide(); });
 			importExportConfigButton->signal_clicked().connect([&] { importExportConfigWindow->show(); });
 
 			// Config
 			exportConfigButton->signal_clicked().connect([&] { exportConfigWindow->show(); });
 			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
+			importConfigButton->signal_clicked().connect([&] { importConfigWindow->show(); });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });

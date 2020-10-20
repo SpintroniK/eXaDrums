@@ -77,6 +77,7 @@ namespace Controllers
 		Gtk::Window* mixerConfigWindow;
 		Gtk::Window* importExportConfigWindow;
 		Gtk::FileChooserDialog* exportConfigWindow;
+		Gtk::FileChooserDialog* importConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;
