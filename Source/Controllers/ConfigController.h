@@ -49,7 +49,8 @@ namespace Controllers
 		void SaveMixerConfig();
 
 		// Config
-		void ExportConfiguration();
+		void ExportConfiguration() const;
+		void ImportConfiguration() const;
 
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();

@@ -37,6 +37,7 @@ namespace Controllers
 		Gtk::Button* importConfigButton = nullptr;
 		Gtk::Button* exportConfigCancelButton = nullptr;
 		Gtk::Button* importConfigCancelButton = nullptr;
+		Gtk::Button* importConfigOpenButton = nullptr;
 
 		// Config management
 		Gtk::Button* exportConfigButton = nullptr;
@@ -73,6 +74,7 @@ namespace Controllers
 			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
 			builder->get_widget("ExportConfigCancelButton", exportConfigCancelButton);
 			builder->get_widget("ImportConfigCancelButton", importConfigCancelButton);
+			builder->get_widget("ImportConfigOpenButton", importConfigOpenButton);
 			builder->get_widget("ImportConfigButton", importConfigButton);
 
 			// Config
@@ -131,6 +133,7 @@ namespace Controllers
 			exportConfigButton->signal_clicked().connect([&] { exportConfigWindow->show(); });
 			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
 			importConfigButton->signal_clicked().connect([&] { importConfigWindow->show(); });
+			importConfigOpenButton->signal_clicked().connect([&] { ImportConfiguration(); });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
@@ -334,7 +337,7 @@ namespace Controllers
 		return;
 	}
 
-	void ConfigController::ExportConfiguration()
+	void ConfigController::ExportConfiguration() const
 	{
 		const std::string fileName = exportConfigWindow->get_filename();
 
@@ -357,6 +360,13 @@ namespace Controllers
 		}
 
 		exportConfigWindow->hide();
+	}
+
+	void ConfigController::ImportConfiguration() const
+	{
+		const std::string fileName = importConfigWindow->get_filename();
+		
+		importConfigWindow->hide();
 	}
 
 	void ConfigController::ShowSoundLibConfigWindow()
