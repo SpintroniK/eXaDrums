@@ -362,11 +362,32 @@ namespace Controllers
 		exportConfigWindow->hide();
 	}
 
-	void ConfigController::ImportConfiguration() const
+	void ConfigController::ImportConfiguration()
 	{
 		const std::string fileName = importConfigWindow->get_filename();
+
+		try
+		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
+
+			// Export configuration
+			Config::ImportConfig(fileName, systemUserPath);
+
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 		
 		importConfigWindow->hide();
+		importExportConfigWindow->hide();
+		isImportConfig = true;
+		quitCallback();
 	}
 
 	void ConfigController::ShowSoundLibConfigWindow()

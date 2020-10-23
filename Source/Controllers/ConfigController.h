@@ -31,6 +31,8 @@ namespace Controllers
 		ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit, const std::function<void()>& quit);
 		virtual ~ConfigController();
 
+		bool IsImportConfig() const { return isImportConfig; }
+
 	private:
 
 		// Signals
@@ -50,7 +52,7 @@ namespace Controllers
 
 		// Config
 		void ExportConfiguration() const;
-		void ImportConfiguration() const;
+		void ImportConfiguration();
 
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
@@ -58,6 +60,8 @@ namespace Controllers
 		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
+
+		bool isImportConfig = false;
 
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;

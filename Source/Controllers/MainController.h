@@ -41,6 +41,7 @@ namespace Controllers
 		virtual ~MainController();
 
 		void Create(Glib::RefPtr<Gtk::Builder>& builder, const std::string& mf, const std::function<void()>& quit, bool isRoot);
+		bool ReebootRequired() const { return configController->IsImportConfig(); }
 
 	private:
 
