@@ -364,6 +364,21 @@ namespace Controllers
 
 	void ConfigController::ImportConfiguration()
 	{
+
+		Gtk::MessageDialog d("This will completely replace the current configuration, including mixer configuration. Do you want to continue?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+		d.set_title("Import Configuration");
+
+		// Get answer
+		int answer = d.run();
+
+		// Check answer
+		switch(answer)
+		{
+			case Gtk::ResponseType::RESPONSE_NO: return;
+			case Gtk::ResponseType::RESPONSE_YES: break;
+			default: return;
+		}
+
 		const std::string fileName = importConfigWindow->get_filename();
 
 		try
