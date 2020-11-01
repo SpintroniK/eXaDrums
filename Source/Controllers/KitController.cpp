@@ -127,7 +127,7 @@ namespace Controllers
 			kitPreferencesButton->signal_clicked().connect([&] { ShowInstrumentSelectWindow(); });
 			instrumentConfigOkay->signal_clicked().connect([&] { ValidateInstrumentData(); });
 			instrumentConfigCancel->signal_clicked().connect([&] { CancelInstrumentModif(); });
-			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); });
+			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); instrumentSeclectWindow->hide(); });
 			instrumentSelectCancel->signal_clicked().connect([&] { instrumentSeclectWindow->hide(); });
 			addInstrument->signal_clicked().connect([&] { AddInstrumentToSelectedKit(); });
 			kitNameCancel->signal_clicked().connect([&] { newKitWindow->hide(); });
@@ -660,6 +660,19 @@ namespace Controllers
 
 		if(instrumentsSelectors.size() > 1)
 		{
+			Gtk::MessageDialog d("Are you sure you want to remove this instrument (this modification will be saved and cannot be undone)?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+			d.set_title("Remove Instrument");
+
+			// Get answer
+			int answer = d.run();
+
+			// Check answer
+			switch(answer)
+			{
+				case Gtk::ResponseType::RESPONSE_NO: return;
+				case Gtk::ResponseType::RESPONSE_YES: break;
+				default: return;
+			}
 
 			// Load current kit into the kit creator for modifications
 			try
@@ -680,6 +693,18 @@ namespace Controllers
 				instrumentsSelectors[i].reset();
 				instrumentsSelectors.erase(instrumentsSelectors.begin() + i);
 			}
+
+			try
+			{
+				std::string kitLocation = drumKit->GetKitDataFileName();
+				kitCreator->SaveKit(kitLocation.c_str());
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
+
+			SaveKitPreferences();
 		}
 
 		return;
@@ -1190,9 +1215,6 @@ namespace Controllers
 			}
 
 		}
-
-		// Close window
-		instrumentSeclectWindow->hide();
 
 		return;
 	}
