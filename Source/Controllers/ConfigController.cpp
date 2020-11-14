@@ -350,7 +350,7 @@ namespace Controllers
 			}
 
 			// Export configuration
-			Config::ExportConfig(systemUserPath, fileName);
+			Config::ExportConfig(systemUserPath.string(), fileName);
 
 		}
 		catch(const Exception& e)
@@ -389,8 +389,8 @@ namespace Controllers
 				throw Exception("File name is too short.", error_type_warning);
 			}
 
-			// Export configuration
-			Config::ImportConfig(fileName, systemUserPath);
+			// Import configuration
+			Config::ImportConfig(fileName, systemUserPath.string());
 
 		}
 		catch(const Exception& e)
