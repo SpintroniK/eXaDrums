@@ -28,9 +28,9 @@ int main(int argc, char** argv)
 
     Config config;
 
-    if(!config.IsInstalledForUser())
+    if(!IsInstalledForUser())
     {
-        config.InstallForUser();
+        InstallForUser();
     }
 
     for(;;)
@@ -68,17 +68,17 @@ int main(int argc, char** argv)
             Glib::RefPtr<Gtk::Builder> builder;
             try
             {
-                builder = Gtk::Builder::create_from_file(config.UiPath());
+                builder = Gtk::Builder::create_from_file(UiPath());
             }
             catch(...)
             {
-                errorDialog("Could not find UI file (" + config.UiPath().string() + ").", error_type_error);
+                errorDialog("Could not find UI file (" + UiPath().string() + ").", error_type_error);
                 return; // Exit properly if UI file can't be loaded.
             }
 
             try
             {
-                controller.Create(builder, config.UserDataPath(), quit, config.IsRoot());
+                controller.Create(builder, UserDataPath(), quit, IsRoot());
             }
             catch(...)
             {

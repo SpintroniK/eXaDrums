@@ -369,7 +369,7 @@ namespace Controllers
 		d.set_title("Import Configuration");
 
 		// Get answer
-		int answer = d.run();
+		const int answer = d.run();
 
 		// Check answer
 		switch(answer)
