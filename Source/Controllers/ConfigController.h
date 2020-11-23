@@ -53,6 +53,7 @@ namespace Controllers
 		// Config
 		void ExportConfiguration() const;
 		void ImportConfiguration();
+		void FactoryReset();
 
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();

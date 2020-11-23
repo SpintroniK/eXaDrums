@@ -11,9 +11,11 @@
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
+#include <gtkmm/switch.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
+#include <gtkmm/infobar.h>
 
 #include <iostream>
 
@@ -42,6 +44,11 @@ namespace Controllers
 		// Config management
 		Gtk::Button* exportConfigButton = nullptr;
 		Gtk::Button* exportConfigSaveButton = nullptr;
+		Gtk::Switch* configOverwriteSwitch = nullptr;
+		Gtk::Switch* configMergeSwitch = nullptr;
+		Gtk::InfoBar* configWarning = nullptr;
+		Gtk::Button* configWarningOKButton = nullptr;
+		Gtk::Button* factoryResetButton = nullptr;
 
 
 		// Triggers
@@ -80,6 +87,11 @@ namespace Controllers
 			// Config
 			builder->get_widget("ExportConfigButton", exportConfigButton);
 			builder->get_widget("ExportConfigSaveButton", exportConfigSaveButton);
+			builder->get_widget("IECOverwriteSwitch", configOverwriteSwitch);
+			builder->get_widget("IECMergeSwitch", configMergeSwitch);
+			builder->get_widget("IECWarning", configWarning);
+			builder->get_widget("ConfigWarningOK", configWarningOKButton);
+			builder->get_widget("FactoryResetButton", factoryResetButton);
 
 			// Triggers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
@@ -134,6 +146,28 @@ namespace Controllers
 			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
 			importConfigButton->signal_clicked().connect([&] { importConfigWindow->show(); });
 			importConfigOpenButton->signal_clicked().connect([&] { ImportConfiguration(); });
+			configWarningOKButton->signal_clicked().connect([=] { configWarning->set_visible(false); });
+			factoryResetButton->signal_clicked().connect([&] { FactoryReset(); });
+			configOverwriteSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			{
+				const auto isActive = configOverwriteSwitch->get_active();
+				if(!isActive)
+				{
+					configMergeSwitch->set_active(false);
+					configWarning->set_visible();
+				}
+				return false;
+			});
+
+			configMergeSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			{
+				const auto isActive = configMergeSwitch->get_active();
+				if(!isActive)
+				{
+					configOverwriteSwitch->set_active(false);
+				}
+				return false;
+			});
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
@@ -400,6 +434,29 @@ namespace Controllers
 		}
 		
 		importConfigWindow->hide();
+		importExportConfigWindow->hide();
+		isImportConfig = true;
+		quitCallback();
+	}
+
+	void ConfigController::FactoryReset()
+	{
+
+		Gtk::MessageDialog d("This will completely reset the current configuration, all changes will be lost. Do you want to continue?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+		d.set_title("Reset Configuration");
+
+		// Get answer
+		const int answer = d.run();
+
+		// Check answer
+		switch(answer)
+		{
+			case Gtk::ResponseType::RESPONSE_NO: return;
+			case Gtk::ResponseType::RESPONSE_YES: break;
+			default: return;
+		}
+
+		ResetConfig();
 		importExportConfigWindow->hide();
 		isImportConfig = true;
 		quitCallback();
