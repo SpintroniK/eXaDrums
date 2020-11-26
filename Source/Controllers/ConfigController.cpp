@@ -46,8 +46,6 @@ namespace Controllers
 		Gtk::Button* exportConfigSaveButton = nullptr;
 		Gtk::Switch* configOverwriteSwitch = nullptr;
 		Gtk::Switch* configMergeSwitch = nullptr;
-		Gtk::InfoBar* configWarning = nullptr;
-		Gtk::Button* configWarningOKButton = nullptr;
 		Gtk::Button* factoryResetButton = nullptr;
 
 
@@ -89,8 +87,6 @@ namespace Controllers
 			builder->get_widget("ExportConfigSaveButton", exportConfigSaveButton);
 			builder->get_widget("IECOverwriteSwitch", configOverwriteSwitch);
 			builder->get_widget("IECMergeSwitch", configMergeSwitch);
-			builder->get_widget("IECWarning", configWarning);
-			builder->get_widget("ConfigWarningOK", configWarningOKButton);
 			builder->get_widget("FactoryResetButton", factoryResetButton);
 
 			// Triggers
@@ -146,28 +142,27 @@ namespace Controllers
 			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
 			importConfigButton->signal_clicked().connect([&] { importConfigWindow->show(); });
 			importConfigOpenButton->signal_clicked().connect([&] { ImportConfiguration(); });
-			configWarningOKButton->signal_clicked().connect([=] { configWarning->set_visible(false); });
 			factoryResetButton->signal_clicked().connect([&] { FactoryReset(); });
-			configOverwriteSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
-			{
-				const auto isActive = configOverwriteSwitch->get_active();
-				if(!isActive)
-				{
-					configMergeSwitch->set_active(false);
-					configWarning->set_visible();
-				}
-				return false;
-			});
+			// configOverwriteSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			// {
+			// 	const auto isActive = configOverwriteSwitch->get_active();
+			// 	if(!isActive)
+			// 	{
+			// 		configMergeSwitch->set_active(false);
+			// 		configWarning->set_visible();
+			// 	}
+			// 	return false;
+			// });
 
-			configMergeSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
-			{
-				const auto isActive = configMergeSwitch->get_active();
-				if(!isActive)
-				{
-					configOverwriteSwitch->set_active(false);
-				}
-				return false;
-			});
+			// configMergeSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			// {
+			// 	const auto isActive = configMergeSwitch->get_active();
+			// 	if(!isActive)
+			// 	{
+			// 		configOverwriteSwitch->set_active(false);
+			// 	}
+			// 	return false;
+			// });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
@@ -399,7 +394,42 @@ namespace Controllers
 	void ConfigController::ImportConfiguration()
 	{
 
-		Gtk::MessageDialog d("This will completely replace the current configuration, including mixer configuration. Do you want to continue?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+
+		Gtk::Switch* configOverwriteSwitch = nullptr;
+		Gtk::Switch* configMergeSwitch = nullptr;
+		
+		builder->get_widget("IECOverwriteSwitch", configOverwriteSwitch);
+		builder->get_widget("IECMergeSwitch", configMergeSwitch);
+
+		const auto isOverwrite = configOverwriteSwitch->get_active();
+		const auto isMerge = configMergeSwitch->get_active();
+
+		std::string message = "";
+
+		if(!isOverwrite && !isMerge)
+		{
+			message += "Not merging nor overwriting configuration will result in keeping current configuration and add new configuration files.";
+		}
+
+		if(!isOverwrite && isMerge)
+		{
+			message += "Merging will preserve existing configuration files, such as mixer configuration.";
+		}
+
+		if(isOverwrite && !isMerge)
+		{
+			message += "Overwriting will completely replace the current configuration, including mixer configuration.";
+		}
+
+		if(isOverwrite && isMerge)
+		{
+			message += "Overwriting and merging will replace the current configuration. Existing files will be replaced, new ones will be added.";
+		}
+
+
+		message += " Do you want to continue?";
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
 		d.set_title("Import Configuration");
 
 		// Get answer
@@ -423,8 +453,21 @@ namespace Controllers
 				throw Exception("File name is too short.", error_type_warning);
 			}
 
+			if(isOverwrite && !isMerge)
+			{
+				try
+				{
+					fs::remove_all(UserDataPath());
+				}
+				catch(...)
+				{
+					throw Exception("Could not remove data directory.", error_type_error);
+				}
+				
+			}
+
 			// Import configuration
-			Config::ImportConfig(fileName, systemUserPath.string());
+			Config::ImportConfig(fileName, systemUserPath.string(), isOverwrite && isMerge);
 
 		}
 		catch(const Exception& e)
