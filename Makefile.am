@@ -60,11 +60,11 @@ AM_LDFLAGS = -Wl,--as-needed
 bin_PROGRAMS = exadrums
 
 exadrums_CXXFLAGS = $(AM_CXXFLAGS) \
-  $(alsa_CFLAGS) $(tinyxml2_CFLAGS) $(gtkmm_CFLAGS) $(exadrums_CFLAGS) \
+  $(alsa_CFLAGS) $(tinyxml2_CFLAGS) $(minizip_CFLAGS) $(gtkmm_CFLAGS) $(exadrums_CFLAGS) \
   -std=c++17
 exadrums_LDADD = $(AM_LDADD) \
   -lstdc++fs \
-  $(alsa_LIBS) $(tinyxml2_LIBS) $(gtkmm_LIBS) $(exadrums_LIBS)
+  $(alsa_LIBS) $(tinyxml2_LIBS) $(minizip_LIBS) $(gtkmm_LIBS) $(exadrums_LIBS)
 
 exadrums_SOURCES = \
   Source/Controllers/CoachController.cpp \
@@ -77,8 +77,6 @@ exadrums_SOURCES = \
   Source/Controllers/MainController.h \
   Source/Controllers/MetronomeController.cpp \
   Source/Controllers/MetronomeController.h \
-  Source/MainWindow/MainWindow.cpp \
-  Source/MainWindow/MainWindow.h \
   Source/Util/ErrorHandler.h \
   Source/Util/Util.h \
   Source/Widgets/Fader.cpp \

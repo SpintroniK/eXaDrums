@@ -16,6 +16,9 @@
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
 #include <gtkmm/comboboxtext.h>
+#include <gtkmm/filechooserdialog.h>
+
+#include <functional>
 
 namespace Controllers
 {
@@ -25,8 +28,10 @@ namespace Controllers
 
 	public:
 
-		ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit);
+		ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit, const std::function<void()>& quit);
 		virtual ~ConfigController();
+
+		bool IsImportConfig() const { return isImportConfig; }
 
 	private:
 
@@ -45,6 +50,11 @@ namespace Controllers
 		// Mixer
 		void SaveMixerConfig();
 
+		// Config
+		void ExportConfiguration() const;
+		void ImportConfiguration();
+		void FactoryReset();
+
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
@@ -52,8 +62,12 @@ namespace Controllers
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
 
+		bool isImportConfig = false;
+
 		Glib::RefPtr<Gtk::Builder> builder;
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
+
+		std::function<void()> quitCallback;
 
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
@@ -67,6 +81,9 @@ namespace Controllers
 		Gtk::Window* triggerConfigWindow;
 		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
+		Gtk::Window* importExportConfigWindow;
+		Gtk::FileChooserDialog* exportConfigWindow;
+		Gtk::FileChooserDialog* importConfigWindow;
 
 		// eXaDrums
 		eXaDrumsApi::Config config;

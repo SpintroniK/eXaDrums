@@ -48,13 +48,14 @@ namespace Controllers
 		int GetCurrentKitId() const;
 		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
 		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
-		void DeleteKit(const int& id);
+		void DeleteKit(int id);
 		void KitAdded();
 		void EnableRecording();
 		void RecorderExport();
 
 		// Instruments
 		int GetInstrumentVolume(int id) const { return drumKit->GetInstrumentVolume(id); };
+		void AddInstrumentToSelectedKit();
 		void AddInstrumentToKit();
 		void ModifyInstrument(int i);
 		void RemoveInstrument(std::size_t i);
@@ -127,6 +128,7 @@ namespace Controllers
 		Gtk::FileChooserDialog* recorderWindow;
 
 		// Class variables
+		bool isModifyingKit = false;
 		int numInstrumentsToCreate;
 		int instrumentToModify;
 

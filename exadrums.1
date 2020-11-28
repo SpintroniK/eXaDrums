@@ -1,7 +1,7 @@
 .\" Process this file with
 .\" groff -man -Tascii exadrums.1
 .\"
-.TH EXADRUMS 1 "2018-06-28" eXaDrums "User Manuals"
+.TH EXADRUMS 1 "2020-05-09" eXaDrums "eXaDrums Manual Pages"
 .SH NAME
 eXaDrums \- Software drum module.
 .SH SYNOPSIS
@@ -16,11 +16,20 @@ eXaDrums accepts the following options:
 .B \-v, \-\-version
 Show eXaDrums command\-line options.
 .TP 8
-.B \-c, \-\-config \fI<path>\fP
-Sets path as the configuration directory.
-.TP 8
 .B \-r, \-\-reset\-config
 Reset to default configuration.
+.TP 8
+.B \-c, \-\-config \fI<directory>\fP
+Set cofiguration directory.
+.TP 8
+.B \-i, \-\-import\-config \fI<file>\fP
+Import configuration from file.
+.TP 8
+.B \-e, \-\-export\-config \fI<directory>\fP
+Export configuration to directory.
+.TP 8
+.B \-f, \-\-fullscreen
+Start in fullscreen mode.
 .SH BUGS
 Please contact the author if you find a bug.
 .SH AUTHOR

@@ -35,7 +35,7 @@ namespace Controllers
 		{
 			metronomeConfigSave->signal_clicked().connect([&] { SaveMetronomeConfig(); });
 			clickTempoScale->signal_value_changed().connect([&] { ChangeTempo(); });
-			clickVolumeScale->signal_value_changed().connect([&] { ChangeVolume(); });
+			clickVolumeScale->signal_value_changed().connect([&] { ChangeClickVolume(); });
 			enableClickButton->signal_clicked().connect([&] { EnableClick(); });
 		}
 
@@ -124,11 +124,11 @@ namespace Controllers
 		return;
 	}
 
-	void MetronomeController::ChangeVolume() const
+	void MetronomeController::ChangeClickVolume() const
 	{
 
 		int volume = (int) this->clickVolumeScale->get_value();
-		drumKit->ChangeVolume(volume);
+		drumKit->ChangeClickVolume(volume);
 		clickVolumeScale->property_sensitive() = true;
 
 		return;

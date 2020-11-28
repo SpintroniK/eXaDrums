@@ -12,6 +12,8 @@
 #include <gtkmm/label.h>
 
 #include <chrono>
+#include <numeric>
+#include <algorithm>
 
 using namespace std::chrono;
 
@@ -30,6 +32,7 @@ namespace Controllers
 			this->builder->get_widget("ClickMeter", clickMeter);
 			this->builder->get_widget("CoachJitterMeter", jitterMeter);
 			this->builder->get_widget("HitMeterBar", hitMeterBar);
+			this->builder->get_widget("CoachScore", scoreLabel);
 		}
 
 		// Connect all signals
@@ -38,6 +41,8 @@ namespace Controllers
 			coachCloseButton->signal_clicked().connect([&]{ CloseRhythmCoach(); });
 		}
 
+		scores.resize(4);
+		std::fill(scores.begin(), scores.end(), 0);
 
 		return;
 	}
@@ -101,7 +106,7 @@ namespace Controllers
 				greenLed->set_visible(false);
 			}
 
-			if(clickFraction < th/double(bpm))
+			if(clickFraction < th / double(bpm))
 			{
 				redLed->set_visible(true);
 			}
@@ -115,10 +120,10 @@ namespace Controllers
 
 		// Update hit meter section
 		long long lastTrigTime = drumKit->GetLastTrigTime();
-		{
-			high_resolution_clock::time_point now = high_resolution_clock::now();
-			long long t = (long long) time_point_cast<microseconds>(now).time_since_epoch().count();
 
+		high_resolution_clock::time_point now = high_resolution_clock::now();
+		long long t = (long long) time_point_cast<microseconds>(now).time_since_epoch().count();
+		{
 			long long dt = (t - lastTrigTime);
 
 			double fraction = std::exp(-double(dt) / 200000.0);
@@ -132,6 +137,9 @@ namespace Controllers
 			long long lastClickTime = drumKit->GetLastClickTime();
 			int tempo = drumKit->GetTempo();
 			double measureDuration = bpm * 60e6 / double(tempo) / drumKit->GetRhythm(); // Measure duration in µs
+
+			const auto dtTime = std::abs(lastTrigTime - prevLastTrigTime);
+			const bool isComputeScore = dtTime <= measureDuration && lastTrigTime != prevLastTrigTime;
 
 			// Create vector of the clicks times
 			std::vector<long long> clicksTimes(bpm + 1);
@@ -150,6 +158,21 @@ namespace Controllers
 
 			int maxError = int(measureDuration / bpm);
 			int jitterValue = -(100 * bestHitError) / maxError + 50;
+			jitterValue = std::clamp(jitterValue, 0, 100);
+
+			int relScore = 2 * (50 - std::abs(jitterValue - 50.));
+
+			if(isComputeScore)
+			{
+				scores[scoreIndex % scores.size()] = relScore;
+				scoreIndex = (scoreIndex + 1) % scores.size();
+			}
+
+			prevLastTrigTime = lastTrigTime;
+
+			int avgScore = std::accumulate(scores.begin(), scores.end(), int{0}) / scores.size();
+
+			scoreLabel->set_text(std::to_string(avgScore));
 
 			jitterMeter->set_value(jitterValue);
 

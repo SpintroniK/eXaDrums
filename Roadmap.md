@@ -10,28 +10,22 @@ This document outlines the development plan from a high level and will be update
 | check mark | work completed                  |
 | &#9997;    | on-going work                   |
 
-## Future versions
-
-### 0.4.1
-
-- [x] Build successfully with clang++-7.
-- [x] Update Readme (installation instructions).
-- [x] Fix Readme (installation procedure -- checkout debian branch first).
-- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
-
-### 0.4.2
-
-- [ ] Detect return keypress in sound chooser and record saver.
+## Current version
 
 ### 0.5.0
 
-- [ ] Add export configuration window.
-- [ ] Add import configuration window.
-- [ ] Add trigger sensitivity combo box.
-- [ ] Add an "add instrument" button in the kit preferences window.
-- [ ] Add score to rhythm coach.
-- [ ] Add toggle fullscreen button.
-- [ ] Update Faders: to be in a scrollable container.
+- [x] Fix sound chooser window size.
+- [ ] &#9997; Check libexadrums: installed and linked versions.
+- [x] Detect return and escape keypress in sound chooser and record saver.
+- [x] Add import/export configuration window.
+- [x] Add factory reset button.
+- [x] Add trigger gain combo box.
+- [X] Add an "add instrument" button in the kit preferences window.
+- [x] Add score to rhythm coach.
+- [x] Add toggle fullscreen button.
+- [x] Update Faders: to be in a scrollable container.
+
+## Future versions
 
 ### 0.6.0
 
@@ -51,3 +45,12 @@ This document outlines the development plan from a high level and will be update
 ## Documentation
 
 - [ ] Doxygen: document code.
+
+## Past versions
+
+### 0.4.1
+
+- [x] Build successfully with clang++-7.
+- [x] Update Readme (installation instructions).
+- [x] Fix Readme (installation procedure -- checkout debian branch first).
+- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).

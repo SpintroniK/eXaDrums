@@ -15,6 +15,9 @@
 #include <gtkmm/button.h>
 #include <gtkmm/scale.h>
 #include <gtkmm/levelbar.h>
+#include <gtkmm/label.h>
+
+#include <vector>
 
 
 namespace Controllers
@@ -43,8 +46,13 @@ namespace Controllers
 		Gtk::Scale* clickMeter;
 		Gtk::Scale* jitterMeter;
 		Gtk::LevelBar* hitMeterBar;
+		Gtk::Label* scoreLabel;
 
 		sigc::connection coachTimeout;
+
+		std::vector<int> scores;
+		size_t scoreIndex = 0;
+		long long prevLastTrigTime = 0;
 
 	};
 

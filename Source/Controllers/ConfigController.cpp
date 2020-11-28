@@ -5,14 +5,17 @@
  *      Author: jeremy
  */
 
+#include "../system.h"
 #include "../Util/Util.h"
 #include "../Util/ErrorHandler.h"
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
+#include <gtkmm/switch.h>
 #include <gtkmm/comboboxtext.h>
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
+#include <gtkmm/infobar.h>
 
 #include <iostream>
 
@@ -24,12 +27,27 @@ using namespace Util;
 namespace Controllers
 {
 
-	ConfigController::ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit)
+	ConfigController::ConfigController(Glib::RefPtr<Gtk::Builder> builder, std::shared_ptr<eXaDrums> drumKit, const std::function<void()>& quit)
 	: builder(builder), drumKit(drumKit), config(*drumKit.get())
 	{
 
+		this->quitCallback = quit;
+
 		Gtk::Button* mixerConfigButton = nullptr;
 		Gtk::Button* soundLibraryButton = nullptr;
+		Gtk::Button* importExportConfigButton = nullptr;
+		Gtk::Button* importConfigButton = nullptr;
+		Gtk::Button* exportConfigCancelButton = nullptr;
+		Gtk::Button* importConfigCancelButton = nullptr;
+		Gtk::Button* importConfigOpenButton = nullptr;
+
+		// Config management
+		Gtk::Button* exportConfigButton = nullptr;
+		Gtk::Button* exportConfigSaveButton = nullptr;
+		Gtk::Switch* configOverwriteSwitch = nullptr;
+		Gtk::Switch* configMergeSwitch = nullptr;
+		Gtk::Button* factoryResetButton = nullptr;
+
 
 		// Triggers
 		Gtk::Button* triggersConfigButton = nullptr;
@@ -58,6 +76,18 @@ namespace Controllers
 			// Buttons
 			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
+			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
+			builder->get_widget("ExportConfigCancelButton", exportConfigCancelButton);
+			builder->get_widget("ImportConfigCancelButton", importConfigCancelButton);
+			builder->get_widget("ImportConfigOpenButton", importConfigOpenButton);
+			builder->get_widget("ImportConfigButton", importConfigButton);
+
+			// Config
+			builder->get_widget("ExportConfigButton", exportConfigButton);
+			builder->get_widget("ExportConfigSaveButton", exportConfigSaveButton);
+			builder->get_widget("IECOverwriteSwitch", configOverwriteSwitch);
+			builder->get_widget("IECMergeSwitch", configMergeSwitch);
+			builder->get_widget("FactoryResetButton", factoryResetButton);
 
 			// Triggers
 			builder->get_widget("TriggersConfigButton", triggersConfigButton);
@@ -90,6 +120,9 @@ namespace Controllers
 			builder->get_widget("TriggerConfigurationWindow", triggerConfigWindow);
 			builder->get_widget("TriggerAddWindow", triggerAddWindow);
 			builder->get_widget("MixerConfigWindow", mixerConfigWindow);
+			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
+			builder->get_widget("ExportConfigWindow", exportConfigWindow);
+			builder->get_widget("ImportConfigWindow", importConfigWindow);
 
 		}
 
@@ -100,6 +133,36 @@ namespace Controllers
 			soundLibraryButton->signal_clicked().connect([&] { ShowSoundLibConfigWindow(); });
 			soundEffectsButton->signal_clicked().connect([&] { ShowSoundEffectsWindow(); });
 			sensorsConfigCancelButton->signal_clicked().connect([&] { sensorsConfigWindow->hide(); });
+			exportConfigCancelButton->signal_clicked().connect([&] { exportConfigWindow->hide(); });
+			importConfigCancelButton->signal_clicked().connect([&] { importConfigWindow->hide(); });
+			importExportConfigButton->signal_clicked().connect([&] { importExportConfigWindow->show(); });
+
+			// Config
+			exportConfigButton->signal_clicked().connect([&] { exportConfigWindow->show(); });
+			exportConfigSaveButton->signal_clicked().connect([&] { ExportConfiguration(); });
+			importConfigButton->signal_clicked().connect([&] { importConfigWindow->show(); });
+			importConfigOpenButton->signal_clicked().connect([&] { ImportConfiguration(); });
+			factoryResetButton->signal_clicked().connect([&] { FactoryReset(); });
+			// configOverwriteSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			// {
+			// 	const auto isActive = configOverwriteSwitch->get_active();
+			// 	if(!isActive)
+			// 	{
+			// 		configMergeSwitch->set_active(false);
+			// 		configWarning->set_visible();
+			// 	}
+			// 	return false;
+			// });
+
+			// configMergeSwitch->signal_button_release_event().connect([=] (GdkEventButton* button_event) 
+			// {
+			// 	const auto isActive = configMergeSwitch->get_active();
+			// 	if(!isActive)
+			// 	{
+			// 		configOverwriteSwitch->set_active(false);
+			// 	}
+			// 	return false;
+			// });
 
 			// Triggers config
 			triggersConfigButton->signal_clicked().connect([&] { ShowTriggersConfigWindow(); });
@@ -303,8 +366,152 @@ namespace Controllers
 		return;
 	}
 
+	void ConfigController::ExportConfiguration() const
+	{
+		const std::string fileName = exportConfigWindow->get_filename();
+
+		try
+		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
+
+			// Export configuration
+			Config::ExportConfig(systemUserPath.string(), fileName);
+
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+
+		exportConfigWindow->hide();
+	}
+
+	void ConfigController::ImportConfiguration()
+	{
+
+
+		Gtk::Switch* configOverwriteSwitch = nullptr;
+		Gtk::Switch* configMergeSwitch = nullptr;
+		
+		builder->get_widget("IECOverwriteSwitch", configOverwriteSwitch);
+		builder->get_widget("IECMergeSwitch", configMergeSwitch);
+
+		const auto isOverwrite = configOverwriteSwitch->get_active();
+		const auto isMerge = configMergeSwitch->get_active();
+
+		std::string message = "";
+
+		if(!isOverwrite && !isMerge)
+		{
+			message += "Not merging nor overwriting configuration will result in keeping current configuration and add new configuration files.";
+		}
+
+		if(!isOverwrite && isMerge)
+		{
+			message += "Merging will preserve existing configuration files, such as mixer configuration.";
+		}
+
+		if(isOverwrite && !isMerge)
+		{
+			message += "Overwriting will completely replace the current configuration, including mixer configuration.";
+		}
+
+		if(isOverwrite && isMerge)
+		{
+			message += "Overwriting and merging will replace the current configuration. Existing files will be replaced, new ones will be added.";
+		}
+
+
+		message += " Do you want to continue?";
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+		d.set_title("Import Configuration");
+
+		// Get answer
+		const int answer = d.run();
+
+		// Check answer
+		switch(answer)
+		{
+			case Gtk::ResponseType::RESPONSE_NO: return;
+			case Gtk::ResponseType::RESPONSE_YES: break;
+			default: return;
+		}
+
+		const std::string fileName = importConfigWindow->get_filename();
+
+		try
+		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
+
+			if(isOverwrite && !isMerge)
+			{
+				try
+				{
+					fs::remove_all(UserDataPath());
+				}
+				catch(...)
+				{
+					throw Exception("Could not remove data directory.", error_type_error);
+				}
+				
+			}
+
+			// Import configuration
+			Config::ImportConfig(fileName, systemUserPath.string(), isOverwrite && isMerge);
+
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+		
+		importConfigWindow->hide();
+		importExportConfigWindow->hide();
+		isImportConfig = true;
+		quitCallback();
+	}
+
+	void ConfigController::FactoryReset()
+	{
+
+		Gtk::MessageDialog d("This will completely reset the current configuration, all changes will be lost. Do you want to continue?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+		d.set_title("Reset Configuration");
+
+		// Get answer
+		const int answer = d.run();
+
+		// Check answer
+		switch(answer)
+		{
+			case Gtk::ResponseType::RESPONSE_NO: return;
+			case Gtk::ResponseType::RESPONSE_YES: break;
+			default: return;
+		}
+
+		ResetConfig();
+		importExportConfigWindow->hide();
+		isImportConfig = true;
+		quitCallback();
+	}
+
 	void ConfigController::ShowSoundLibConfigWindow()
 	{
+		const std::string message{"Sounds are located in folder: \n" + drumKit->GetDataLocation() + "SoundBank"};
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK);
+		d.set_title("Sound Library");
+		d.run();
 
 		return;
 	}
@@ -373,7 +580,8 @@ namespace Controllers
 
 		// Get widgets
 		auto sensorNb = GetWidget<Gtk::Entry>(builder, "TCSensorNb");
-		auto threshold = GetWidget<Gtk::Entry>(builder, "TCThreshold");;
+		auto threshold = GetWidget<Gtk::Entry>(builder, "TCThreshold");
+		auto gain = GetWidget<Gtk::Entry>(builder, "TCGain");
 		auto scanTime = GetWidget<Gtk::Entry>(builder, "TCScanTime");
 		auto maskTime = GetWidget<Gtk::Entry>(builder, "TCMaskTime");;
 		auto types = GetWidget<Gtk::ComboBoxText>(builder, "TCTypes");
@@ -384,6 +592,7 @@ namespace Controllers
 
 		tp.sensorId = std::stoi(sensorNb->get_text());
 		tp.threshold = std::stoi(threshold->get_text());
+		tp.gain = std::stod(gain->get_text());
 		tp.scanTime = std::stoi(scanTime->get_text());
 		tp.maskTime = std::stoi(maskTime->get_text());
 
@@ -458,6 +667,11 @@ namespace Controllers
 
 	void ConfigController::ShowSoundEffectsWindow()
 	{
+		const std::string message{"This feature is still under development."};
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK);
+		d.set_title("Sound Effects");
+		d.run();
 
 		return;
 	}
@@ -542,6 +756,7 @@ namespace Controllers
 		Gtk::Entry* threshold = nullptr;
 		Gtk::Entry* scanTime = nullptr;
 		Gtk::Entry* maskTime = nullptr;
+		Gtk::Entry* gain = nullptr;
 		Gtk::ComboBoxText* types = nullptr;
 		Gtk::ComboBoxText* responses = nullptr;
 
@@ -549,6 +764,7 @@ namespace Controllers
 		{
 			builder->get_widget("TCSensorNb", sensorNb);
 			builder->get_widget("TCThreshold", threshold);
+			builder->get_widget("TCGain", gain);
 			builder->get_widget("TCScanTime", scanTime);
 			builder->get_widget("TCMaskTime", maskTime);
 			builder->get_widget("TCTypes", types);
@@ -571,6 +787,7 @@ namespace Controllers
 		// Set fields values
 		{
 			sensorNb->set_text(std::to_string(trigger.sensorId));
+			gain->set_text(std::to_string(trigger.gain));
 			threshold->set_text(std::to_string(trigger.threshold));
 			scanTime->set_text(std::to_string(trigger.scanTime));
 			maskTime->set_text(std::to_string(trigger.maskTime));
@@ -587,6 +804,7 @@ namespace Controllers
 	{
 		const auto sensorId = GetWidget<Gtk::Entry>(builder, "TASensorNb")->get_text();
 		const auto threshold = GetWidget<Gtk::Entry>(builder, "TAThreshold")->get_text();
+		const auto gain = GetWidget<Gtk::Entry>(builder, "TAGain")->get_text();
 		const auto scanTime = GetWidget<Gtk::Entry>(builder, "TAScanTime")->get_text();
 		const auto maskTime = GetWidget<Gtk::Entry>(builder, "TAMaskTime")->get_text();
 		const auto type = GetWidget<Gtk::ComboBoxText>(builder, "TATypes")->get_active_text();
@@ -595,6 +813,7 @@ namespace Controllers
 		TriggerParameters trigger;
 		trigger.sensorId = std::stoi(sensorId.raw());
 		trigger.threshold = std::stoi(threshold.raw());
+		trigger.gain = std::stod(gain.raw());
 		trigger.scanTime = std::stoi(scanTime.raw());
 		trigger.maskTime = std::stoi(maskTime.raw());
 		std::copy(type.begin(), type.end(), trigger.type);

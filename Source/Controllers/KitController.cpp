@@ -16,12 +16,15 @@
 #include <algorithm>
 #include <string>
 #include <stdexcept>
+#include <filesystem>
 #include <iostream>
 
 using namespace eXaDrumsApi;
 using namespace Widgets;
 using namespace Util;
 using namespace Errors;
+
+namespace fs = std::filesystem;
 
 namespace Controllers
 {
@@ -42,6 +45,7 @@ namespace Controllers
 		Gtk::Button* instrumentConfigCancel = nullptr;
 		Gtk::Button* instrumentSelectSave = nullptr;
 		Gtk::Button* instrumentSelectCancel = nullptr;
+		Gtk::Button* addInstrument = nullptr;
 		Gtk::Button* kitNameCancel = nullptr;
 		Gtk::Button* KitNameOk = nullptr;
 		Gtk::Button* soundChooserCancel = nullptr;
@@ -64,6 +68,7 @@ namespace Controllers
 			builder->get_widget("KitPreferencesButton", kitPreferencesButton);
 			builder->get_widget("InstrumentConfigOkay", instrumentConfigOkay);
 			builder->get_widget("InstrumentConfigCancel", instrumentConfigCancel);
+			builder->get_widget("ISAdd", addInstrument);
 			builder->get_widget("ISSave", instrumentSelectSave);
 			builder->get_widget("ISCancel", instrumentSelectCancel);
 			builder->get_widget("KitNameCancel", kitNameCancel);
@@ -122,8 +127,9 @@ namespace Controllers
 			kitPreferencesButton->signal_clicked().connect([&] { ShowInstrumentSelectWindow(); });
 			instrumentConfigOkay->signal_clicked().connect([&] { ValidateInstrumentData(); });
 			instrumentConfigCancel->signal_clicked().connect([&] { CancelInstrumentModif(); });
-			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); });
+			instrumentSelectSave->signal_clicked().connect([&] { SaveKitPreferences(); instrumentSeclectWindow->hide(); });
 			instrumentSelectCancel->signal_clicked().connect([&] { instrumentSeclectWindow->hide(); });
+			addInstrument->signal_clicked().connect([&] { AddInstrumentToSelectedKit(); });
 			kitNameCancel->signal_clicked().connect([&] { newKitWindow->hide(); });
 			KitNameOk->signal_clicked().connect([&] { ValidateKitData(); });
 			soundChooserCancel->signal_clicked().connect([=] { soundChooser->hide(); });
@@ -135,7 +141,13 @@ namespace Controllers
 			instrumentConfig_Type->signal_changed().connect([&] { ChangeInstrumentType(); });
 
 			// Kits list
-			kitsList->signal_changed().connect([&] { ChangeKit(); });
+			kitsList->signal_changed().connect([&] 
+			{ 
+				if(!isModifyingKit)
+				{
+					ChangeKit(); 
+				}
+			});
 
 			// Windows
 			virtualPadWindow->signal_key_press_event().connect([&](GdkEventKey* e)
@@ -148,12 +160,19 @@ namespace Controllers
 				return false;
 			}, false);
 
-			/*recorderWindow->signal_key_press_event().connect([&](GdkEventKey* e)
+			recorderWindow->signal_key_press_event().connect([&](GdkEventKey* e)
 			{
-				std::cout << static_cast<int>(e->keyval) << std::endl;
+				if(e->keyval == GDK_KEY_Return || e->keyval == GDK_KEY_KP_Enter)
+				{
+					RecorderExport();
+				}
+				else if(e->keyval == GDK_KEY_Escape)
+				{
+					recorderWindow->hide();
+				}
 				return false;
 			}, false);
-			*/
+
 		}
 
 		return;
@@ -221,7 +240,7 @@ namespace Controllers
 		return;
 	}
 
-	void KitController::DeleteKit(const int& id)
+	void KitController::DeleteKit(int id)
 	{
 
 		int numKits = drumKit->GetNumKits();
@@ -235,10 +254,6 @@ namespace Controllers
 				PlayDrums();
 			}
 
-			// Deselect kit
-			int activeKit = (id == 0)? 1 : 0;
-			kitsList->set_active(activeKit);
-
 			// Delete kit
 			try
 			{
@@ -251,10 +266,12 @@ namespace Controllers
 			}
 
 			// Remove kit from list
+			this->isModifyingKit = true;
+			kitsList->set_active(-1);
 			kitsList->remove_text(id);
+			this->isModifyingKit = false;
 
-			// Set new kit
-			ChangeKit();
+			kitsList->set_active(std::max(0, id - 1));
 
 		}
 		else
@@ -291,15 +308,21 @@ namespace Controllers
 		// Retrieve kits names
 		std::vector<std::string> newkitsNames = drumKit->GetKitsNames();
 
-		auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
+		if(newkitsNames.size() == oldKitsNames.size() + 1)
+		{
+			const auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
+	
+			if(newOldKit.second != newkitsNames.end())
+			{
+				// Get new kit's name and position in the list
+				std::string newKitName = *(newOldKit.second);
+				int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
 
-		// Get new kit's name and position in the list
-		std::string newKitName = *(newOldKit.second);
-		int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
-
-		// Insert new kit into list, and activate it
-		kitsList->insert(pos, newKitName);
-		kitsList->set_active(pos);
+				// Insert new kit into list, and activate it
+				kitsList->insert(pos, newKitName);
+				kitsList->set_active(pos);
+			}
+		}
 
 		// Set new kit
 		ChangeKit();
@@ -331,6 +354,11 @@ namespace Controllers
 
 		try
 		{
+			const auto path = fs::path{fileName};
+			if(path.filename().string().length() <= 3)
+			{
+				throw Exception("File name is too short.", error_type_warning);
+			}
 			drumKit->RecorderExport(fileName);
 		}
 		catch(const Exception& e)
@@ -408,7 +436,8 @@ namespace Controllers
 		// Load new kit or exit if it doesn't exist
 		try
 		{
-			drumKit->SelectKit(GetCurrentKitId());
+			const auto kitId = GetCurrentKitId();
+			drumKit->SelectKit(kitId);
 		}
 		catch(const Exception& e)
 		{
@@ -638,6 +667,19 @@ namespace Controllers
 
 		if(instrumentsSelectors.size() > 1)
 		{
+			Gtk::MessageDialog d("Are you sure you want to remove this instrument (this modification will be saved and cannot be undone)?", false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_YES_NO);
+			d.set_title("Remove Instrument");
+
+			// Get answer
+			int answer = d.run();
+
+			// Check answer
+			switch(answer)
+			{
+				case Gtk::ResponseType::RESPONSE_NO: return;
+				case Gtk::ResponseType::RESPONSE_YES: break;
+				default: return;
+			}
 
 			// Load current kit into the kit creator for modifications
 			try
@@ -658,10 +700,49 @@ namespace Controllers
 				instrumentsSelectors[i].reset();
 				instrumentsSelectors.erase(instrumentsSelectors.begin() + i);
 			}
+
+			try
+			{
+				std::string kitLocation = drumKit->GetKitDataFileName();
+				kitCreator->SaveKit(kitLocation.c_str());
+			}
+			catch(const Exception& e)
+			{
+				errorDialog(e);
+			}
+
+			SaveKitPreferences();
 		}
 
 		return;
 	}
+
+
+	void KitController::AddInstrumentToSelectedKit()
+	{
+
+		this->isModifyingKit = true;
+		kitCreator->SaveKit();
+		kitCreator->CreateNewKit();
+
+		// Load current kit into the kit creator for modifications
+		try
+		{
+			std::string kitLocation = drumKit->GetKitDataFileName();
+			kitCreator->CreateFromModel(kitLocation.c_str());
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+
+		int numInstruments = kitCreator->GetNumInstruments();
+		this->numInstrumentsToCreate = numInstruments + 1;
+
+		AddInstrumentToKit();
+	}
+
 
 	void KitController::AddInstrumentToKit()
 	{
@@ -720,10 +801,21 @@ namespace Controllers
 			instrumentConfigWindow->hide();
 
 			AddNewKit();
-			KitAdded();
 
-			kitCreator->CreateNewKit();
-			this->numInstrumentsToCreate = 0;
+			if(!this->isModifyingKit)
+			{
+				KitAdded();
+				kitCreator->CreateNewKit();
+				this->numInstrumentsToCreate = 0;
+			}
+			else
+			{
+				ShowInstrumentSelectWindow();
+			}
+			
+
+			if(this->isModifyingKit)
+				this->isModifyingKit = false;
 
 		}
 		else
@@ -921,6 +1013,15 @@ namespace Controllers
 				std::string soundType = sound->GetSoundType();
 				std::string soundFile = sound->GetSound();
 
+				const auto soundPath = fs::path{drumKit->GetDataLocation() + "SoundBank/" + soundFile};
+				const auto extension = soundPath.extension().string();
+
+				if(!fs::exists(soundPath) || extension != ".wav")
+				{
+					kitCreator->RemoveLastInstrument();
+					Errors::errorDialog("Invalid sound file. Only '.wav' files are allowed.", error_type_error);
+					return;
+				}
 				kitCreator->AddInstrumentSound(soundFile.c_str(), soundType.c_str());
 			}
 
@@ -1082,7 +1183,7 @@ namespace Controllers
 					errorDialog(e);
 					return;
 				}
-				
+
 			}
 
 			// Reload kits
@@ -1096,19 +1197,13 @@ namespace Controllers
 				return;
 			}
 
-			//FIXME: Doesn't update the active entry when there's only one kit
 			if(name != kitsList->get_active_text())
 			{
 				kitsList->get_active()->set_value(0, name);
 
-				if(drumKit->GetKitsNames().size() > 1 && kitsList->get_active_row_number() == 0)
-				{
-					kitsList->set_active(1);
-				}
-				else
-				{
-					kitsList->set_active(0);
-				}
+				isModifyingKit = true;
+				kitsList->set_active(-1);
+				isModifyingKit = false;
 
 				kitsList->set_active_text(name);
 			}
@@ -1130,9 +1225,6 @@ namespace Controllers
 			}
 
 		}
-
-		// Close window
-		instrumentSeclectWindow->hide();
 
 		return;
 	}

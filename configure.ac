@@ -5,7 +5,7 @@
 
 # https://www.gnu.org/software/autoconf/manual/autoconf.html
 AC_INIT([eXaDrums],
-        [0.4.1],
+        [0.5.0],
         [Jérémy Oden <jerem.oden@gmail.com>],
         [],
         [http://www.freewebmaster.fr])
@@ -20,6 +20,7 @@ AM_INIT_AUTOMAKE([-Wall -Werror foreign subdir-objects])
 # https://autotools.io/pkgconfig/pkg_check_modules.html
 PKG_CHECK_MODULES([alsa], [alsa])
 PKG_CHECK_MODULES([tinyxml2], [tinyxml2])
+PKG_CHECK_MODULES([minizip], [minizip])
 PKG_CHECK_MODULES([gtkmm], [gtkmm-3.0])
 PKG_CHECK_MODULES([exadrums], [exadrums])
 
