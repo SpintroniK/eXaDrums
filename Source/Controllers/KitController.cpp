@@ -141,7 +141,13 @@ namespace Controllers
 			instrumentConfig_Type->signal_changed().connect([&] { ChangeInstrumentType(); });
 
 			// Kits list
-			kitsList->signal_changed().connect([&] { ChangeKit(); });
+			kitsList->signal_changed().connect([&] 
+			{ 
+				if(!isModifyingKit)
+				{
+					ChangeKit(); 
+				}
+			});
 
 			// Windows
 			virtualPadWindow->signal_key_press_event().connect([&](GdkEventKey* e)
@@ -234,7 +240,7 @@ namespace Controllers
 		return;
 	}
 
-	void KitController::DeleteKit(const int& id)
+	void KitController::DeleteKit(int id)
 	{
 
 		int numKits = drumKit->GetNumKits();
@@ -248,10 +254,6 @@ namespace Controllers
 				PlayDrums();
 			}
 
-			// Deselect kit
-			int activeKit = (id == 0)? 1 : 0;
-			kitsList->set_active(activeKit);
-
 			// Delete kit
 			try
 			{
@@ -264,10 +266,12 @@ namespace Controllers
 			}
 
 			// Remove kit from list
+			this->isModifyingKit = true;
+			kitsList->set_active(-1);
 			kitsList->remove_text(id);
+			this->isModifyingKit = false;
 
-			// Set new kit
-			ChangeKit();
+			kitsList->set_active(std::max(0, id - 1));
 
 		}
 		else
@@ -304,18 +308,20 @@ namespace Controllers
 		// Retrieve kits names
 		std::vector<std::string> newkitsNames = drumKit->GetKitsNames();
 
-		auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
-
-		if(newOldKit.first != oldKitsNames.end())
+		if(newkitsNames.size() == oldKitsNames.size() + 1)
 		{
+			const auto newOldKit = std::mismatch(oldKitsNames.cbegin(), oldKitsNames.cend(), newkitsNames.cbegin());
+	
+			if(newOldKit.second != newkitsNames.end())
+			{
+				// Get new kit's name and position in the list
+				std::string newKitName = *(newOldKit.second);
+				int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
 
-			// Get new kit's name and position in the list
-			std::string newKitName = *(newOldKit.second);
-			int pos = std::distance(newkitsNames.cbegin(), newOldKit.second);
-
-			// Insert new kit into list, and activate it
-			kitsList->insert(pos, newKitName);
-			kitsList->set_active(pos);
+				// Insert new kit into list, and activate it
+				kitsList->insert(pos, newKitName);
+				kitsList->set_active(pos);
+			}
 		}
 
 		// Set new kit
@@ -430,7 +436,8 @@ namespace Controllers
 		// Load new kit or exit if it doesn't exist
 		try
 		{
-			drumKit->SelectKit(GetCurrentKitId());
+			const auto kitId = GetCurrentKitId();
+			drumKit->SelectKit(kitId);
 		}
 		catch(const Exception& e)
 		{

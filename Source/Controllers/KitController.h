@@ -48,7 +48,7 @@ namespace Controllers
 		int GetCurrentKitId() const;
 		void SaveKitConfig(int id) const { drumKit->SaveKitConfig(id); }
 		void SaveKitConfig() const { drumKit->SaveKitConfig(GetCurrentKitId()); }
-		void DeleteKit(const int& id);
+		void DeleteKit(int id);
 		void KitAdded();
 		void EnableRecording();
 		void RecorderExport();
