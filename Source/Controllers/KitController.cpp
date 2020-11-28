@@ -1013,6 +1013,15 @@ namespace Controllers
 				std::string soundType = sound->GetSoundType();
 				std::string soundFile = sound->GetSound();
 
+				const auto soundPath = fs::path{drumKit->GetDataLocation() + "SoundBank/" + soundFile};
+				const auto extension = soundPath.extension().string();
+
+				if(!fs::exists(soundPath) || extension != ".wav")
+				{
+					kitCreator->RemoveLastInstrument();
+					Errors::errorDialog("Invalid sound file. Only '.wav' files are allowed.", error_type_error);
+					return;
+				}
 				kitCreator->AddInstrumentSound(soundFile.c_str(), soundType.c_str());
 			}
 
