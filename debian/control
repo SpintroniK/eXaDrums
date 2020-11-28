@@ -5,10 +5,12 @@ Maintainer: Jeremy Oden <jerem.oden@gmail.com>
 Build-Depends:
  debhelper-compat (= 13),
  libasound-dev,
- libexadrums-dev,
+ libexadrums-dev (>= 0.5.0),
  libgtkmm-3.0-dev,
+ libminizip-dev,
  pkg-config,
-Standards-Version: 4.5.0
+ zlib1g-dev,
+Standards-Version: 4.5.1
 Rules-Requires-Root: no
 Homepage: https://www.freewebmaster.fr
 Vcs-Browser: https://github.com/SpintroniK/eXaDrums/tree/debian
@@ -39,4 +41,3 @@ Description: Software drum module (graphical user interface)
  and the error management is not complete.
  .
  This package provides the graphical user interface.
- 
