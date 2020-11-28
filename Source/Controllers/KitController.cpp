@@ -1174,7 +1174,7 @@ namespace Controllers
 					errorDialog(e);
 					return;
 				}
-				
+
 			}
 
 			// Reload kits
@@ -1188,19 +1188,13 @@ namespace Controllers
 				return;
 			}
 
-			//FIXME: Doesn't update the active entry when there's only one kit
 			if(name != kitsList->get_active_text())
 			{
 				kitsList->get_active()->set_value(0, name);
 
-				if(drumKit->GetKitsNames().size() > 1 && kitsList->get_active_row_number() == 0)
-				{
-					kitsList->set_active(1);
-				}
-				else
-				{
-					kitsList->set_active(0);
-				}
+				isModifyingKit = true;
+				kitsList->set_active(-1);
+				isModifyingKit = false;
 
 				kitsList->set_active_text(name);
 			}
