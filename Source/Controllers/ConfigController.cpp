@@ -507,6 +507,11 @@ namespace Controllers
 
 	void ConfigController::ShowSoundLibConfigWindow()
 	{
+		const std::string message{"Sounds are located in folder: \n" + drumKit->GetDataLocation() + "SoundBank"};
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK);
+		d.set_title("Sound Library");
+		d.run();
 
 		return;
 	}
@@ -662,6 +667,11 @@ namespace Controllers
 
 	void ConfigController::ShowSoundEffectsWindow()
 	{
+		const std::string message{"This feature is still under development."};
+
+		Gtk::MessageDialog d(message, false, Gtk::MessageType::MESSAGE_WARNING, Gtk::ButtonsType::BUTTONS_OK);
+		d.set_title("Sound Effects");
+		d.run();
 
 		return;
 	}
