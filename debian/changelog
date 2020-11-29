@@ -1,4 +1,4 @@
-exadrums (0.5.0-1) unstable; urgency=medium
+exadrums (0.5.1-1) unstable; urgency=medium
 
   * New upstream version, depending on new libexadrums, minizip
     and zlib (because minizip does not).
