@@ -122,6 +122,7 @@ namespace Controllers
 
 		// Windows
 		Gtk::Window* newKitWindow;
+		Gtk::Window* recorderExportWindow;
 		Gtk::Window* instrumentConfigWindow;
 		Gtk::Window* instrumentSeclectWindow;
 		Gtk::Window* virtualPadWindow;

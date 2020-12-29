@@ -1,7 +1,7 @@
 ## Process this file with automake to produce Makefile.in
 
-# Copyright (C) 2018-2019 Jérémy Oden <jerem.oden@gmail.com>
-# Copyright (C) 2018-2019 Nicolas Boulenguez <nicolas@debian.org>
+# Copyright (C) 2018-2021 Jérémy Oden <jerem.oden@gmail.com>
+# Copyright (C) 2018-2021 Nicolas Boulenguez <nicolas@debian.org>
 
 # Cache shared with autoconf.
 ACLOCAL_AMFLAGS = -I m4
@@ -52,6 +52,9 @@ dist_png_DATA = eXaDrums.png
 
 pixmapsdir = $(datadir)/pixmaps
 dist_pixmaps_DATA = eXaDrums.xpm
+
+appdatadir = $(datadir)/metainfo
+dist_appdata_DATA = exadrums.appdata.xml
 
 # Good habits.
 AM_CXXFLAGS = -Wall
