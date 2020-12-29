@@ -1,7 +1,7 @@
 # Process this file with autoconf to produce configure.
 
-# Copyright (C) 2018-2019 Jérémy Oden <jerem.oden@gmail.com>
-# Copyright (C) 2018-2019 Nicolas Boulenguez <nicolas@debian.org>
+# Copyright (C) 2018-2021 Jérémy Oden <jerem.oden@gmail.com>
+# Copyright (C) 2018-2021 Nicolas Boulenguez <nicolas@debian.org>
 
 # https://www.gnu.org/software/autoconf/manual/autoconf.html
 AC_INIT([eXaDrums],
