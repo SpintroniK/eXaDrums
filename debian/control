@@ -5,14 +5,14 @@ Maintainer: Jeremy Oden <jerem.oden@gmail.com>
 Build-Depends:
  debhelper-compat (= 13),
  libasound-dev,
- libexadrums-dev (>= 0.5.0),
+ libexadrums-dev (>= 0.6.0),
  libgtkmm-3.0-dev,
  libminizip-dev,
  pkg-config,
  zlib1g-dev,
 Standards-Version: 4.5.1
 Rules-Requires-Root: no
-Homepage: https://www.freewebmaster.fr
+Homepage: https://exadrums.com
 Vcs-Browser: https://github.com/SpintroniK/eXaDrums/tree/debian
 Vcs-Git: https://github.com/SpintroniK/eXaDrums.git -b debian
 
