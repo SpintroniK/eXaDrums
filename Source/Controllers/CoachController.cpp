@@ -44,6 +44,9 @@ namespace Controllers
 		scores.resize(4);
 		std::fill(scores.begin(), scores.end(), 0);
 
+		hitMeterBar->set_min_value(0.);
+		hitMeterBar->set_max_value(1.);
+
 		return;
 	}
 
@@ -128,8 +131,10 @@ namespace Controllers
 
 			double fraction = std::exp(-double(dt) / 200000.0);
 			double value = double(drumKit->GetLastTrigValue()) / 100.0;
-
-			hitMeterBar->set_value(std::max(value * fraction, 0.));
+			auto val = std::max(value * fraction, 0.);
+			if(val < 0.01)
+				val = 0.;
+			hitMeterBar->set_value(val);
 		}
 
 		// Check accuracy

@@ -11,6 +11,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/messagedialog.h>
 #include <gtkmm/filechooserdialog.h>
+#include <gtkmm/checkbutton.h>
 
 #include <functional>
 #include <algorithm>
@@ -52,6 +53,8 @@ namespace Controllers
 		Gtk::Button* soundChooserOkay = nullptr;
 		Gtk::Button* recorderCancel = nullptr;
 		Gtk::Button* recorderSave = nullptr;
+		Gtk::Button* recorderExportCancel = nullptr;
+		Gtk::Button* recorderExportOK = nullptr;
 
 		Gtk::FileChooserDialog* soundChooser = nullptr;
 
@@ -77,6 +80,8 @@ namespace Controllers
 			builder->get_widget("SoundChooserOkay", soundChooserOkay);
 			builder->get_widget("RecorderCancel", recorderCancel);
 			builder->get_widget("RecorderSave", recorderSave);
+			builder->get_widget("RecorderExportCancel", recorderExportCancel);
+			builder->get_widget("RecorderExportOK", recorderExportOK);
 
 			builder->get_widget("SoundChooser", soundChooser);
 
@@ -100,6 +105,7 @@ namespace Controllers
 			builder->get_widget("InstrumentConfigWindow", instrumentConfigWindow);
 			builder->get_widget("InstrumentSeclectWindow", instrumentSeclectWindow);
 			builder->get_widget("RecorderWindow", recorderWindow);
+			builder->get_widget("RecorderExportWindow", recorderExportWindow);
 			builder->get_widget("VirtualPadWindow", virtualPadWindow);
 
 		}
@@ -136,6 +142,8 @@ namespace Controllers
 			soundChooserOkay->signal_clicked().connect([&] { ChangeInstrumentSound(); });
 			recorderCancel->signal_clicked().connect([&] { recorderWindow->hide(); });
 			recorderSave->signal_clicked().connect([&] { RecorderExport(); });
+			recorderExportCancel->signal_clicked().connect([&] { recorderExportWindow->hide(); });
+			recorderExportOK->signal_clicked().connect([&] { recorderWindow->show(); });
 
 			// Comboboxes
 			instrumentConfig_Type->signal_changed().connect([&] { ChangeInstrumentType(); });
@@ -340,17 +348,24 @@ namespace Controllers
 	{
 		bool isRecording = this->recordButton->get_active();
 
+
 		drumKit->EnableRecording(isRecording);
 
 		if(!isRecording)
 		{
-			recorderWindow->show();
+			recorderExportWindow->show();
 		}
 	}
 
 	void KitController::RecorderExport()
 	{
-		std::string fileName = recorderWindow->get_filename();
+		recorderExportWindow->hide();
+		const std::string fileName = recorderWindow->get_filename();
+
+		Gtk::CheckButton* exportRawCheckbox = nullptr;
+		builder->get_widget("ExportRawCheckbox", exportRawCheckbox);
+
+		const auto isExportRaw = exportRawCheckbox->get_active();
 
 		try
 		{
@@ -359,7 +374,22 @@ namespace Controllers
 			{
 				throw Exception("File name is too short.", error_type_warning);
 			}
-			drumKit->RecorderExport(fileName);
+
+			std::string wavFileName = fileName;
+			if(path.extension() != ".wav")
+			{
+				wavFileName += ".wav";
+			}
+			
+			drumKit->RecorderExportPCM(wavFileName);
+
+			if(isExportRaw)
+			{
+				drumKit->RecorderExport(fileName + ".xml");
+			}
+
+			drumKit->RecorderPurgeTempFile();
+
 		}
 		catch(const Exception& e)
 		{

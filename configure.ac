@@ -1,14 +1,14 @@
 # Process this file with autoconf to produce configure.
 
-# Copyright (C) 2018-2019 Jérémy Oden <jerem.oden@gmail.com>
-# Copyright (C) 2018-2019 Nicolas Boulenguez <nicolas@debian.org>
+# Copyright (C) 2018-2021 Jérémy Oden <jerem.oden@gmail.com>
+# Copyright (C) 2018-2021 Nicolas Boulenguez <nicolas@debian.org>
 
 # https://www.gnu.org/software/autoconf/manual/autoconf.html
 AC_INIT([eXaDrums],
-        [0.5.2],
+        [0.6.0],
         [Jérémy Oden <jerem.oden@gmail.com>],
         [],
-        [http://www.freewebmaster.fr])
+        [https://exadrums.com])
 AC_CONFIG_SRCDIR([Source/exadrumsConfig.h])
 AC_PROG_CXX
 AC_CONFIG_MACRO_DIRS([m4])

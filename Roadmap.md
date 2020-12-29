@@ -12,25 +12,12 @@ This document outlines the development plan from a high level and will be update
 
 ## Current version
 
-### 0.5.0
-
-- [x] Fix sound chooser window size.
-- [ ] &#9997; Check libexadrums: installed and linked versions.
-- [x] Detect return and escape keypress in sound chooser and record saver.
-- [x] Add import/export configuration window.
-- [x] Add factory reset button.
-- [x] Add trigger gain combo box.
-- [X] Add an "add instrument" button in the kit preferences window.
-- [x] Add score to rhythm coach.
-- [x] Add toggle fullscreen button.
-- [x] Update Faders: to be in a scrollable container.
-
-## Future versions
-
 ### 0.6.0
 
-- [ ] Add recorder's sound export feature.
-- [ ] Add calibration tools.
+- [x] Add recorder's sound export feature.
+- [x] Add minimal calibration tools.
+
+## Future versions
 
 ### 0.7.0
 
@@ -47,6 +34,19 @@ This document outlines the development plan from a high level and will be update
 - [ ] Doxygen: document code.
 
 ## Past versions
+
+### 0.5.0
+
+- [x] Fix sound chooser window size.
+- [x] &#9997; Check libexadrums: installed and linked versions.
+- [x] Detect return and escape keypress in sound chooser and record saver.
+- [x] Add import/export configuration window.
+- [x] Add factory reset button.
+- [x] Add trigger gain combo box.
+- [X] Add an "add instrument" button in the kit preferences window.
+- [x] Add score to rhythm coach.
+- [x] Add toggle fullscreen button.
+- [x] Update Faders: to be in a scrollable container.
 
 ### 0.4.1
 

@@ -16,6 +16,7 @@
 #include <gtkmm/entry.h>
 #include <gtkmm/box.h>
 #include <gtkmm/infobar.h>
+#include <glibmm/main.h>
 
 #include <iostream>
 
@@ -570,6 +571,8 @@ namespace Controllers
 		}
 
 		triggerConfigWindow->hide();
+		triggerTimeout.disconnect();
+
 		triggerSelectWindow->show();
 
 		return;
@@ -745,6 +748,25 @@ namespace Controllers
 		}
 	}
 
+	bool ConfigController::UpdateTriggerValue(size_t id)
+	{
+		Gtk::Label* triggerValue = nullptr;
+		builder->get_widget("LastTrigValue", triggerValue);
+		
+		try
+		{
+			const auto value = drumKit->GetTriggerValue(id);
+			triggerValue->set_text(std::to_string(value));
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+		}
+		
+
+		return true;
+	}
+
 	void ConfigController::TriggerConfiguration(std::size_t sensorId)
 	{
 
@@ -794,6 +816,8 @@ namespace Controllers
 			types->set_active_text(type);
 			responses->set_active_text(response);
 		}
+
+		triggerTimeout = Glib::signal_timeout().connect(sigc::bind(sigc::mem_fun(this, &ConfigController::UpdateTriggerValue), sensorId), 100);
 
 		triggerConfigWindow->show();
 

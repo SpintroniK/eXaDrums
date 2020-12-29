@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2015-2020, Jeremy Oden <jerem.oden@gmail.com> -->
+<!-- Copyright (c) 2015-2021, Jeremy Oden <jerem.oden@gmail.com> -->
 <component type="desktop">
  <id>eXaDrums.desktop</id>
  <metadata_license>BSD 3-Clause License</metadata_license>
@@ -7,16 +7,16 @@
  <name>eXaDrums</name>
  <summary>Software Drum Module</summary>
  <description>
-  <p>EXaDrums is a software drum module. Its main goal is to bring
-   professional sound quality, low latency and an intuitive user
+  <p>EXaDrums is a software drum module. Its main goal is to offer
+   professional sound quality, low latency, and an intuitive user
    interface.</p>
  </description>
  <screenshots>
   <screenshot type="default">
-   <image>https://freewebmaster.fr/exadrums/exadrums.png</image>
+   <image>https://exadrums.com/assets/screenshot.png</image>
    <caption>The main window showing the application in action</caption>
   </screenshot>
  </screenshots>
- <url type="homepage">https://freewebmaster.fr//</url>
+ <url type="homepage">https://exadrums.com</url>
  <updatecontact>jerem.oden@gmail.com</updatecontact>
 </component>
