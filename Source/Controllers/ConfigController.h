@@ -61,6 +61,7 @@ namespace Controllers
 		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
+		bool UpdateTriggerValue(size_t id);
 
 		bool isImportConfig = false;
 
@@ -68,6 +69,8 @@ namespace Controllers
 		std::shared_ptr<eXaDrumsApi::eXaDrums> drumKit;
 
 		std::function<void()> quitCallback;
+
+		sigc::connection triggerTimeout;
 
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
