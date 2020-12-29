@@ -8,7 +8,7 @@ AC_INIT([eXaDrums],
         [0.6.0],
         [Jérémy Oden <jerem.oden@gmail.com>],
         [],
-        [http://www.freewebmaster.fr])
+        [https://exadrums.com])
 AC_CONFIG_SRCDIR([Source/exadrumsConfig.h])
 AC_PROG_CXX
 AC_CONFIG_MACRO_DIRS([m4])
