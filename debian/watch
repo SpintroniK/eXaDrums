@@ -6,4 +6,4 @@ opts=\
   filenamemangle=s/.+\/v?(\d\S+)\.tar\.gz/eXaDrums-$1\.tar\.gz/ \
   \
   https://github.com/SpintroniK/eXaDrums/tags \
-  .*/archive/(\d\S+)\.tar\.gz
+  .*/archive/refs/tags/(\d\S+)\.tar\.gz
