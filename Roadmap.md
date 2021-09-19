@@ -12,16 +12,11 @@ This document outlines the development plan from a high level and will be update
 
 ## Current version
 
-### 0.6.0
-
-- [x] Add recorder's sound export feature.
-- [x] Add minimal calibration tools.
-
-## Future versions
-
 ### 0.7.0
 
-- [ ] Add sound effects.
+- [ ] Add loader to record export window.
+
+## Future versions
 
 ### 0.8.0
 
@@ -35,22 +30,27 @@ This document outlines the development plan from a high level and will be update
 
 ## Past versions
 
+### 0.6.0
+
+- [X] Add recorder's sound export feature.
+- [X] Add minimal calibration tools.
+
 ### 0.5.0
 
-- [x] Fix sound chooser window size.
-- [x] &#9997; Check libexadrums: installed and linked versions.
-- [x] Detect return and escape keypress in sound chooser and record saver.
-- [x] Add import/export configuration window.
-- [x] Add factory reset button.
-- [x] Add trigger gain combo box.
+- [X] Fix sound chooser window size.
+- [X] &#9997; Check libexadrums: installed and linked versions.
+- [X] Detect return and escape keypress in sound chooser and record saver.
+- [X] Add import/export configuration window.
+- [X] Add factory reset button.
+- [X] Add trigger gain combo box.
 - [X] Add an "add instrument" button in the kit preferences window.
-- [x] Add score to rhythm coach.
-- [x] Add toggle fullscreen button.
-- [x] Update Faders: to be in a scrollable container.
+- [X] Add score to rhythm coach.
+- [X] Add toggle fullscreen button.
+- [X] Update Faders: to be in a scrollable container.
 
 ### 0.4.1
 
-- [x] Build successfully with clang++-7.
-- [x] Update Readme (installation instructions).
-- [x] Fix Readme (installation procedure -- checkout debian branch first).
-- [x] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
+- [X] Build successfully with clang++-7.
+- [X] Update Readme (installation instructions).
+- [X] Fix Readme (installation procedure -- checkout debian branch first).
+- [X] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
