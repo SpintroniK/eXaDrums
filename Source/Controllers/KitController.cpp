@@ -584,7 +584,7 @@ namespace Controllers
 
 			std::transform(trigsIds.begin(), trigsIds.end(), soundTriggers.begin(), [&, max] (int trigId)
 			{
-				return [&, trigId, max] () -> void { drumKit->SetTriggerSensorValue(trigId, 0, max); };
+				return [&, trigId, max] () -> void { drumKit->SetTriggerSensorValue(trigId, max); };
 			});
 
 			VirtualPadPtr vpad(new VirtualPad(instNames[i], std::move(soundTriggers)));
