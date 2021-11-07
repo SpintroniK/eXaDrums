@@ -64,7 +64,7 @@ bin_PROGRAMS = exadrums
 
 exadrums_CXXFLAGS = $(AM_CXXFLAGS) \
   $(alsa_CFLAGS) $(tinyxml2_CFLAGS) $(minizip_CFLAGS) $(gtkmm_CFLAGS) $(exadrums_CFLAGS) \
-  -std=c++17
+  -std=c++20
 exadrums_LDADD = $(AM_LDADD) \
   -lstdc++fs \
   $(alsa_LIBS) $(tinyxml2_LIBS) $(minizip_LIBS) $(gtkmm_LIBS) $(exadrums_LIBS)
