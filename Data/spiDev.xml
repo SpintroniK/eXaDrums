@@ -1,0 +1,4 @@
+<SpiDev>
+    <Device type="MCP3008" bus="0" cs="0">
+    </Device>
+</SpiDev>

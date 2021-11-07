@@ -17,7 +17,7 @@ This document outlines the development plan from a high level and will be update
 - &#9997; Work with libexadrums 0.7.0 API.
 - [ ] Add loader to record export window.
 - [ ] Make instruments & triggers lists scrollable.
-- &#9997; Use C++20
+- [X] Use C++20
 
 ## Future versions
 
