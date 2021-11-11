@@ -66,6 +66,7 @@ namespace Controllers
 		Gtk::Button* sensorsConfigButton = nullptr;
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
+		Gtk::Button* spiConfigButton = nullptr;
 
 		// Mixer
 		Gtk::Button* mixerConfigCancelButton = nullptr;
@@ -107,6 +108,7 @@ namespace Controllers
 			builder->get_widget("SensorsConfigButton", sensorsConfigButton);
 			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
+			builder->get_widget("SpiConfigButton", spiConfigButton);
 
 			// Mixer
 			builder->get_widget("MixerConfigCancel", mixerConfigCancelButton);
@@ -206,6 +208,12 @@ namespace Controllers
 			Gtk::ComboBoxText* sensorsTypesList = nullptr;
 			builder->get_widget("SensorsTypes", sensorsTypesList);
 
+			sensorsTypesList->signal_changed().connect([=] 
+			{
+				const auto isSpi = sensorsTypesList->get_active_text() == "Spi";
+				spiConfigButton->set_visible(isSpi);
+			});
+
 			std::vector<std::string> sensorsTypes = config.GetSensorsTypes();
 
 			// Append values to combobox
@@ -213,6 +221,11 @@ namespace Controllers
 
 			const std::string selectedType = config.GetSensorsType();
 			sensorsTypesList->set_active_text(selectedType);
+
+			if(selectedType == "Spi")
+			{
+				spiConfigButton->set_visible(true);
+			}
 
 			Gtk::Entry* hddDataFolder = nullptr;
 			builder->get_widget("SensorsDataFolder", hddDataFolder);
