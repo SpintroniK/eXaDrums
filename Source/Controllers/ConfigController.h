@@ -58,6 +58,7 @@ namespace Controllers
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
+		void SaveSpiConfig();
 		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
@@ -85,6 +86,7 @@ namespace Controllers
 		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
 		Gtk::Window* importExportConfigWindow;
+		Gtk::Window* spiDevConfigWindow;
 		Gtk::FileChooserDialog* exportConfigWindow;
 		Gtk::FileChooserDialog* importConfigWindow;
 

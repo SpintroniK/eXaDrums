@@ -15,6 +15,7 @@ This document outlines the development plan from a high level and will be update
 ### 0.7.0
 
 - &#9997; Work with libexadrums 0.7.0 API.
+- &#9997; Add Spi devices configuration dialog.
 - [ ] Add loader to record export window.
 - [ ] Make instruments & triggers lists scrollable.
 - &#9997; Stop using Gtk deprecated features.

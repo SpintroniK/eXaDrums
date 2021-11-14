@@ -67,6 +67,7 @@ namespace Controllers
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
 		Gtk::Button* spiConfigButton = nullptr;
+		Gtk::Button* spiConfigHideButton = nullptr;
 
 		// Mixer
 		Gtk::Button* mixerConfigCancelButton = nullptr;
@@ -109,6 +110,7 @@ namespace Controllers
 			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
 			builder->get_widget("SpiConfigButton", spiConfigButton);
+			builder->get_widget("SpiConfigHideButton", spiConfigHideButton);
 
 			// Mixer
 			builder->get_widget("MixerConfigCancel", mixerConfigCancelButton);
@@ -126,6 +128,7 @@ namespace Controllers
 			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
 			builder->get_widget("ExportConfigWindow", exportConfigWindow);
 			builder->get_widget("ImportConfigWindow", importConfigWindow);
+			builder->get_widget("SpiDevConfigWindow", spiDevConfigWindow);
 
 		}
 
@@ -180,6 +183,8 @@ namespace Controllers
 			// Sensors config
 			sensorsConfigButton->signal_clicked().connect([&] { ShowSensorsConfigWindow(); });
 			sensorsConfigOkayButton->signal_clicked().connect([&] { SaveSensorsConfig(); });
+			spiConfigButton->signal_clicked().connect([this] { spiDevConfigWindow->show(); });
+			spiConfigHideButton->signal_clicked().connect([this] { spiDevConfigWindow->hide(); });
 
 			// Mixer config
 			mixerConfigCancelButton->signal_clicked().connect([&] { mixerConfigWindow->hide(); });
@@ -739,6 +744,14 @@ namespace Controllers
 		sensorsConfigWindow->hide();
 
 		return;
+	}
+
+	void ConfigController::SaveSpiConfig()
+	{
+
+		
+
+		spiDevConfigWindow->hide();
 	}
 
 	void ConfigController::TriggerDelete(int sensorId)

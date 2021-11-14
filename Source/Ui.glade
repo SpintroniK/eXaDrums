@@ -30,7 +30,7 @@ Author: Jérémy Oden
 
 -->
 <interface>
-  <requires lib="gtk+" version="3.20"/>
+  <requires lib="gtk+" version="3.24"/>
   <!-- interface-license-type bsd3c -->
   <!-- interface-name eXaDrums -->
   <!-- interface-description Drums for Linux -->
@@ -49,7 +49,6 @@ Author: Jérémy Oden
   </object>
   <object class="GtkFileChooserDialog" id="ImportConfigWindow">
     <property name="can-focus">False</property>
-    <property name="use-header-bar">0</property>
     <property name="type-hint">dialog</property>
     <child internal-child="vbox">
       <object class="GtkBox">
@@ -156,6 +155,29 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
+  </object>
+  <object class="GtkFileFilter" id="SoundsFilter">
+    <patterns>
+      <pattern>*.raw</pattern>
+      <pattern>*.wav</pattern>
+    </patterns>
+  </object>
+  <object class="GtkAdjustment" id="TempoAdjustment">
+    <property name="lower">60</property>
+    <property name="upper">240</property>
+    <property name="value">120</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="adjustment1">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
+  </object>
+  <object class="GtkAdjustment" id="volumeAdjustment">
+    <property name="upper">100</property>
+    <property name="step-increment">1</property>
+    <property name="page-increment">10</property>
   </object>
   <object class="GtkWindow" id="MainWindow">
     <property name="can-focus">False</property>
@@ -496,7 +518,6 @@ Author: Jérémy Oden
                                             <property name="can-focus">False</property>
                                             <property name="halign">end</property>
                                             <property name="valign">center</property>
-                                            <property name="margin-right">2</property>
                                             <property name="margin-end">2</property>
                                             <property name="hexpand">True</property>
                                             <property name="vexpand">True</property>
@@ -513,7 +534,6 @@ Author: Jérémy Oden
                                             <property name="can-focus">False</property>
                                             <property name="halign">start</property>
                                             <property name="valign">center</property>
-                                            <property name="margin-left">2</property>
                                             <property name="margin-start">2</property>
                                             <property name="hexpand">True</property>
                                             <property name="vexpand">True</property>
@@ -561,7 +581,6 @@ Author: Jérémy Oden
                                             <property name="can-focus">False</property>
                                             <property name="halign">end</property>
                                             <property name="valign">center</property>
-                                            <property name="margin-right">2</property>
                                             <property name="margin-end">2</property>
                                             <property name="hexpand">True</property>
                                             <property name="vexpand">True</property>
@@ -578,7 +597,6 @@ Author: Jérémy Oden
                                             <property name="can-focus">False</property>
                                             <property name="halign">start</property>
                                             <property name="valign">center</property>
-                                            <property name="margin-left">2</property>
                                             <property name="margin-start">2</property>
                                             <property name="hexpand">True</property>
                                             <property name="vexpand">True</property>
@@ -1223,11 +1241,314 @@ Author: Jérémy Oden
       </object>
     </child>
   </object>
+  <object class="GtkWindow" id="CoachWindow">
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Rhytthm Coach</property>
+    <property name="resizable">False</property>
+    <property name="window-position">center</property>
+    <property name="gravity">center</property>
+    <property name="transient-for">MainWindow</property>
+    <child>
+      <!-- n-columns=3 n-rows=8 -->
+      <object class="GtkGrid" id="CoachGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <property name="margin-start">10</property>
+        <property name="margin-end">10</property>
+        <property name="margin-top">10</property>
+        <property name="margin-bottom">10</property>
+        <property name="row-spacing">4</property>
+        <property name="column-spacing">4</property>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">&lt;b&gt;Rhythm Coach&lt;/b&gt;</property>
+            <property name="use-markup">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">0</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkScale" id="CoachJitterMeter">
+            <property name="visible">True</property>
+            <property name="sensitive">False</property>
+            <property name="can-focus">True</property>
+            <property name="adjustment">adjustment1</property>
+            <property name="fill-level">100</property>
+            <property name="round-digits">1</property>
+            <property name="draw-value">False</property>
+            <property name="has-origin">False</property>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">3</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkButton" id="CoachCloseButton">
+            <property name="visible">True</property>
+            <property name="can-focus">True</property>
+            <property name="receives-default">True</property>
+            <child>
+              <!-- n-columns=2 n-rows=1 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <child>
+                  <object class="GtkImage">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="valign">center</property>
+                    <property name="margin-end">2</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="icon-name">dialog-close</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="valign">center</property>
+                    <property name="margin-start">2</property>
+                    <property name="hexpand">True</property>
+                    <property name="vexpand">True</property>
+                    <property name="label" translatable="yes">Close</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+              </object>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">2</property>
+            <property name="top-attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=3 n-rows=1 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="hexpand">True</property>
+            <property name="column-homogeneous">True</property>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Too Slow</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="label" translatable="yes">Too Fast</property>
+              </object>
+              <packing>
+                <property name="left-attach">2</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkImage">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="icon-name">go-down</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">2</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLevelBar" id="HitMeterBar">
+            <property name="width-request">12</property>
+            <property name="height-request">80</property>
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="margin-end">8</property>
+            <property name="orientation">vertical</property>
+            <property name="inverted">True</property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <!-- n-columns=1 n-rows=2 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="valign">end</property>
+            <property name="vexpand">False</property>
+            <child>
+              <object class="GtkScale" id="ClickMeter">
+                <property name="width-request">200</property>
+                <property name="visible">True</property>
+                <property name="sensitive">False</property>
+                <property name="can-focus">True</property>
+                <property name="hexpand">True</property>
+                <property name="adjustment">ClickMeterAdjustment</property>
+                <property name="fill-level">100</property>
+                <property name="round-digits">1</property>
+                <property name="draw-value">False</property>
+                <property name="has-origin">False</property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <!-- n-columns=2 n-rows=1 -->
+              <object class="GtkGrid">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="column-homogeneous">True</property>
+                <child>
+                  <object class="GtkLabel" id="CoachGreenLed">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">start</property>
+                    <property name="hexpand">True</property>
+                    <property name="label" translatable="yes">&lt;span color="#00aa00"&gt; &amp;#9679; &lt;/span&gt;</property>
+                    <property name="use-markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">0</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <object class="GtkLabel" id="CoachRedLed">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <property name="halign">end</property>
+                    <property name="label" translatable="yes">&lt;span color="#ff0000"&gt;&amp;#9679; &lt;/span&gt;</property>
+                    <property name="use-markup">True</property>
+                  </object>
+                  <packing>
+                    <property name="left-attach">1</property>
+                    <property name="top-attach">0</property>
+                  </packing>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">6</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel" id="CoachScore">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="halign">start</property>
+            <property name="label" translatable="yes">0/100</property>
+            <property name="ellipsize">start</property>
+            <attributes>
+              <attribute name="weight" value="bold"/>
+            </attributes>
+          </object>
+          <packing>
+            <property name="left-attach">1</property>
+            <property name="top-attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkLabel">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="label" translatable="yes">Score: </property>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">7</property>
+          </packing>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+        <child>
+          <placeholder/>
+        </child>
+      </object>
+    </child>
+  </object>
   <object class="GtkFileChooserDialog" id="ExportConfigWindow">
-    <property name="use-header-bar">0</property>
     <property name="can-focus">False</property>
     <property name="title" translatable="yes">Export configuration to file</property>
-    <property name="window-position">center</property>
     <property name="type-hint">dialog</property>
     <property name="transient-for">MainWindow</property>
     <property name="action">save</property>
@@ -1921,6 +2242,141 @@ Author: Jérémy Oden
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">2</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkFileChooserDialog" id="SoundChooser">
+    <property name="can-focus">False</property>
+    <property name="title" translatable="yes">Select a sound file and click OK</property>
+    <property name="modal">True</property>
+    <property name="window-position">center</property>
+    <property name="icon-name">applications-multimedia</property>
+    <property name="type-hint">utility</property>
+    <property name="transient-for">InstrumentConfigWindow</property>
+    <property name="filter">SoundsFilter</property>
+    <property name="preview-widget-active">False</property>
+    <property name="use-preview-label">False</property>
+    <child internal-child="vbox">
+      <object class="GtkBox">
+        <property name="width-request">640</property>
+        <property name="can-focus">False</property>
+        <property name="halign">center</property>
+        <property name="valign">center</property>
+        <property name="orientation">vertical</property>
+        <property name="spacing">2</property>
+        <child internal-child="action_area">
+          <object class="GtkButtonBox">
+            <property name="can-focus">False</property>
+            <property name="layout-style">end</property>
+            <child>
+              <object class="GtkButton" id="SoundChooserCancel">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <child>
+                  <!-- n-columns=2 n-rows=1 -->
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="margin-end">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="icon-name">dialog-cancel</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="margin-start">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="yes">Cancel</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="SoundChooserOkay">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <child>
+                  <!-- n-columns=2 n-rows=1 -->
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="margin-end">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="icon-name">applications-multimedia</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="margin-start">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="yes">Select</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="expand">True</property>
+                <property name="fill">True</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+          </object>
+          <packing>
+            <property name="expand">False</property>
+            <property name="fill">False</property>
+            <property name="position">0</property>
           </packing>
         </child>
       </object>
@@ -2941,7 +3397,6 @@ Author: Jérémy Oden
     </child>
   </object>
   <object class="GtkFileChooserDialog" id="RecorderWindow">
-    <property name="use-header-bar">0</property>
     <property name="can-focus">False</property>
     <property name="modal">True</property>
     <property name="icon-name">document-save</property>
@@ -3408,6 +3863,151 @@ Author: Jérémy Oden
           <packing>
             <property name="left-attach">0</property>
             <property name="top-attach">1</property>
+          </packing>
+        </child>
+      </object>
+    </child>
+  </object>
+  <object class="GtkWindow" id="SpiDevConfigWindow">
+    <property name="can-focus">False</property>
+    <property name="modal">True</property>
+    <property name="type-hint">dialog</property>
+    <property name="transient-for">MainWindow</property>
+    <child>
+      <!-- n-columns=1 n-rows=2 -->
+      <object class="GtkGrid">
+        <property name="visible">True</property>
+        <property name="can-focus">False</property>
+        <child>
+          <!-- n-columns=3 n-rows=1 -->
+          <object class="GtkGrid">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <child>
+              <object class="GtkButton" id="SpiConfigHideButton">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-end">2</property>
+                <property name="margin-bottom">2</property>
+                <child>
+                  <!-- n-columns=2 n-rows=1 -->
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="margin-end">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="icon-name">dialog-close</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="margin-start">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="yes">Close</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkButton" id="SpiConfigSaveButton">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="receives-default">True</property>
+                <property name="margin-end">2</property>
+                <property name="margin-bottom">2</property>
+                <child>
+                  <!-- n-columns=2 n-rows=1 -->
+                  <object class="GtkGrid">
+                    <property name="visible">True</property>
+                    <property name="can-focus">False</property>
+                    <child>
+                      <object class="GtkImage">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">end</property>
+                        <property name="valign">center</property>
+                        <property name="margin-end">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="icon-name">document-save</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">0</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <object class="GtkLabel">
+                        <property name="visible">True</property>
+                        <property name="can-focus">False</property>
+                        <property name="halign">start</property>
+                        <property name="valign">center</property>
+                        <property name="margin-start">2</property>
+                        <property name="hexpand">True</property>
+                        <property name="vexpand">True</property>
+                        <property name="label" translatable="yes">Save</property>
+                      </object>
+                      <packing>
+                        <property name="left-attach">1</property>
+                        <property name="top-attach">0</property>
+                      </packing>
+                    </child>
+                  </object>
+                </child>
+              </object>
+              <packing>
+                <property name="left-attach">2</property>
+                <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">1</property>
+          </packing>
+        </child>
+        <child>
+          <object class="GtkBox" id="SpiDevList">
+            <property name="visible">True</property>
+            <property name="can-focus">False</property>
+            <property name="orientation">vertical</property>
+            <child>
+              <placeholder/>
+            </child>
+          </object>
+          <packing>
+            <property name="left-attach">0</property>
+            <property name="top-attach">0</property>
           </packing>
         </child>
       </object>
@@ -4420,469 +5020,5 @@ Author: Jérémy Oden
         </child>
       </object>
     </child>
-  </object>
-  <object class="GtkFileFilter" id="SoundsFilter">
-    <patterns>
-      <pattern>*.raw</pattern>
-      <pattern>*.wav</pattern>
-    </patterns>
-  </object>
-  <object class="GtkFileChooserDialog" id="SoundChooser">
-    <property name="use-header-bar">0</property>
-    <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Select a sound file and click OK</property>
-    <property name="modal">True</property>
-    <property name="window-position">center</property>
-    <property name="icon-name">applications-multimedia</property>
-    <property name="type-hint">utility</property>
-    <property name="transient-for">InstrumentConfigWindow</property>
-    <property name="filter">SoundsFilter</property>
-    <property name="preview-widget-active">False</property>
-    <property name="use-preview-label">False</property>
-    <child internal-child="vbox">
-      <object class="GtkBox">
-        <property name="width-request">640</property>
-        <property name="can-focus">False</property>
-        <property name="halign">center</property>
-        <property name="valign">center</property>
-        <property name="orientation">vertical</property>
-        <property name="spacing">2</property>
-        <child internal-child="action_area">
-          <object class="GtkButtonBox">
-            <property name="can-focus">False</property>
-            <property name="layout-style">end</property>
-            <child>
-              <object class="GtkButton" id="SoundChooserCancel">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <child>
-                  <!-- n-columns=2 n-rows=1 -->
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="valign">center</property>
-                        <property name="margin-end">2</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="valign">center</property>
-                        <property name="margin-start">2</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="label" translatable="yes">Cancel</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkButton" id="SoundChooserOkay">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="receives-default">True</property>
-                <child>
-                  <!-- n-columns=2 n-rows=1 -->
-                  <object class="GtkGrid">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <child>
-                      <object class="GtkImage">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">end</property>
-                        <property name="valign">center</property>
-                        <property name="margin-end">2</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="icon-name">applications-multimedia</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">0</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <object class="GtkLabel">
-                        <property name="visible">True</property>
-                        <property name="can-focus">False</property>
-                        <property name="halign">start</property>
-                        <property name="valign">center</property>
-                        <property name="margin-start">2</property>
-                        <property name="hexpand">True</property>
-                        <property name="vexpand">True</property>
-                        <property name="label" translatable="yes">Select</property>
-                      </object>
-                      <packing>
-                        <property name="left-attach">1</property>
-                        <property name="top-attach">0</property>
-                      </packing>
-                    </child>
-                  </object>
-                </child>
-              </object>
-              <packing>
-                <property name="expand">True</property>
-                <property name="fill">True</property>
-                <property name="position">1</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="expand">False</property>
-            <property name="fill">False</property>
-            <property name="position">0</property>
-          </packing>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkAdjustment" id="TempoAdjustment">
-    <property name="lower">60</property>
-    <property name="upper">240</property>
-    <property name="value">120</property>
-    <property name="step-increment">1</property>
-    <property name="page-increment">10</property>
-  </object>
-  <object class="GtkAdjustment" id="adjustment1">
-    <property name="upper">100</property>
-    <property name="step-increment">1</property>
-    <property name="page-increment">10</property>
-  </object>
-  <object class="GtkWindow" id="CoachWindow">
-    <property name="can-focus">False</property>
-    <property name="title" translatable="yes">Rhytthm Coach</property>
-    <property name="resizable">False</property>
-    <property name="window-position">center</property>
-    <property name="gravity">center</property>
-    <property name="transient-for">MainWindow</property>
-    <child>
-      <!-- n-columns=3 n-rows=8 -->
-      <object class="GtkGrid" id="CoachGrid">
-        <property name="visible">True</property>
-        <property name="can-focus">False</property>
-        <property name="margin-start">10</property>
-        <property name="margin-end">10</property>
-        <property name="margin-top">10</property>
-        <property name="margin-bottom">10</property>
-        <property name="row-spacing">4</property>
-        <property name="column-spacing">4</property>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">&lt;b&gt;Rhythm Coach&lt;/b&gt;</property>
-            <property name="use-markup">True</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">0</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkScale" id="CoachJitterMeter">
-            <property name="visible">True</property>
-            <property name="sensitive">False</property>
-            <property name="can-focus">True</property>
-            <property name="adjustment">adjustment1</property>
-            <property name="fill-level">100</property>
-            <property name="round-digits">1</property>
-            <property name="draw-value">False</property>
-            <property name="has-origin">False</property>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">3</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkButton" id="CoachCloseButton">
-            <property name="visible">True</property>
-            <property name="can-focus">True</property>
-            <property name="receives-default">True</property>
-            <child>
-              <!-- n-columns=2 n-rows=1 -->
-              <object class="GtkGrid">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <child>
-                  <object class="GtkImage">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="valign">center</property>
-                    <property name="margin-end">2</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="icon-name">dialog-close</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="valign">center</property>
-                    <property name="margin-start">2</property>
-                    <property name="hexpand">True</property>
-                    <property name="vexpand">True</property>
-                    <property name="label" translatable="yes">Close</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-              </object>
-            </child>
-          </object>
-          <packing>
-            <property name="left-attach">2</property>
-            <property name="top-attach">7</property>
-          </packing>
-        </child>
-        <child>
-          <!-- n-columns=3 n-rows=1 -->
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="hexpand">True</property>
-            <child>
-              <object class="GtkArrow">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="hexpand">True</property>
-                <property name="arrow-type">down</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Too Slow</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="label" translatable="yes">Too Fast</property>
-              </object>
-              <packing>
-                <property name="left-attach">2</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">2</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLevelBar" id="HitMeterBar">
-            <property name="width-request">12</property>
-            <property name="height-request">80</property>
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="margin-end">8</property>
-            <property name="orientation">vertical</property>
-            <property name="inverted">True</property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">6</property>
-          </packing>
-        </child>
-        <child>
-          <!-- n-columns=1 n-rows=2 -->
-          <object class="GtkGrid">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="valign">end</property>
-            <property name="vexpand">False</property>
-            <child>
-              <object class="GtkScale" id="ClickMeter">
-                <property name="width-request">200</property>
-                <property name="visible">True</property>
-                <property name="sensitive">False</property>
-                <property name="can-focus">True</property>
-                <property name="hexpand">True</property>
-                <property name="adjustment">ClickMeterAdjustment</property>
-                <property name="fill-level">100</property>
-                <property name="round-digits">1</property>
-                <property name="draw-value">False</property>
-                <property name="has-origin">False</property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <!-- n-columns=2 n-rows=1 -->
-              <object class="GtkGrid">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
-                <property name="column-homogeneous">True</property>
-                <child>
-                  <object class="GtkLabel" id="CoachGreenLed">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">start</property>
-                    <property name="hexpand">True</property>
-                    <property name="label" translatable="yes">&lt;span color="#00aa00"&gt; &amp;#9679; &lt;/span&gt;</property>
-                    <property name="use-markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">0</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-                <child>
-                  <object class="GtkLabel" id="CoachRedLed">
-                    <property name="visible">True</property>
-                    <property name="can-focus">False</property>
-                    <property name="halign">end</property>
-                    <property name="label" translatable="yes">&lt;span color="#ff0000"&gt;&amp;#9679; &lt;/span&gt;</property>
-                    <property name="use-markup">True</property>
-                  </object>
-                  <packing>
-                    <property name="left-attach">1</property>
-                    <property name="top-attach">0</property>
-                  </packing>
-                </child>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">0</property>
-              </packing>
-            </child>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">6</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel" id="CoachScore">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="halign">start</property>
-            <property name="label" translatable="yes">0/100</property>
-            <property name="ellipsize">start</property>
-            <attributes>
-              <attribute name="weight" value="bold"/>
-            </attributes>
-          </object>
-          <packing>
-            <property name="left-attach">1</property>
-            <property name="top-attach">7</property>
-          </packing>
-        </child>
-        <child>
-          <object class="GtkLabel">
-            <property name="visible">True</property>
-            <property name="can-focus">False</property>
-            <property name="label" translatable="yes">Score: </property>
-          </object>
-          <packing>
-            <property name="left-attach">0</property>
-            <property name="top-attach">7</property>
-          </packing>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-        <child>
-          <placeholder/>
-        </child>
-      </object>
-    </child>
-  </object>
-  <object class="GtkAdjustment" id="volumeAdjustment">
-    <property name="upper">100</property>
-    <property name="step-increment">1</property>
-    <property name="page-increment">10</property>
   </object>
 </interface>
