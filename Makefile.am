@@ -29,6 +29,7 @@ dist_pkgdata_DATA = \
   Data/SoundBank/SnareDrum/Snr_Acou_01.wav \
   Data/SoundBank/Tom/Tom01.wav \
   Data/SoundBank/Tom/Tom03.wav \
+  Data/spiDev.xml \
   Data/triggersConfig.xml
 
 # Install an empty directory.
@@ -93,5 +94,6 @@ exadrums_SOURCES = \
   Source/Widgets/TriggerSelector.cpp \
   Source/Widgets/TriggerSelector.h \
   Source/Widgets/VirtualPad.h \
+  Source/Widgets/SpiDev.h \
   Source/exadrumsConfig.h \
   Source/main.cpp
