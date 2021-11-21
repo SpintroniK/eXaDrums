@@ -5,8 +5,8 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_WIDGETS_VIRTUALPAD_H_
-#define SOURCE_WIDGETS_VIRTUALPAD_H_
+#ifndef EXADRUMS_SOURCE_WIDGETS_VIRTUALPAD_H
+#define EXADRUMS_SOURCE_WIDGETS_VIRTUALPAD_H
 
 #include <gtkmm/grid.h>
 #include <gtkmm/button.h>
@@ -121,4 +121,4 @@ namespace Widgets
 
 }
 
-#endif /* SOURCE_WIDGETS_VIRTUALPAD_H_ */
+#endif /* EXADRUMS_SOURCE_WIDGETS_VIRTUALPAD_H */

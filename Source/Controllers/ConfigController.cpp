@@ -8,6 +8,7 @@
 #include "../system.h"
 #include "../Util/Util.h"
 #include "../Util/ErrorHandler.h"
+
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
@@ -183,7 +184,7 @@ namespace Controllers
 			// Sensors config
 			sensorsConfigButton->signal_clicked().connect([&] { ShowSensorsConfigWindow(); });
 			sensorsConfigOkayButton->signal_clicked().connect([&] { SaveSensorsConfig(); });
-			spiConfigButton->signal_clicked().connect([this] { spiDevConfigWindow->show(); });
+			spiConfigButton->signal_clicked().connect([this] { ShowSpiConfigWindow(); });
 			spiConfigHideButton->signal_clicked().connect([this] { spiDevConfigWindow->hide(); });
 
 			// Mixer config
@@ -752,6 +753,27 @@ namespace Controllers
 		
 
 		spiDevConfigWindow->hide();
+	}
+
+	void ConfigController::ShowSpiConfigWindow()
+	{
+		auto* const container = GetWidget<Gtk::Box>(builder, "SpiDevList");
+
+		const auto spiDevParams = config.GetSpiDevicesParameters();
+
+		std::ranges::for_each(spidev, [=](auto& s) { container->remove(s); });
+
+		spidev.clear();
+		spidev.reserve(spiDevParams.size());
+
+		std::ranges::transform(spiDevParams, std::back_inserter(spidev), [](const auto& params) { return SpiDev{params}; });
+
+		for(auto& s : spidev)
+		{
+			container->add(s);
+		}
+
+		spiDevConfigWindow->show();
 	}
 
 	void ConfigController::TriggerDelete(int sensorId)

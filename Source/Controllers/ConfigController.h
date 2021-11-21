@@ -12,6 +12,7 @@
 #include <libexadrums/Api/Config/Config_api.hpp>
 
 #include "../Widgets/TriggerSelector.h"
+#include "../Widgets/SpiDev.h"
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
@@ -59,6 +60,7 @@ namespace Controllers
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
 		void SaveSpiConfig();
+		void ShowSpiConfigWindow();
 		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
@@ -75,6 +77,7 @@ namespace Controllers
 
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
+		std::vector<Widgets::SpiDev> spidev;
 
 		// Comboboxes
 		Gtk::ComboBoxText* mixerDevices;
