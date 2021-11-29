@@ -1174,8 +1174,8 @@ namespace Controllers
 		for(std::size_t i = 0; i < instrumentsSelectors.size(); i++)
 		{
 			auto& is = instrumentsSelectors[i];
-			is->GetPreferencesButton().signal_clicked().connect([=] { ModifyInstrument(i); });
-			is->GetDeleteButton().signal_clicked().connect([=] { RemoveInstrument(i); });
+			is->GetPreferencesButton().signal_clicked().connect([=, this] { ModifyInstrument(i); });
+			is->GetDeleteButton().signal_clicked().connect([=, this] { RemoveInstrument(i); });
 		}
 
 		instrumentSeclectWindow->show();
