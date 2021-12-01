@@ -491,6 +491,8 @@ Author: Jérémy Oden
                           <object class="GtkGrid" id="RhythmCoachMainGrid">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="margin-start">10</property>
+                            <property name="margin-end">11</property>
                             <property name="row-homogeneous">True</property>
                             <property name="column-homogeneous">True</property>
                             <child>
@@ -741,6 +743,7 @@ Author: Jérémy Oden
                           <object class="GtkGrid" id="AdvancedGrid">
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
+                            <property name="margin-start">10</property>
                             <property name="margin-end">10</property>
                             <property name="margin-top">10</property>
                             <property name="margin-bottom">10</property>
@@ -870,6 +873,7 @@ Author: Jérémy Oden
                       <object class="GtkGrid" id="DrumKitGrid">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
+                        <property name="margin-start">10</property>
                         <property name="margin-bottom">10</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
