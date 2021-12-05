@@ -5,8 +5,8 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
-#define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
+#ifndef EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H
+#define EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H
 
 #include <libexadrums/Api/eXaDrums.hpp>
 #include <libexadrums/Api/Config/Config_api.hpp>
@@ -101,4 +101,4 @@ namespace Controllers
 
 } /* namespace Controllers */
 
-#endif /* SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_ */
+#endif /* EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H */

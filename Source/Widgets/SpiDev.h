@@ -37,16 +37,20 @@ namespace Widgets
             this->show_all();
         }
 
+        auto GetName() const { return std::string{name.get_text()}; }
+        auto GetBus() const { return static_cast<int>(busAdj->get_value()); }
+        auto GetCs() const { return static_cast<int>(csAdj->get_value()); }
+
     private:
 
         Gtk::Entry name{};
 
-        Glib::RefPtr<Gtk::Adjustment> busAdj{Gtk::Adjustment::create(0, 0, 10)};
+        Glib::RefPtr<Gtk::Adjustment> busAdj{Gtk::Adjustment::create(0, 0, 9)};
         Gtk::SpinButton bus{busAdj};
 
-        Glib::RefPtr<Gtk::Adjustment> csAdj{Gtk::Adjustment::create(0, 0, 10)};
+        Glib::RefPtr<Gtk::Adjustment> csAdj{Gtk::Adjustment::create(0, 0, 9)};
         Gtk::SpinButton cs{csAdj};
-        
+
     };
 
 

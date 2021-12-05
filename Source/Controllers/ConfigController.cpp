@@ -35,8 +35,8 @@ namespace Controllers
 
 		this->quitCallback = quit;
 
-		Gtk::Button* mixerConfigButton = nullptr;
-		Gtk::Button* soundLibraryButton = nullptr;
+		auto mixerConfigButton = GetWidget<Gtk::Button>(builder, "MixerConfigButton");
+		auto soundLibraryButton = GetWidget<Gtk::Button>(builder, "SoundLibraryButton");
 		Gtk::Button* importExportConfigButton = nullptr;
 		Gtk::Button* importConfigButton = nullptr;
 		Gtk::Button* exportConfigCancelButton = nullptr;
@@ -69,6 +69,7 @@ namespace Controllers
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
 		Gtk::Button* spiConfigButton = nullptr;
 		Gtk::Button* spiConfigHideButton = nullptr;
+		auto spiConfigSaveButton = GetWidget<Gtk::Button>(builder, "SpiConfigSaveButton");
 
 		// Mixer
 		Gtk::Button* mixerConfigCancelButton = nullptr;
@@ -78,7 +79,6 @@ namespace Controllers
 		{
 
 			// Buttons
-			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
 			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
 			builder->get_widget("ExportConfigCancelButton", exportConfigCancelButton);
@@ -186,6 +186,7 @@ namespace Controllers
 			sensorsConfigOkayButton->signal_clicked().connect([&] { SaveSensorsConfig(); });
 			spiConfigButton->signal_clicked().connect([this] { ShowSpiConfigWindow(); });
 			spiConfigHideButton->signal_clicked().connect([this] { spiDevConfigWindow->hide(); });
+			spiConfigSaveButton->signal_clicked().connect([this] { SaveSpiConfig(); });
 
 			// Mixer config
 			mixerConfigCancelButton->signal_clicked().connect([&] { mixerConfigWindow->hide(); });
@@ -750,7 +751,34 @@ namespace Controllers
 	void ConfigController::SaveSpiConfig()
 	{
 
-		
+		this->config.LoadSpiDevConfig();
+
+		// Get all SpiDev params from widgets
+		std::vector<SpiDevParameters> spidevParams;
+
+		for(const auto& s : spidev)
+		{
+			SpiDevParameters params;
+
+			const auto nameStr = s.GetName();
+			std::snprintf(params.name, sizeof params.name, nameStr.data());
+			params.bus = s.GetBus();
+			params.cs = s.GetCs();
+
+			spidevParams.push_back(params);
+		}
+
+		this->config.SetSpiDevParameters(spidevParams);
+
+		try
+		{
+			this->config.SaveSpiDevConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
 
 		spiDevConfigWindow->hide();
 	}
@@ -759,6 +787,7 @@ namespace Controllers
 	{
 		auto* const container = GetWidget<Gtk::Box>(builder, "SpiDevList");
 
+		config.LoadSpiDevConfig();
 		const auto spiDevParams = config.GetSpiDevicesParameters();
 
 		std::ranges::for_each(spidev, [=](auto& s) { container->remove(s); });
