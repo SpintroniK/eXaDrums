@@ -492,7 +492,7 @@ Author: Jérémy Oden
                             <property name="visible">True</property>
                             <property name="can-focus">False</property>
                             <property name="margin-start">10</property>
-                            <property name="margin-end">11</property>
+                            <property name="margin-end">10</property>
                             <property name="row-homogeneous">True</property>
                             <property name="column-homogeneous">True</property>
                             <child>
