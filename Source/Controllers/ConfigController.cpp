@@ -761,7 +761,7 @@ namespace Controllers
 			SpiDevParameters params;
 
 			const auto nameStr = s.GetName();
-			std::snprintf(params.name, sizeof params.name, nameStr.data());
+			std::snprintf(params.name, sizeof params.name, "%s", nameStr.data());
 			params.bus = s.GetBus();
 			params.cs = s.GetCs();
 
