@@ -239,6 +239,11 @@ namespace Controllers
 			std::string dataFolder = config.GetSensorsDataFolder();
 			hddDataFolder->set_text(dataFolder);
 
+			Gtk::Entry* serialPortEntry = nullptr;
+			builder->get_widget("SerialPort", serialPortEntry);
+			const std::string serialPort = config.GetSerialPort();
+			serialPortEntry->set_text(serialPort);
+
 		}
 
 		// Configure triggers window
@@ -715,22 +720,26 @@ namespace Controllers
 		Gtk::Entry* resolution = nullptr;
 		Gtk::ComboBoxText* sensorsTypesList = nullptr;
 		Gtk::Entry* hddDataFolder = nullptr;
+		Gtk::Entry* serialPortEntry = nullptr;
 
 		builder->get_widget("SensorsSamplingRate", samplingRate);
 		builder->get_widget("SensorsResolution", resolution);
 		builder->get_widget("SensorsTypes", sensorsTypesList);
 		builder->get_widget("SensorsDataFolder", hddDataFolder);
+		builder->get_widget("SerialPort", serialPortEntry);
 
 		int sRate = std::stoi(samplingRate->get_text());
 		int res = std::stoi(resolution->get_text());
 		std::string type = sensorsTypesList->get_active_text();
 		std::string dataFolder = hddDataFolder->get_text();
+		const std::string serialPort = serialPortEntry->get_text();
 
 
 		config.SetSensorsSamplingRate(sRate);
 		config.SetSensorsResolution(res);
 		config.SetSensorsType(type);
 		config.SetSensorsDataFolder(dataFolder);
+		config.SetSerialPort(serialPort);
 
 		try
 		{

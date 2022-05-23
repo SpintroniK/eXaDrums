@@ -43,7 +43,7 @@ This document outlines the development plan from a high level and will be update
 ### 0.5.0
 
 - [X] Fix sound chooser window size.
-- [X] &#9997; Check libexadrums: installed and linked versions.
+- [X] Check libexadrums: installed and linked versions.
 - [X] Detect return and escape keypress in sound chooser and record saver.
 - [X] Add import/export configuration window.
 - [X] Add factory reset button.
