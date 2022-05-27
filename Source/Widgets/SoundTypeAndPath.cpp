@@ -11,7 +11,6 @@ namespace Widgets
 {
 
 	SoundTypeAndPath::SoundTypeAndPath(const std::vector<std::string>& types, const std::string& dataFolder, Gtk::FileChooserDialog* soundChooser)
-	: soundTypeLabel("Sound type: "), soundLabel("Sound: "), typesList(true), soundName(""), soundChange(Gtk::StockID("gtk-edit")), changingSound(false)
 	{
 
 		this->set_hexpand(true);
@@ -55,6 +54,15 @@ namespace Widgets
 
 		soundChange.signal_clicked().connect([=, this] { ShowSoundChooser(soundChooser, dataFolder); });
 
+		this->attach_next_to(midiLabel, soundChange, Gtk::PositionType::POS_RIGHT, 1, 1);
+		midiLabel.set_halign(Gtk::Align::ALIGN_END);
+		midiLabel.set_hexpand(true);
+		midiLabel.show();
+
+		this->attach_next_to(midiNote, midiLabel, Gtk::PositionType::POS_RIGHT, 1, 1);
+		midiNote.set_halign(Gtk::Align::ALIGN_END);
+		midiNote.set_hexpand(false);
+		midiNote.show();
 
 		this->show();
 
