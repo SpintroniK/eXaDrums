@@ -39,6 +39,7 @@ namespace Widgets
 		void SetSoundType(const std::string& t) { typesList.set_active_text(t); }
 		void SetSound(const std::string& t) { soundName.set_text(t); }
 		void SetSoundChanged() { changingSound = false; }
+		void SetMidiNote(uint8_t note) { midiNote.set_value(note); }
 
 		std::string GetSoundType() const { return typesList.get_entry_text(); }
 		std::string GetSound() const { return soundName.get_text(); }

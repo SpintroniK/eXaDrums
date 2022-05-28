@@ -629,6 +629,7 @@ namespace Controllers
 		// Get instrument sounds
 		std::vector<std::string> instrumentSoundsTypes = kitCreator->GetInstrumentSoundsTypes(i);
 		std::vector<std::string> instrumentSoundsLocs = kitCreator->GetInstrumentSoundsLocs(i);
+		std::vector<uint8_t> instrumentNotes = kitCreator->GetInstrumentSoundsNotes(i);
 
 		// Get widgets
 		Gtk::ComboBoxText* instrumentConfig_Type = nullptr;
@@ -681,6 +682,7 @@ namespace Controllers
 
 			s->SetSoundType(instrumentSoundsTypes[i]);
 			s->SetSound(instrumentSoundsLocs[i]);
+			s->SetMidiNote(instrumentNotes[i]);
 		}
 
 		// Keep track of the instrument id
@@ -987,9 +989,11 @@ namespace Controllers
 
 				// Retrieve sounds types and locations
 				std::vector<std::pair<std::string, std::string>> sndTypesAndLocs;
+				std::vector<uint8_t> soundsNotes;
 				for(const auto& s : soundsTypesAndPaths)
 				{
 					sndTypesAndLocs.push_back({s->GetSoundType(), s->GetSound()});
+					soundsNotes.push_back(s->GetMidiNote());
 				}
 
 				// Change instrument name
@@ -1003,6 +1007,7 @@ namespace Controllers
 
 				// Modify sounds
 				kitCreator->SetInstrumentSoundsTypesAndLocs(id, sndTypesAndLocs);
+				kitCreator->SetInstrumentSoundsNotes(id, soundsNotes);
 
 
 				// Change instrument name on the kit config window
