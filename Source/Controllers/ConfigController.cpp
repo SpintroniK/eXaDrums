@@ -8,6 +8,7 @@
 #include "../system.h"
 #include "../Util/Util.h"
 #include "../Util/ErrorHandler.h"
+
 #include "ConfigController.h"
 
 #include <gtkmm/button.h>
@@ -34,8 +35,8 @@ namespace Controllers
 
 		this->quitCallback = quit;
 
-		Gtk::Button* mixerConfigButton = nullptr;
-		Gtk::Button* soundLibraryButton = nullptr;
+		auto mixerConfigButton = GetWidget<Gtk::Button>(builder, "MixerConfigButton");
+		auto soundLibraryButton = GetWidget<Gtk::Button>(builder, "SoundLibraryButton");
 		Gtk::Button* importExportConfigButton = nullptr;
 		Gtk::Button* importConfigButton = nullptr;
 		Gtk::Button* exportConfigCancelButton = nullptr;
@@ -66,6 +67,9 @@ namespace Controllers
 		Gtk::Button* sensorsConfigButton = nullptr;
 		Gtk::Button* sensorsConfigOkayButton = nullptr;
 		Gtk::Button* sensorsConfigCancelButton = nullptr;
+		Gtk::Button* spiConfigButton = nullptr;
+		Gtk::Button* spiConfigHideButton = nullptr;
+		auto spiConfigSaveButton = GetWidget<Gtk::Button>(builder, "SpiConfigSaveButton");
 
 		// Mixer
 		Gtk::Button* mixerConfigCancelButton = nullptr;
@@ -75,7 +79,6 @@ namespace Controllers
 		{
 
 			// Buttons
-			builder->get_widget("MixerConfigButton", mixerConfigButton);
 			builder->get_widget("SoundLibraryButton", soundLibraryButton);
 			builder->get_widget("ImportExportConfigButton", importExportConfigButton);
 			builder->get_widget("ExportConfigCancelButton", exportConfigCancelButton);
@@ -107,6 +110,8 @@ namespace Controllers
 			builder->get_widget("SensorsConfigButton", sensorsConfigButton);
 			builder->get_widget("SensorsConfigCancelButton", sensorsConfigCancelButton);
 			builder->get_widget("SensorsConfigOkayButton", sensorsConfigOkayButton);
+			builder->get_widget("SpiConfigButton", spiConfigButton);
+			builder->get_widget("SpiConfigHideButton", spiConfigHideButton);
 
 			// Mixer
 			builder->get_widget("MixerConfigCancel", mixerConfigCancelButton);
@@ -124,6 +129,7 @@ namespace Controllers
 			builder->get_widget("ImportExportConfigWindow", importExportConfigWindow);
 			builder->get_widget("ExportConfigWindow", exportConfigWindow);
 			builder->get_widget("ImportConfigWindow", importConfigWindow);
+			builder->get_widget("SpiDevConfigWindow", spiDevConfigWindow);
 
 		}
 
@@ -178,6 +184,9 @@ namespace Controllers
 			// Sensors config
 			sensorsConfigButton->signal_clicked().connect([&] { ShowSensorsConfigWindow(); });
 			sensorsConfigOkayButton->signal_clicked().connect([&] { SaveSensorsConfig(); });
+			spiConfigButton->signal_clicked().connect([this] { ShowSpiConfigWindow(); });
+			spiConfigHideButton->signal_clicked().connect([this] { spiDevConfigWindow->hide(); });
+			spiConfigSaveButton->signal_clicked().connect([this] { SaveSpiConfig(); });
 
 			// Mixer config
 			mixerConfigCancelButton->signal_clicked().connect([&] { mixerConfigWindow->hide(); });
@@ -206,6 +215,12 @@ namespace Controllers
 			Gtk::ComboBoxText* sensorsTypesList = nullptr;
 			builder->get_widget("SensorsTypes", sensorsTypesList);
 
+			sensorsTypesList->signal_changed().connect([=] 
+			{
+				const auto isSpi = sensorsTypesList->get_active_text() == "Spi";
+				spiConfigButton->set_visible(isSpi);
+			});
+
 			std::vector<std::string> sensorsTypes = config.GetSensorsTypes();
 
 			// Append values to combobox
@@ -214,10 +229,20 @@ namespace Controllers
 			const std::string selectedType = config.GetSensorsType();
 			sensorsTypesList->set_active_text(selectedType);
 
+			if(selectedType == "Spi")
+			{
+				spiConfigButton->set_visible(true);
+			}
+
 			Gtk::Entry* hddDataFolder = nullptr;
 			builder->get_widget("SensorsDataFolder", hddDataFolder);
 			std::string dataFolder = config.GetSensorsDataFolder();
 			hddDataFolder->set_text(dataFolder);
+
+			Gtk::Entry* serialPortEntry = nullptr;
+			builder->get_widget("SerialPort", serialPortEntry);
+			const std::string serialPort = config.GetSerialPort();
+			serialPortEntry->set_text(serialPort);
 
 		}
 
@@ -695,22 +720,26 @@ namespace Controllers
 		Gtk::Entry* resolution = nullptr;
 		Gtk::ComboBoxText* sensorsTypesList = nullptr;
 		Gtk::Entry* hddDataFolder = nullptr;
+		Gtk::Entry* serialPortEntry = nullptr;
 
 		builder->get_widget("SensorsSamplingRate", samplingRate);
 		builder->get_widget("SensorsResolution", resolution);
 		builder->get_widget("SensorsTypes", sensorsTypesList);
 		builder->get_widget("SensorsDataFolder", hddDataFolder);
+		builder->get_widget("SerialPort", serialPortEntry);
 
 		int sRate = std::stoi(samplingRate->get_text());
 		int res = std::stoi(resolution->get_text());
 		std::string type = sensorsTypesList->get_active_text();
 		std::string dataFolder = hddDataFolder->get_text();
+		const std::string serialPort = serialPortEntry->get_text();
 
 
 		config.SetSensorsSamplingRate(sRate);
 		config.SetSensorsResolution(res);
 		config.SetSensorsType(type);
 		config.SetSensorsDataFolder(dataFolder);
+		config.SetSerialPort(serialPort);
 
 		try
 		{
@@ -726,6 +755,63 @@ namespace Controllers
 		sensorsConfigWindow->hide();
 
 		return;
+	}
+
+	void ConfigController::SaveSpiConfig()
+	{
+
+		this->config.LoadSpiDevConfig();
+
+		// Get all SpiDev params from widgets
+		std::vector<SpiDevParameters> spidevParams;
+
+		for(const auto& s : spidev)
+		{
+			SpiDevParameters params;
+
+			const auto nameStr = s.GetName();
+			std::snprintf(params.name, sizeof params.name, "%s", nameStr.data());
+			params.bus = s.GetBus();
+			params.cs = s.GetCs();
+
+			spidevParams.push_back(params);
+		}
+
+		this->config.SetSpiDevParameters(spidevParams);
+
+		try
+		{
+			this->config.SaveSpiDevConfig();
+		}
+		catch(const Exception& e)
+		{
+			errorDialog(e);
+			return;
+		}
+
+		spiDevConfigWindow->hide();
+	}
+
+	void ConfigController::ShowSpiConfigWindow()
+	{
+		auto* const container = GetWidget<Gtk::Box>(builder, "SpiDevList");
+
+		config.LoadSpiDevConfig();
+		const auto spiDevParams = config.GetSpiDevicesParameters();
+
+		std::ranges::for_each(spidev, [=](auto& s) { container->remove(s); });
+
+		spidev.clear();
+		spidev.reserve(spiDevParams.size());
+
+		std::ranges::transform(spiDevParams, std::back_inserter(spidev), [](const auto& params) { return SpiDev{params}; });
+
+		for(auto& s : spidev)
+		{
+			container->add(s);
+		}
+
+		spiDevConfigWindow->show();
 	}
 
 	void ConfigController::TriggerDelete(int sensorId)

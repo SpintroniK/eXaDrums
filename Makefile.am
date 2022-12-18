@@ -29,6 +29,7 @@ dist_pkgdata_DATA = \
   Data/SoundBank/SnareDrum/Snr_Acou_01.wav \
   Data/SoundBank/Tom/Tom01.wav \
   Data/SoundBank/Tom/Tom03.wav \
+  Data/spiDev.xml \
   Data/triggersConfig.xml
 
 # Install an empty directory.
@@ -64,7 +65,7 @@ bin_PROGRAMS = exadrums
 
 exadrums_CXXFLAGS = $(AM_CXXFLAGS) \
   $(alsa_CFLAGS) $(tinyxml2_CFLAGS) $(minizip_CFLAGS) $(gtkmm_CFLAGS) $(exadrums_CFLAGS) \
-  -std=c++17
+  -std=c++20
 exadrums_LDADD = $(AM_LDADD) \
   -lstdc++fs \
   $(alsa_LIBS) $(tinyxml2_LIBS) $(minizip_LIBS) $(gtkmm_LIBS) $(exadrums_LIBS)
@@ -93,5 +94,6 @@ exadrums_SOURCES = \
   Source/Widgets/TriggerSelector.cpp \
   Source/Widgets/TriggerSelector.h \
   Source/Widgets/VirtualPad.h \
+  Source/Widgets/SpiDev.h \
   Source/exadrumsConfig.h \
   Source/main.cpp
