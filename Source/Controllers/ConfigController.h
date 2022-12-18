@@ -5,13 +5,14 @@
  *      Author: jeremy
  */
 
-#ifndef SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
-#define SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_
+#ifndef EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H
+#define EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H
 
 #include <libexadrums/Api/eXaDrums.hpp>
 #include <libexadrums/Api/Config/Config_api.hpp>
 
 #include "../Widgets/TriggerSelector.h"
+#include "../Widgets/SpiDev.h"
 
 #include <gtkmm/builder.h>
 #include <gtkmm/window.h>
@@ -58,6 +59,8 @@ namespace Controllers
 		void ShowSoundEffectsWindow();
 		void ShowSensorsConfigWindow();
 		void SaveSensorsConfig();
+		void SaveSpiConfig();
+		void ShowSpiConfigWindow();
 		void TriggerConfiguration(std::size_t sensorId);
 		void AddTrigger();
 		void TriggerDelete(int sensorId);
@@ -74,6 +77,7 @@ namespace Controllers
 
 		// Widgets
 		std::vector<Widgets::TriggerSelectorPtr> triggersSelectors;
+		std::vector<Widgets::SpiDev> spidev;
 
 		// Comboboxes
 		Gtk::ComboBoxText* mixerDevices;
@@ -85,6 +89,7 @@ namespace Controllers
 		Gtk::Window* triggerAddWindow;
 		Gtk::Window* mixerConfigWindow;
 		Gtk::Window* importExportConfigWindow;
+		Gtk::Window* spiDevConfigWindow;
 		Gtk::FileChooserDialog* exportConfigWindow;
 		Gtk::FileChooserDialog* importConfigWindow;
 
@@ -96,4 +101,4 @@ namespace Controllers
 
 } /* namespace Controllers */
 
-#endif /* SOURCE_CONTROLLERS_CONFIGCONTROLLER_H_ */
+#endif /* EXADRUMS_SOURCE_CONTROLLERS_CONFIGCONTROLLER_H */

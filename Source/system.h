@@ -1,18 +1,13 @@
-#ifndef SOURCE_SYSTEM_H_
-#define SOURCE_SYSTEM_H_
+#ifndef EXADRUMS_SOURCE_SYSTEM_H
+#define EXADRUMS_SOURCE_SYSTEM_H
 
-
-#if __has_include(<filesystem>)
-	#include <filesystem>
-	namespace fs = std::filesystem;
-#else
-	#include <experimental/filesystem>
-	namespace fs = std::experimental::filesystem;
-#endif
+#include <filesystem>
 
 #include <vector>
 
 #include <unistd.h>
+
+namespace fs = std::filesystem;
 
 inline const static fs::path systemUserPath = fs::path{std::getenv("HOME")}/".eXaDrums";
 inline const static fs::path systemRootPath{"/usr/share/exadrums"};
@@ -86,7 +81,8 @@ inline bool InstallForUser()
 	copyFiles(systemRootPath, UserDataPath(), {	fs::path{"alsaConfig.xml"},
 												fs::path{"metronomeConfig.xml"},
 												fs::path{"sensorsConfig.xml"},
-												fs::path{"triggersConfig.xml"}});
+												fs::path{"triggersConfig.xml"},
+												fs::path{"spiDev.xml"}});
 
 	// Install default kit
 	copyFiles(systemRootPath, UserDataPath()/"Kits", { fs::path{"Default.xml"} });
@@ -111,4 +107,4 @@ inline bool ResetConfig()
 	return true;
 }
 
-#endif
+#endif /* EXADRUMS_SOURCE_SYSTEM_H */
