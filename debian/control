@@ -5,7 +5,7 @@ Maintainer: Jeremy Oden <jerem.oden@gmail.com>
 Build-Depends:
  debhelper-compat (= 13),
  libasound-dev,
- libexadrums-dev (>= 0.6.0),
+ libexadrums-dev (>= 0.7.0),
  libgtkmm-3.0-dev,
  libminizip-dev,
  pkg-config,
