@@ -10,7 +10,7 @@ Build-Depends:
  libminizip-dev,
  pkg-config,
  zlib1g-dev,
-Standards-Version: 4.5.1
+Standards-Version: 4.6.2
 Rules-Requires-Root: no
 Homepage: https://exadrums.com
 Vcs-Browser: https://github.com/SpintroniK/eXaDrums/tree/debian
