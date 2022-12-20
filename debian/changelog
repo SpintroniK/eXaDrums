@@ -1,3 +1,11 @@
+exadrums (0.7.0-1) unstable; urgency=medium
+
+  * New upstream release, requiring libexadrums 0.7.0.
+  * Standards-Version: 4.6.2 (no changes).
+  * Fix watch file.
+
+ -- Jeremy Oden <jerem.oden@gmail.com>  Tue, 20 Dec 2022 03:15:14 +0000
+
 exadrums (0.6.0-1) unstable; urgency=medium
 
   * New upstream version.
