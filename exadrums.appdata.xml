@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Copyright (c) 2015-2021, Jeremy Oden <jerem.oden@gmail.com> -->
+<!-- Copyright (c) 2015-2022, Jeremy Oden <jerem.oden@gmail.com> -->
 <component type="desktop">
  <id>eXaDrums.desktop</id>
- <metadata_license>BSD 3-Clause License</metadata_license>
- <project_license>BSD 3-Clause License</project_license>
+ <metadata_license>BSD-3-Clause</metadata_license>
+ <project_license>BSD-3-Clause</project_license>
  <name>eXaDrums</name>
  <summary>Software Drum Module</summary>
  <description>
