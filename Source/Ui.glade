@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!-- Generated with glade 3.38.2 
+<!-- Generated with glade 3.40.0 
 
 Copyright (c) Jérémy Oden
 All rights reserved.
@@ -5019,7 +5019,7 @@ Author: Jérémy Oden
     <property name="website-label" translatable="yes">eXaDrums.com</property>
     <property name="authors">Jérémy Oden</property>
     <property name="logo">eXaDrums_logo_small.png</property>
-    <property name="license-type">bsd</property>
+    <property name="license-type">bsd-3</property>
     <child internal-child="vbox">
       <object class="GtkBox" id="eXaDrumsAboutDialogBox">
         <property name="can-focus">False</property>
