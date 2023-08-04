@@ -4,27 +4,22 @@ This document outlines the development plan from a high level and will be update
 
 ## Legend of annotations
 
-| Mark       | Description                     |
-| ---------- | ------------------------------- |
-| open box   | work not started - scheduled    |
-| check mark | work completed                  |
-| &#9997;    | on-going work                   |
+| Mark               | Description                     |
+| ----------         | ------------------------------- |
+| :construction:     | work not started - scheduled    |
+| :heavy_check_mark: | work completed                  |
+| :pencil:           | on-going work                   |
 
 ## Current version
 
-### 0.7.0
-
-- &#9997; Work with libexadrums 0.7.0 API.
-- [X] Add Spi devices configuration dialog.
-- [X] Stop using Gtk deprecated features.
-- [X] Use C++20
-
-## Future versions
-
 ### 0.8.0
 
-- [ ] Add loader to record export window.
-- [ ] Make instruments & triggers lists scrollable.
+- :heavy_check_mark: C++23
+- :pencil: Update sensors config to work with USBMIDI.
+- :construction: Add loader to record export window.
+- :construction: Make instruments & triggers lists scrollable.
+
+## Future versions
 
 ### 0.9.0
 
@@ -32,31 +27,38 @@ This document outlines the development plan from a high level and will be update
 
 ## Documentation
 
-- [ ] Doxygen: document code.
+- :construction: Doxygen: document code.
 
 ## Past versions
 
+### 0.7.0
+
+- :heavy_check_mark: Work with libexadrums 0.7.0 API.
+- :heavy_check_mark: Add Spi devices configuration dialog.
+- :heavy_check_mark: Stop using Gtk deprecated features.
+- :heavy_check_mark: Use C++20
+
 ### 0.6.0
 
-- [X] Add recorder's sound export feature.
-- [X] Add minimal calibration tools.
+- :heavy_check_mark: Add recorder's sound export feature.
+- :heavy_check_mark: Add minimal calibration tools.
 
 ### 0.5.0
 
-- [X] Fix sound chooser window size.
-- [X] Check libexadrums: installed and linked versions.
-- [X] Detect return and escape keypress in sound chooser and record saver.
-- [X] Add import/export configuration window.
-- [X] Add factory reset button.
-- [X] Add trigger gain combo box.
-- [X] Add an "add instrument" button in the kit preferences window.
-- [X] Add score to rhythm coach.
-- [X] Add toggle fullscreen button.
-- [X] Update Faders: to be in a scrollable container.
+- :heavy_check_mark: Fix sound chooser window size.
+- :heavy_check_mark: Check libexadrums: installed and linked versions.
+- :heavy_check_mark: Detect return and escape keypress in sound chooser and record saver.
+- :heavy_check_mark: Add import/export configuration window.
+- :heavy_check_mark: Add factory reset button.
+- :heavy_check_mark: Add trigger gain combo box.
+- :heavy_check_mark: Add an "add instrument" button in the kit preferences window.
+- :heavy_check_mark: Add score to rhythm coach.
+- :heavy_check_mark: Add toggle fullscreen button.
+- :heavy_check_mark: Update Faders: to be in a scrollable container.
 
 ### 0.4.1
 
-- [X] Build successfully with clang++-7.
-- [X] Update Readme (installation instructions).
-- [X] Fix Readme (installation procedure -- checkout debian branch first).
-- [X] Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
+- :heavy_check_mark: Build successfully with clang++-7.
+- :heavy_check_mark: Update Readme (installation instructions).
+- :heavy_check_mark: Fix Readme (installation procedure -- checkout debian branch first).
+- :heavy_check_mark: Fix invisible (hidden) non-popup windows (ubuntu MATE arm64).
