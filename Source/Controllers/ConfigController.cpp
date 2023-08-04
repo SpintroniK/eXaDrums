@@ -70,6 +70,12 @@ namespace Controllers
 		Gtk::Button* spiConfigButton = nullptr;
 		Gtk::Button* spiConfigHideButton = nullptr;
 		auto spiConfigSaveButton = GetWidget<Gtk::Button>(builder, "SpiConfigSaveButton");
+		auto serialPortEntry = GetWidget<Gtk::Entry>(builder, "SerialPort");
+		auto serialPortLabel = GetWidget<Gtk::Label>(builder, "SerialPortLabel");
+		auto hddDataFolder = GetWidget<Gtk::Entry>(builder, "SensorsDataFolder");
+		// auto hddDataFolderLabel = GetWidget<Gtk::Label>(builder, "SensorsDataFolderLabel");
+		auto midiPortEntry = GetWidget<Gtk::Entry>(builder, "MidiPortEntry");
+		auto midiPortLabel = GetWidget<Gtk::Label>(builder, "MidiPortLabel");
 
 		// Mixer
 		Gtk::Button* mixerConfigCancelButton = nullptr;
@@ -219,6 +225,15 @@ namespace Controllers
 			{
 				const auto isSpi = sensorsTypesList->get_active_text() == "Spi";
 				spiConfigButton->set_visible(isSpi);
+
+				const auto isSerialMidi = sensorsTypesList->get_active_text() == "SerialMidi";
+				serialPortEntry->set_visible(isSerialMidi);
+				serialPortLabel->set_visible(isSerialMidi);
+
+				const auto isUSBMidi = sensorsTypesList->get_active_text() == "USBMidi";
+				midiPortEntry->set_visible(isUSBMidi);
+				midiPortLabel->set_visible(isUSBMidi);
+				
 			});
 
 			std::vector<std::string> sensorsTypes = config.GetSensorsTypes();
@@ -234,15 +249,15 @@ namespace Controllers
 				spiConfigButton->set_visible(true);
 			}
 
-			Gtk::Entry* hddDataFolder = nullptr;
-			builder->get_widget("SensorsDataFolder", hddDataFolder);
+
 			std::string dataFolder = config.GetSensorsDataFolder();
 			hddDataFolder->set_text(dataFolder);
 
-			Gtk::Entry* serialPortEntry = nullptr;
-			builder->get_widget("SerialPort", serialPortEntry);
 			const std::string serialPort = config.GetSerialPort();
 			serialPortEntry->set_text(serialPort);
+
+			const auto midiPort = config.GetMidiPort();
+			midiPortEntry->set_text(midiPort);
 
 		}
 
@@ -727,12 +742,14 @@ namespace Controllers
 		builder->get_widget("SensorsTypes", sensorsTypesList);
 		builder->get_widget("SensorsDataFolder", hddDataFolder);
 		builder->get_widget("SerialPort", serialPortEntry);
+		auto midiPortEntry = GetWidget<Gtk::Entry>(builder, "MidiPortEntry");
 
 		int sRate = std::stoi(samplingRate->get_text());
 		int res = std::stoi(resolution->get_text());
 		std::string type = sensorsTypesList->get_active_text();
 		std::string dataFolder = hddDataFolder->get_text();
 		const std::string serialPort = serialPortEntry->get_text();
+		const std::string midiPort = midiPortEntry->get_text();
 
 
 		config.SetSensorsSamplingRate(sRate);
@@ -740,6 +757,7 @@ namespace Controllers
 		config.SetSensorsType(type);
 		config.SetSensorsDataFolder(dataFolder);
 		config.SetSerialPort(serialPort);
+		config.SetMidiPort(midiPort);
 
 		try
 		{

@@ -74,7 +74,7 @@ Author: Jérémy Oden
                       <object class="GtkImage">
                         <property name="visible">True</property>
                         <property name="can-focus">False</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -1310,7 +1310,7 @@ Author: Jérémy Oden
                     <property name="margin-end">2</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="icon-name">dialog-close</property>
+                    <property name="icon-name">application-exit</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -1585,7 +1585,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -2208,7 +2208,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -2293,7 +2293,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -2533,7 +2533,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -3045,7 +3045,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -3128,7 +3128,7 @@ Author: Jérémy Oden
                     <property name="margin-end">2</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="icon-name">dialog-cancel</property>
+                    <property name="icon-name">application-exit</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -3313,7 +3313,7 @@ Author: Jérémy Oden
                     <property name="margin-end">2</property>
                     <property name="hexpand">True</property>
                     <property name="vexpand">True</property>
-                    <property name="icon-name">dialog-cancel</property>
+                    <property name="icon-name">application-exit</property>
                   </object>
                   <packing>
                     <property name="left-attach">0</property>
@@ -3439,7 +3439,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -3676,6 +3676,11 @@ Author: Jérémy Oden
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="has-entry">True</property>
+                <child internal-child="entry">
+                  <object class="GtkEntry">
+                    <property name="can-focus">False</property>
+                  </object>
+                </child>
               </object>
               <packing>
                 <property name="left-attach">1</property>
@@ -3783,7 +3788,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -3827,7 +3832,7 @@ Author: Jérémy Oden
           </packing>
         </child>
         <child>
-          <!-- n-columns=2 n-rows=2 -->
+          <!-- n-columns=2 n-rows=3 -->
           <object class="GtkGrid">
             <property name="visible">True</property>
             <property name="can-focus">False</property>
@@ -3836,32 +3841,10 @@ Author: Jérémy Oden
             <property name="row-spacing">4</property>
             <property name="column-spacing">4</property>
             <child>
-              <object class="GtkLabel">
+              <object class="GtkLabel" id="SerialPortLabel">
                 <property name="visible">True</property>
                 <property name="can-focus">False</property>
                 <property name="halign">end</property>
-                <property name="label" translatable="yes">Hdd Folder: </property>
-              </object>
-              <packing>
-                <property name="left-attach">0</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkEntry" id="SensorsDataFolder">
-                <property name="visible">True</property>
-                <property name="can-focus">True</property>
-                <property name="hexpand">True</property>
-              </object>
-              <packing>
-                <property name="left-attach">1</property>
-                <property name="top-attach">1</property>
-              </packing>
-            </child>
-            <child>
-              <object class="GtkLabel">
-                <property name="visible">True</property>
-                <property name="can-focus">False</property>
                 <property name="label" translatable="yes">Serial Port: </property>
               </object>
               <packing>
@@ -3877,6 +3860,51 @@ Author: Jérémy Oden
               <packing>
                 <property name="left-attach">1</property>
                 <property name="top-attach">0</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="SensorsDataFolderLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">Hdd Folder: </property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="SensorsDataFolder">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+                <property name="hexpand">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">2</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkLabel" id="MidiPortLabel">
+                <property name="visible">True</property>
+                <property name="can-focus">False</property>
+                <property name="halign">end</property>
+                <property name="label" translatable="yes">MIDI Port: </property>
+              </object>
+              <packing>
+                <property name="left-attach">0</property>
+                <property name="top-attach">1</property>
+              </packing>
+            </child>
+            <child>
+              <object class="GtkEntry" id="MidiPortEntry">
+                <property name="visible">True</property>
+                <property name="can-focus">True</property>
+              </object>
+              <packing>
+                <property name="left-attach">1</property>
+                <property name="top-attach">1</property>
               </packing>
             </child>
           </object>
@@ -3925,7 +3953,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-close</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -4336,7 +4364,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -4711,7 +4739,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-cancel</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
@@ -4863,7 +4891,7 @@ Author: Jérémy Oden
                         <property name="margin-end">2</property>
                         <property name="hexpand">True</property>
                         <property name="vexpand">True</property>
-                        <property name="icon-name">dialog-close</property>
+                        <property name="icon-name">application-exit</property>
                       </object>
                       <packing>
                         <property name="left-attach">0</property>
