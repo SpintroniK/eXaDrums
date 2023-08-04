@@ -5,7 +5,7 @@
 
 # https://www.gnu.org/software/autoconf/manual/autoconf.html
 AC_INIT([eXaDrums],
-        [0.7.0],
+        [0.8.0],
         [Jérémy Oden <jerem.oden@gmail.com>],
         [],
         [https://exadrums.com])
